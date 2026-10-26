@@ -2338,31 +2338,6 @@
       cursor: not-allowed;
     }
 
-    /* ===== Log in / log out ===== */
-    body.is-locked > *:not(#loginScreen) { display: none !important; }
-    .login-screen { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; background: var(--bg-void); overflow-y: auto; }
-    body.is-locked .login-screen { display: flex; }
-    .login-card { width: 100%; max-width: 400px; margin: auto; padding: 28px 24px 24px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, .28); }
-    .login-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 22px; --brand-emblem: 56px; --brand-word-h: 52px; }
-    .login-card h1 { margin: 0 0 4px; font-size: 21px; line-height: 1.25; color: var(--text-1); text-align: center; }
-    .login-sub { margin: 0 0 18px; font-size: 13px; line-height: 1.5; color: var(--text-3); text-align: center; }
-    .login-card .form-group { margin-bottom: 14px; }
-    .login-pass { position: relative; }
-    .login-pass .input { padding-right: 66px; }
-    .login-eye { position: absolute; top: 50%; right: 6px; transform: translateY(-50%); min-height: 32px; padding: 0 10px; border: 0; border-radius: 7px; background: none; color: var(--text-2); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
-    .login-eye:hover { background: var(--bg-elevated-2); }
-    .login-hint { margin: -6px 0 14px; font-size: 12px; color: var(--text-3); }
-    .login-error { margin: 0 0 14px; padding: 10px 12px; border-radius: 9px; background: var(--danger-bg); color: var(--red-light); font-size: 13px; line-height: 1.45; }
-    .login-submit { width: 100%; justify-content: center; min-height: 42px; font-size: 14px; }
-    .login-back { width: 100%; justify-content: center; margin-top: 8px; min-height: 38px; }
-    #sidebarLogout { width: 100%; justify-content: center; }
-    .sidebar.collapsed #sidebarLogout span { display: none; }
-    @media (max-width: 640px) {
-      .login-screen { padding: 14px; align-items: flex-start; }
-      .login-card { padding: 22px 18px 20px; margin-top: 6vh; }
-      .login-brand { --brand-emblem: 48px; --brand-word-h: 44px; margin-bottom: 18px; }
-    }
-
     /* ===== User management: roles & permissions ===== */
     .perm-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 8px; }
     .perm-bar .perm-sum { margin-left: auto; font-size: 12px; color: var(--text-3); }
@@ -3092,7 +3067,6 @@
       .role-switch label { margin-bottom: 4px; }
       /* panels and messages sit inside the screen */
       .dropdown-panel { position: fixed; top: calc(var(--topbar-h) + 6px); left: 8px; right: 8px; width: auto !important; max-height: calc(100vh - var(--topbar-h) - 20px); }
-      @supports (height: 1dvh) { .dropdown-panel { max-height: calc(100dvh - var(--topbar-h) - 20px); } }
       #profilePanel { left: auto; width: min(260px, calc(100vw - 16px)) !important; }
       .dropdown-list { max-height: min(60vh, 360px); }
       .toast-container { left: 10px; right: 10px; bottom: 10px; }
@@ -3159,7 +3133,7 @@
   </style>
 </head>
 
-<body class="is-locked">
+<body>
   <a href="#content" class="skip-link">Skip to main content</a>
   <noscript><p style="padding:16px;font:14px sans-serif">This system needs JavaScript. Turn it on in your browser settings, then reload the page.</p></noscript>
   <p id="uxLive" class="sr-only" role="status" aria-live="polite"></p>
@@ -3221,7 +3195,6 @@
         <label>I am…</label>
         <select class="select" id="techPicker" style="width:100%;"></select>
       </div>
-      <button type="button" class="btn btn-ghost btn-sm" id="sidebarLogout" title="Log out" aria-label="Log out"><i class="fa-solid fa-arrow-right"></i><span>Log out</span></button>
     </div>
   </aside>
 
@@ -3250,6 +3223,8 @@
         </div>
         <button class="icon-btn hide-phone" onclick="toggleTheme()" title="Toggle light / dark mode"
           aria-label="Toggle light or dark mode"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
+        <button class="icon-btn hide-phone hide-tablet" onclick="openShortcutsHelp()" title="Keyboard shortcuts &amp; help"
+          aria-label="Keyboard shortcuts and help"><i class="fa-solid fa-circle-question"></i></button>
         <div class="dropdown-wrap">
           <button class="icon-btn" id="notifBtn" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span
               class="notif-dot" id="notifDot" style="display:none;"></span></button>
@@ -3280,7 +3255,6 @@
             <div style="padding:8px;">
               <a href="#" class="nav-item menu-theme" id="menuTheme" role="button"><i class="fa-solid fa-sun" id="menuThemeIcon"></i><span id="menuThemeLabel">Light mode</span></a>
               <a href="#" class="nav-item" data-page="settings"><i class="fa-solid fa-gear"></i>Settings</a>
-              <a href="#" class="nav-item" id="menuLogout" role="button"><i class="fa-solid fa-arrow-right"></i>Log out</a>
             </div>
           </div>
         </div>
@@ -3860,32 +3834,6 @@
   </div>
   </div>
 
-  <div class="login-screen" id="loginScreen">
-    <form class="login-card" id="loginForm" novalidate role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-      <div class="login-brand" aria-hidden="true"><span class="brand-emblem"></span><span class="brand-wordmark"></span></div>
-      <h1 id="loginTitle">Sign in</h1>
-      <p class="login-sub" id="loginSub">Use the username and password your administrator gave you.</p>
-      <div class="form-group">
-        <label for="loginUser">Username</label>
-        <input class="input" id="loginUser" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
-      </div>
-      <div class="form-group" id="loginPassGroup">
-        <label for="loginPass">Password</label>
-        <div class="login-pass">
-          <input class="input" id="loginPass" name="password" type="password" autocomplete="current-password">
-          <button type="button" class="login-eye" id="loginEye" aria-label="Show password" aria-pressed="false">Show</button>
-        </div>
-      </div>
-      <div id="loginNewGroup" style="display:none;">
-        <div class="form-group"><label for="loginNew">New password</label><input class="input" id="loginNew" name="new-password" type="password" autocomplete="new-password"></div>
-        <div class="form-group"><label for="loginNew2">Confirm new password</label><input class="input" id="loginNew2" name="confirm-password" type="password" autocomplete="new-password"></div>
-        <p class="login-hint">At least 6 characters.</p>
-      </div>
-      <div class="login-error" id="loginError" role="alert" style="display:none;"></div>
-      <button type="submit" class="btn btn-primary login-submit" id="loginSubmit">Sign in</button>
-      <button type="button" class="btn btn-ghost btn-sm login-back" id="loginBack" style="display:none;">Back</button>
-    </form>
-  </div>
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modalBox"></div>
   </div>
@@ -3939,23 +3887,6 @@
     }
 
     /* ---- Storage bridge ---- */
-    // If the page it is opened in does not provide window.storage (for example the file is opened straight on a
-    // phone), fall back to the browser's own localStorage so logins, passwords and data survive a refresh.
-    // If that is blocked too, the app still runs, in memory only.
-    (function () {
-      if (typeof window === 'undefined' || window.storage) return;
-      let ls = null;
-      try { ls = window.localStorage; const t = '__7m_test__'; ls.setItem(t, '1'); ls.removeItem(t); } catch (e) { ls = null; }
-      if (!ls) return;
-      const P = '7majestic:';
-      const k = (key, shared) => P + (shared ? 's:' : 'p:') + key;
-      window.storage = {
-        async get(key, shared) { const v = ls.getItem(k(key, shared)); if (v === null) throw new Error('Key not found'); return { key, value: v, shared: !!shared }; },
-        async set(key, value, shared) { ls.setItem(k(key, shared), String(value)); return { key, value, shared: !!shared }; },
-        async delete(key, shared) { const had = ls.getItem(k(key, shared)) !== null; ls.removeItem(k(key, shared)); return { key, deleted: had, shared: !!shared }; },
-        async list(prefix, shared) { const pre = k(prefix || '', shared), keys = []; for (let i = 0; i < ls.length; i++) { const kk = ls.key(i); if (kk && kk.indexOf(pre) === 0) keys.push(kk.slice(P.length + 2)); } return { keys, prefix, shared: !!shared }; },
-      };
-    })();
     const STORAGE_AVAILABLE = (typeof window !== 'undefined' && !!window.storage);
     async function storageGet(key, shared) { if (!STORAGE_AVAILABLE) return null; try { return await window.storage.get(key, !!shared); } catch (e) { return null; } }
     async function storageSet(key, value, shared) { if (!STORAGE_AVAILABLE) return null; try { return await window.storage.set(key, value, !!shared); } catch (e) { return null; } }
@@ -4126,7 +4057,7 @@
           if (Array.isArray(loaded) && loaded.length) { EMPLOYEES.splice(0, EMPLOYEES.length, ...loaded.map(normalizeEmployee)); return; }
         } catch (e) { }
       }
-      saveRoster();
+      await saveRoster();
     }
 
     /* ============================================================
@@ -4167,7 +4098,7 @@
           if (Array.isArray(loaded) && loaded.length) { CUSTOMERS.splice(0, CUSTOMERS.length, ...loaded); return; }
         } catch (e) { }
       }
-      saveCustomers();
+      await saveCustomers();
     }
     function custById(id) { return CUSTOMERS.find(c => c.id === id); }
 
@@ -4188,7 +4119,7 @@
           if (Array.isArray(loaded)) { ANNOUNCEMENTS = loaded; return; }
         } catch (e) { }
       }
-      saveAnnouncements();
+      await saveAnnouncements();
     }
 
     /* ============================================================
@@ -4278,7 +4209,7 @@
       if (gotP && gotP.value) { try { const l = JSON.parse(gotP.value); if (Array.isArray(l) && l.length) { PAY_PERIODS.splice(0, PAY_PERIODS.length, ...l); } } catch (e) { } }
       const gotD = await storageGet('payroll:data', true);
       if (gotD && gotD.value) { try { const l = JSON.parse(gotD.value); if (l && typeof l === 'object') { PAYROLL_DATA = l; } } catch (e) { } }
-      else { savePayrollData(); savePayPeriods(); }
+      else { await savePayrollData(); await savePayPeriods(); }
       const draft = PAY_PERIODS.find(p => p.status === 'draft');
       CURRENT_PERIOD_ID = draft ? draft.id : PAY_PERIODS[PAY_PERIODS.length - 1].id;
     }
@@ -4403,7 +4334,7 @@
       const got = await storageGet('calendar:events', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l)) { EVENTS = l.map(normalizeEvent); return; } } catch (e) { } }
       EVENTS = EVENTS.map(normalizeEvent);
-      saveEvents();
+      await saveEvents();
     }
 
     /* ---- Data-access layer (bookings/jobs) ----
@@ -4479,7 +4410,7 @@
     async function loadTeamsFromStorage() {
       const got = await storageGet('schedule:teams', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l) && l.length) { TEAMS = l.map(normalizeTeam); return; } } catch (e) { } }
-      saveTeams();
+      await saveTeams();
     }
 
     /* ============================================================
@@ -4502,13 +4433,13 @@
     async function loadNotificationsFromStorage() {
       const got = await storageGet('system:notifications', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l)) { NOTIFICATIONS = l; return; } } catch (e) { } }
-      saveNotifications();
+      await saveNotifications();
     }
     async function saveActivity() { await storageSet('system:activity', JSON.stringify(ACTIVITY), true); }
     async function loadActivityFromStorage() {
       const got = await storageGet('system:activity', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l)) { ACTIVITY = l; return; } } catch (e) { } }
-      saveActivity();
+      await saveActivity();
     }
 
     /* ---- who is currently acting, for activity text + self-notify suppression ---- */
@@ -4517,7 +4448,7 @@
         const t = empById(CURRENT_TECH_ID);
         return { role: 'Technician', techId: CURRENT_TECH_ID, label: t ? t.name : 'A technician' };
       }
-      return { role: 'Administrator', techId: null, label: (sessionUser() && sessionUser().name) || 'Admin' };
+      return { role: 'Administrator', techId: null, label: 'Admin' };
     }
     // Business events only need to notify OTHER people — never the person who
     // just performed the action (they get a toast instead, at the mutation
@@ -4742,13 +4673,13 @@
     async function loadCompanyInfoFromStorage() {
       const got = await storageGet('settings:company', true);
       if (got && got.value) { try { Object.assign(COMPANY_INFO, JSON.parse(got.value)); return; } catch (e) { } }
-      saveCompanyInfoToStorage();
+      await saveCompanyInfoToStorage();
     }
     async function savePayrollDefaultsToStorage() { await storageSet('settings:payrolldefaults', JSON.stringify(PAYROLL_DEFAULTS), true); }
     async function loadPayrollDefaultsFromStorage() {
       const got = await storageGet('settings:payrolldefaults', true);
       if (got && got.value) { try { Object.assign(PAYROLL_DEFAULTS, JSON.parse(got.value)); return; } catch (e) { } }
-      savePayrollDefaultsToStorage();
+      await savePayrollDefaultsToStorage();
     }
 
     /* ============================================================
@@ -4813,7 +4744,7 @@
           }
         } catch (e) { }
       }
-      if (!complete) savePermissionsToStorage();
+      if (!complete) await savePermissionsToStorage();
       recomputeRoleHiddenPages();
     }
     // 'noaccess' is a hidden helper page shown only when nothing at all is allowed.
@@ -7489,15 +7420,13 @@
       initializedPages.clear();   // pages drawn under the other role must be drawn again
       applyPermissionUI();
       $('#profileRoleLabel').textContent = ROLE_LABELS[role];
-      // A signed-in technician is locked to their own account; only an Administrator can preview other views.
-      $('#roleSwitch').closest('.role-switch').style.display = sessionIsTech() ? 'none' : '';
-      $('#techPickerWrap').style.display = (role === 'Technician' && !sessionIsTech()) ? 'block' : 'none';
+      $('#techPickerWrap').style.display = role === 'Technician' ? 'block' : 'none';
       if (role === 'Technician') {
         populateTechPicker();
         const e = empById(CURRENT_TECH_ID);
         $('#profileNameLabel').textContent = e ? e.name : 'Technician';
       } else {
-        $('#profileNameLabel').textContent = (sessionUser() && sessionUser().name) || 'Admin User';
+        $('#profileNameLabel').textContent = 'Admin User';
       }
       const hidden = ROLE_HIDDEN_PAGES[role] || [];
       $all('.nav-item[data-page]').forEach(n => { n.style.display = hidden.includes(n.dataset.page) ? 'none' : 'flex'; });
@@ -7590,7 +7519,17 @@
       return [...emp, ...cust];
     }
     let searchIndex = [];
-    function openCmdk() { if (document.body.classList.contains('is-locked')) return; $('#cmdkOverlay').classList.add('open'); $('#cmdkInput').value = ''; $('#cmdkInput').focus(); renderCmdkResults(''); }
+    function openShortcutsHelp() {
+      openModal('Keyboard Shortcuts &amp; Tips', `
+    <div class="detail-row"><span class="k">Open global search</span><span class="v"><kbd style="background:var(--bg-elevated-2);border:1px solid var(--border-strong);border-radius:5px;padding:2px 7px;font-family:var(--font-mono);font-size:12px;">⌘K</kbd> / <kbd style="background:var(--bg-elevated-2);border:1px solid var(--border-strong);border-radius:5px;padding:2px 7px;font-family:var(--font-mono);font-size:12px;">Ctrl K</kbd></span></div>
+    <div class="detail-row"><span class="k">Close any dialog or panel</span><span class="v"><kbd style="background:var(--bg-elevated-2);border:1px solid var(--border-strong);border-radius:5px;padding:2px 7px;font-family:var(--font-mono);font-size:12px;">Esc</kbd></span></div>
+    <div class="detail-row"><span class="k">Sort a table</span><span class="v">Click any column header</span></div>
+    <div class="detail-row"><span class="k">Edit a week's time log</span><span class="v">Pencil icon on the Payroll table row</span></div>
+    <div class="detail-row"><span class="k">Undo a delete</span><span class="v">Click "Undo" on the confirmation toast</span></div>
+    <div class="detail-row"><span class="k">Switch what you can see</span><span class="v">"Viewing as" role selector, bottom of sidebar</span></div>
+  `, []);
+    }
+    function openCmdk() { $('#cmdkOverlay').classList.add('open'); $('#cmdkInput').value = ''; $('#cmdkInput').focus(); renderCmdkResults(''); }
     function closeCmdk() { $('#cmdkOverlay').classList.remove('open'); }
     function renderCmdkResults(q) {
       q = q.toLowerCase();
@@ -7625,112 +7564,6 @@
       updateLiveClock();
       setInterval(updateLiveClock, 1000);
     }
-
-    /* ============================================================
-       LOG IN / LOG OUT
-       Accounts are the ones in Settings → User Accounts. An account that has no
-       password yet (new, or never set) is asked to create one the first time.
-       ============================================================ */
-    let SESSION_USER_ID = null;
-    function sessionUser() { return SESSION_USER_ID ? empById(SESSION_USER_ID) : null; }
-    function sessionIsTech() { const u = sessionUser(); return !!u && u.role !== 'Admin'; }
-    async function saveSession(id) { if (id) await storageSet('session:user', id, false); else await storageDelete('session:user', false); }
-    async function initSession() {
-      const got = await storageGet('session:user', false);
-      const u = got && got.value ? empById(got.value) : null;
-      if (u && u.acctStatus !== 'Suspended') { enterApp(u); return true; }
-      return false;
-    }
-    let loginMode = 'signin', loginPending = null, loginFails = 0, loginLockUntil = 0, loginReady = false;
-    setTimeout(() => { loginReady = true; }, 8000);   // safety net: never leave sign-in locked if loading stalls
-    function setLoginError(msg) { const el = $('#loginError'); el.textContent = msg || ''; el.style.display = msg ? 'block' : 'none'; }
-    function setLoginMode(mode, emp) {
-      loginMode = mode; loginPending = emp ? emp.id : null;
-      const setup = mode === 'setup';
-      $('#loginTitle').textContent = setup ? 'Create your password' : 'Sign in';
-      $('#loginSub').textContent = setup ? `Welcome, ${emp.name}. This account has no password yet. Choose one to continue.` : 'Use the username and password your administrator gave you.';
-      $('#loginPassGroup').style.display = setup ? 'none' : '';
-      $('#loginNewGroup').style.display = setup ? '' : 'none';
-      $('#loginUser').readOnly = setup;
-      $('#loginSubmit').textContent = setup ? 'Save password and sign in' : 'Sign in';
-      $('#loginBack').style.display = setup ? '' : 'none';
-      $('#loginNew').value = ''; $('#loginNew2').value = '';
-      setLoginError('');
-      if (setup) setTimeout(() => { try { $('#loginNew').focus(); } catch (e) { } }, 30);
-    }
-    function showLogin() {
-      document.body.classList.add('is-locked');
-      setLoginMode('signin');
-      $('#loginUser').value = ''; $('#loginPass').value = '';
-      $('#loginPass').type = 'password'; $('#loginEye').textContent = 'Show'; $('#loginEye').setAttribute('aria-pressed', 'false'); $('#loginEye').setAttribute('aria-label', 'Show password');
-      setTimeout(() => { try { $('#loginUser').focus(); } catch (e) { } }, 60);
-    }
-    function enterApp(emp) {
-      SESSION_USER_ID = emp.id;
-      saveSession(emp.id);
-      const admin = emp.role === 'Admin';
-      if (!admin) CURRENT_TECH_ID = emp.id;
-      const sel = $('#roleSwitch'); sel.value = admin ? 'Administrator' : 'Technician';
-      document.body.classList.remove('is-locked');
-      $('#loginPass').value = ''; $('#loginNew').value = ''; $('#loginNew2').value = '';
-      applyRoleView(sel.value);
-      goToPage(firstAllowedPage());
-      if (!STORAGE_AVAILABLE) showToast('info', 'Saving is unavailable. Your changes will be lost when you close or refresh this page.');
-    }
-    async function logOut() {
-      closeModal(); closeDrawer(); closeCmdk(); closeAllDropdowns();
-      $('#sidebar').classList.remove('mobile-open'); $('#sidebarBackdrop').classList.remove('open');
-      SESSION_USER_ID = null;
-      saveSession(null);
-      $('#roleSwitch').value = 'Administrator';
-      applyRoleView('Administrator');
-      goToPage('dashboard');
-      showLogin();
-    }
-    async function submitLogin(ev) {
-      if (ev) ev.preventDefault();
-      if (!loginReady) { setLoginError('Still loading your data. Please try again in a moment.'); return; }
-      const wait = Math.ceil((loginLockUntil - Date.now()) / 1000);
-      if (wait > 0) { setLoginError(`Too many tries. Please wait ${wait} second${wait === 1 ? '' : 's'} and try again.`); return; }
-      if (loginMode === 'setup') {
-        const emp = empById(loginPending);
-        if (!emp || emp.password || emp.acctStatus === 'Suspended') { setLoginMode('signin'); setLoginError('Please sign in again.'); return; }
-        const p1 = $('#loginNew').value, p2 = $('#loginNew2').value;
-        if (p1.length < 6) { setLoginError('Use at least 6 characters for your password.'); $('#loginNew').focus(); return; }
-        if (p1 !== p2) { setLoginError('The two passwords do not match.'); $('#loginNew2').focus(); return; }
-        emp.password = p1;
-        saveRoster();   // not awaited: a slow or failing save must never keep someone waiting at the login screen
-        enterApp(emp);
-        return;
-      }
-      const uname = $('#loginUser').value.trim().toLowerCase(), pw = $('#loginPass').value;
-      if (!uname) { setLoginError('Enter your username.'); $('#loginUser').focus(); return; }
-      const acct = EMPLOYEES.find(e => String(e.username || '').toLowerCase() === uname) || null;
-      if (acct && acct.acctStatus !== 'Suspended' && !acct.password && pw === '') { setLoginMode('setup', acct); return; }
-      if (!pw) { setLoginError('Enter your password.'); $('#loginPass').focus(); return; }
-      if (!acct || !acct.password || acct.password !== pw) {
-        if (++loginFails >= 5) { loginFails = 0; loginLockUntil = Date.now() + 30000; setLoginError('Too many tries. Please wait 30 seconds and try again.'); }
-        else setLoginError('Incorrect username or password.');
-        $('#loginPass').value = ''; $('#loginPass').focus();
-        return;
-      }
-      if (acct.acctStatus === 'Suspended') { setLoginError('This account is suspended. Please contact your administrator.'); return; }
-      loginFails = 0;
-      enterApp(acct);
-    }
-    $('#loginForm').addEventListener('submit', submitLogin);
-    $('#loginBack').addEventListener('click', () => { $('#loginPass').value = ''; setLoginMode('signin'); $('#loginUser').focus(); });
-    $('#loginEye').addEventListener('click', () => {
-      const p = $('#loginPass'), show = p.type === 'password';
-      p.type = show ? 'text' : 'password';
-      $('#loginEye').textContent = show ? 'Hide' : 'Show';
-      $('#loginEye').setAttribute('aria-pressed', show ? 'true' : 'false');
-      $('#loginEye').setAttribute('aria-label', show ? 'Hide password' : 'Show password');
-    });
-    $('#loginUser').addEventListener('input', () => setLoginError(''));
-    $('#loginPass').addEventListener('input', () => setLoginError(''));
-    $('#menuLogout').addEventListener('click', e => { e.preventDefault(); logOut(); });
-    $('#sidebarLogout').addEventListener('click', () => logOut());
 
     /* Permission guards: even if a button is somehow reached, the action itself refuses to run
        unless the signed-in role is allowed. Administrators always pass. */
@@ -7778,8 +7611,8 @@
       runAutomaticReminders();
       renderNotifications();
       searchIndex = buildSearchIndex();
-      if (!SESSION_USER_ID) { goToPage('dashboard'); applyRoleView($('#roleSwitch').value); }
-      try { if (!SESSION_USER_ID && !(await initSession())) showLogin(); } finally { loginReady = true; }
+      goToPage('dashboard');
+      applyRoleView($('#roleSwitch').value);
       startNotificationPolling();
       startLiveClock();
       _scheduleMidnightRefresh();
@@ -8258,7 +8091,7 @@
       function ini() {
         var el = Q('.topbar .avatar'), nm = '';
         if (!el) return;
-        try { if (CURRENT_ROLE === 'Technician') { var e = empById(CURRENT_TECH_ID); nm = e ? String(e.name || '') : ''; } else if (sessionUser()) nm = String(sessionUser().name || ''); } catch (x) { }
+        try { if (CURRENT_ROLE === 'Technician') { var e = empById(CURRENT_TECH_ID); nm = e ? String(e.name || '') : ''; } } catch (x) { }
         el.textContent = nm ? nm.trim().split(/\s+/).map(function (w) { return w.charAt(0); }).slice(0, 2).join('').toUpperCase() : 'AD';
       }
       var _ar = window.applyRoleView;
