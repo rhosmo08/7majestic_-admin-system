@@ -2338,6 +2338,69 @@
       cursor: not-allowed;
     }
 
+    /* ===== Log in / log out ===== */
+    body.is-locked > *:not(#loginScreen) { display: none !important; }
+    .login-screen { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; background: var(--bg-void); overflow-y: auto; }
+    body.is-locked .login-screen { display: flex; }
+    .login-card { width: 100%; max-width: 400px; margin: auto; padding: 28px 24px 24px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, .28); }
+    .login-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 22px; --brand-emblem: 56px; --brand-word-h: 52px; }
+    .login-card h1 { margin: 0 0 4px; font-size: 21px; line-height: 1.25; color: var(--text-1); text-align: center; }
+    .login-sub { margin: 0 0 18px; font-size: 13px; line-height: 1.5; color: var(--text-3); text-align: center; }
+    .login-card .form-group { margin-bottom: 14px; }
+    .login-pass { position: relative; }
+    .login-pass .input { padding-right: 66px; }
+    .login-eye { position: absolute; top: 50%; right: 6px; transform: translateY(-50%); min-height: 32px; padding: 0 10px; border: 0; border-radius: 7px; background: none; color: var(--text-2); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .login-eye:hover { background: var(--bg-elevated-2); }
+    .login-hint { margin: -6px 0 14px; font-size: 12px; color: var(--text-3); }
+    .login-error { margin: 0 0 14px; padding: 10px 12px; border-radius: 9px; background: var(--danger-bg); color: var(--red-light); font-size: 13px; line-height: 1.45; }
+    .login-submit { width: 100%; justify-content: center; min-height: 42px; font-size: 14px; }
+    .login-back { width: 100%; justify-content: center; margin-top: 8px; min-height: 38px; }
+    #sidebarLogout { width: 100%; justify-content: center; }
+    .sidebar.collapsed #sidebarLogout span { display: none; }
+    @media (max-width: 640px) {
+      .login-screen { padding: 14px; align-items: flex-start; }
+      .login-card { padding: 22px 18px 20px; margin-top: 6vh; }
+      .login-brand { --brand-emblem: 48px; --brand-word-h: 44px; margin-bottom: 18px; }
+    }
+
+    /* ===== User management: roles & permissions ===== */
+    .perm-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 8px; }
+    .perm-bar .perm-sum { margin-left: auto; font-size: 12px; color: var(--text-3); }
+    .perm-head, .perm-row { display: grid; grid-template-columns: minmax(0, 1fr) 120px 156px; gap: 12px; align-items: center; }
+    .perm-head { padding: 10px 0; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); border-bottom: 1px solid var(--border-strong); }
+    .perm-head span:not(:first-child) { text-align: center; }
+    .perm-group { padding: 18px 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--text-2); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+    .perm-group small { font-weight: 500; font-size: 12px; color: var(--text-3); }
+    .perm-row { padding: 11px 0; border-bottom: 1px solid var(--border); }
+    .perm-name { font-weight: 600; font-size: 13.5px; color: var(--text-1); }
+    .perm-desc { margin-top: 2px; font-size: 12px; line-height: 1.45; color: var(--text-3); }
+    .perm-admin, .perm-lock { justify-self: center; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+    .perm-admin { color: var(--text-2); }
+    .perm-admin i { color: var(--success); }
+    .perm-lock { font-weight: 600; color: var(--text-3); }
+    .perm-switch { justify-self: center; display: inline-flex; align-items: center; gap: 9px; min-height: 36px; padding: 0 8px; border: 0; background: none; cursor: pointer; font: inherit; font-size: 12px; font-weight: 600; color: var(--text-2); border-radius: 8px; }
+    .perm-switch:hover { background: var(--bg-elevated-2); }
+    .perm-switch .track { position: relative; width: 36px; height: 20px; flex: 0 0 36px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--bg-elevated-2); transition: background .15s ease, border-color .15s ease; }
+    .perm-switch .track::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--text-3); transition: transform .15s ease, background .15s ease; }
+    .perm-switch[aria-checked="true"] .track { background: var(--success); border-color: var(--success); }
+    .perm-switch[aria-checked="true"] .track::after { transform: translateX(16px); background: #fff; }
+    .perm-switch .state { min-width: 66px; text-align: left; }
+    .perm-switch[aria-checked="true"] .state { color: var(--success); }
+    .perm-section-h { margin: 26px 0 2px; font-size: 16px; }
+    .perm-section-sub { margin: 0; font-size: 12.5px; color: var(--text-3); }
+    .perm-none { margin: 40px auto; max-width: 420px; text-align: center; }
+    @media (max-width: 640px) {
+      .perm-head { display: none; }
+      .perm-row { grid-template-columns: minmax(0, 1fr); row-gap: 2px; }
+      .perm-admin, .perm-lock, .perm-switch { justify-self: start; }
+      .perm-admin::before { content: "Administrator:"; color: var(--text-3); margin-right: 2px; }
+      .perm-lock::before { content: "Technician:"; font-weight: 500; margin-right: 2px; }
+      .perm-switch { padding: 0; }
+      .perm-switch::before { content: "Technician:"; font-weight: 500; color: var(--text-3); }
+      .perm-bar .btn { flex: 1 1 auto; justify-content: center; }
+      .perm-bar .perm-sum { flex: 1 1 100%; margin-left: 0; }
+    }
+
     /* Sidebar mobile toggle */
     .mobile-toggle {
       display: none;
@@ -2458,6 +2521,18 @@
       font-size: 11px;
       color: #5a4210;
     }
+
+    /* the payroll table now has four row buttons, so its cells are a little tighter on wide screens */
+    @media (min-width: 641px) {
+      #payrollAdminTableWrap th, #payrollAdminTableWrap td { padding-left: 12px; padding-right: 12px; }
+    }
+
+    /* payslip history rows (technician page and the history dialog) */
+    .ps-hist-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--border); }
+    .card-head + .ps-hist-row, .ps-hist-list > .ps-hist-row:first-child { border-top: 0; }
+    .ps-hist-main { flex: 1; min-width: 0; }
+    .ps-hist-title { font-weight: 600; font-size: 13px; }
+    .ps-hist-net { font-weight: 700; font-size: 13px; white-space: nowrap; }
 
     /* the paper stays white in dark mode, so its buttons need dark ink */
     .payslip-sheet .btn-ghost {
@@ -3017,10 +3092,13 @@
       .role-switch label { margin-bottom: 4px; }
       /* panels and messages sit inside the screen */
       .dropdown-panel { position: fixed; top: calc(var(--topbar-h) + 6px); left: 8px; right: 8px; width: auto !important; max-height: calc(100vh - var(--topbar-h) - 20px); }
+      @supports (height: 1dvh) { .dropdown-panel { max-height: calc(100dvh - var(--topbar-h) - 20px); } }
       #profilePanel { left: auto; width: min(260px, calc(100vw - 16px)) !important; }
       .dropdown-list { max-height: min(60vh, 360px); }
       .toast-container { left: 10px; right: 10px; bottom: 10px; }
       .toast { min-width: 0; max-width: none; width: 100%; padding: 10px 12px; font-size: 12.5px; }
+      /* while a dialog or side panel is open, messages sit above its buttons instead of covering them */
+      body:has(.modal-overlay.open) .toast-container, body:has(.drawer-overlay.open) .toast-container { bottom: 78px; }
       /* search and filter share one row */
       .toolbar { flex-wrap: nowrap; gap: 8px; margin-bottom: 10px; }
       .input-search { flex: 1 1 0; min-width: 0; max-width: none; }
@@ -3081,7 +3159,7 @@
   </style>
 </head>
 
-<body>
+<body class="is-locked">
   <a href="#content" class="skip-link">Skip to main content</a>
   <noscript><p style="padding:16px;font:14px sans-serif">This system needs JavaScript. Turn it on in your browser settings, then reload the page.</p></noscript>
   <p id="uxLive" class="sr-only" role="status" aria-live="polite"></p>
@@ -3143,6 +3221,7 @@
         <label>I am…</label>
         <select class="select" id="techPicker" style="width:100%;"></select>
       </div>
+      <button type="button" class="btn btn-ghost btn-sm" id="sidebarLogout" title="Log out" aria-label="Log out"><i class="fa-solid fa-arrow-right"></i><span>Log out</span></button>
     </div>
   </aside>
 
@@ -3171,8 +3250,6 @@
         </div>
         <button class="icon-btn hide-phone" onclick="toggleTheme()" title="Toggle light / dark mode"
           aria-label="Toggle light or dark mode"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
-        <button class="icon-btn hide-phone hide-tablet" onclick="openShortcutsHelp()" title="Keyboard shortcuts &amp; help"
-          aria-label="Keyboard shortcuts and help"><i class="fa-solid fa-circle-question"></i></button>
         <div class="dropdown-wrap">
           <button class="icon-btn" id="notifBtn" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span
               class="notif-dot" id="notifDot" style="display:none;"></span></button>
@@ -3203,6 +3280,7 @@
             <div style="padding:8px;">
               <a href="#" class="nav-item menu-theme" id="menuTheme" role="button"><i class="fa-solid fa-sun" id="menuThemeIcon"></i><span id="menuThemeLabel">Light mode</span></a>
               <a href="#" class="nav-item" data-page="settings"><i class="fa-solid fa-gear"></i>Settings</a>
+              <a href="#" class="nav-item" id="menuLogout" role="button"><i class="fa-solid fa-arrow-right"></i>Log out</a>
             </div>
           </div>
         </div>
@@ -3219,10 +3297,10 @@
             <p>Company overview — payroll, bookings, and customers at a glance.</p>
           </div>
           <div class="page-header-actions">
-            <button class="btn btn-ghost btn-sm" onclick="goToPage('payroll')"><i class="fa-solid fa-sack-dollar"></i>Go
+            <button class="btn btn-ghost btn-sm" data-pv="payroll" onclick="goToPage('payroll')"><i class="fa-solid fa-sack-dollar"></i>Go
               to Payroll</button>
             <button class="btn btn-primary btn-sm"
-              onclick="goToPage('customers');setTimeout(()=>openCustomerModal(),150);"><i
+              data-pm="custManage" onclick="goToPage('customers');setTimeout(()=>openCustomerModal(),150);"><i
                 class="fa-solid fa-plus"></i>New Customer</button>
           </div>
         </div>
@@ -3319,9 +3397,9 @@
             <p>Team roster — technicians and office staff.</p>
           </div>
           <div class="page-header-actions">
-            <button class="btn btn-ghost btn-sm" onclick="exportToCSV('employees')"><i
+            <button class="btn btn-ghost btn-sm" data-pm="export" onclick="exportToCSV('employees')"><i
                 class="fa-solid fa-download"></i>Export</button>
-            <button class="btn btn-primary btn-sm" onclick="openEmployeeModal()"><i class="fa-solid fa-plus"></i>New
+            <button class="btn btn-primary btn-sm" data-pm="empManage" onclick="openEmployeeModal()"><i class="fa-solid fa-plus"></i>New
               Employee</button>
           </div>
         </div>
@@ -3349,7 +3427,7 @@
                   onclick="toggleSort('emp','status',renderEmployees,'empTableHead')">Status</th>
                 <th class="sortable" data-sort-field="hire"
                   onclick="toggleSort('emp','hire',renderEmployees,'empTableHead')">Hire Date</th>
-                <th>Rate / hr</th>
+                <th data-pm="rates">Rate / hr</th>
                 <th></th>
               </tr>
             </thead>
@@ -3366,9 +3444,9 @@
             <p>Client directory — contact info, service units, and maintenance schedule.</p>
           </div>
           <div class="page-header-actions">
-            <button class="btn btn-ghost btn-sm" onclick="exportToCSV('customers')"><i
+            <button class="btn btn-ghost btn-sm" data-pm="export" onclick="exportToCSV('customers')"><i
                 class="fa-solid fa-download"></i>Export</button>
-            <button class="btn btn-primary btn-sm" onclick="openCustomerModal()"><i class="fa-solid fa-plus"></i>New
+            <button class="btn btn-primary btn-sm" data-pm="custManage" onclick="openCustomerModal()"><i class="fa-solid fa-plus"></i>New
               Customer</button>
           </div>
         </div>
@@ -3391,7 +3469,7 @@
                   onclick="toggleSort('cust','id',renderCustomers,'custTableHead')">ID</th>
                 <th class="sortable" data-sort-field="name"
                   onclick="toggleSort('cust','name',renderCustomers,'custTableHead')">Customer</th>
-                <th>Phone</th>
+                <th data-pm="phones">Phone</th>
                 <th>Unit / Service</th>
                 <th>Preferred Service</th>
                 <th class="sortable" data-sort-field="status"
@@ -3416,7 +3494,7 @@
             <p>Accept, edit or decline new requests.</p>
           </div>
           <div class="page-header-actions">
-            <button class="btn btn-ghost btn-sm" onclick="exportToCSV('bookings')"><i
+            <button class="btn btn-ghost btn-sm" data-pm="export" onclick="exportToCSV('bookings')"><i
                 class="fa-solid fa-download"></i>Export</button>
           </div>
         </div>
@@ -3585,6 +3663,19 @@
         </div>
       </section>
 
+      <!-- ============ NO ACCESS PAGE ============ -->
+      <section class="page" id="page-noaccess">
+        <div class="page-header">
+          <div>
+            <h1>No pages available</h1>
+            <p>Your administrator has not given this account access to anything yet.</p>
+          </div>
+        </div>
+        <div class="empty-state perm-none"><i class="fa-solid fa-user-lock"></i>
+          <p>Please ask your administrator to update your permissions in Settings &rarr; User Management.</p>
+        </div>
+      </section>
+
       <!-- ============ SETTINGS PAGE ============ -->
       <section class="page" id="page-stats">
         <div class="page-header">
@@ -3697,7 +3788,7 @@
               <div class="form-group"><label>Email</label><input class="input" id="setCoEmail"
                   placeholder="e.g. office@7majestic.ph"></div>
             </div>
-            <div style="margin-top:16px;"><button class="btn btn-primary btn-sm" onclick="saveCompanyInfo()"><i
+            <div data-pm="settingsManage" style="margin-top:16px;"><button class="btn btn-primary btn-sm" onclick="saveCompanyInfo()"><i
                   class="fa-solid fa-check"></i>Save Changes</button></div>
           </div>
           <div class="card-solid">
@@ -3711,11 +3802,15 @@
               <div class="form-group"><label>Default OT Rate / hr (₱)</label><input class="input" type="number"
                   id="setDefOT" value="62"></div>
             </div>
-            <div style="margin-top:16px;"><button class="btn btn-primary btn-sm" onclick="savePayrollDefaults()"><i
+            <div data-pm="settingsManage" style="margin-top:16px;"><button class="btn btn-primary btn-sm" onclick="savePayrollDefaults()"><i
                   class="fa-solid fa-check"></i>Save Defaults</button></div>
           </div>
         </div>
-        <div class="card-solid" style="margin-top:16px;">
+        <div data-pm="admin" style="margin-top:6px;">
+          <h2 class="perm-section-h">User Management</h2>
+          <p class="perm-section-sub">Who can sign in, and exactly what each role can open and do.</p>
+        </div>
+        <div class="card-solid" data-pm="admin" style="margin-top:12px;">
           <div class="card-head">
             <div>
               <h3>User Accounts</h3>
@@ -3741,26 +3836,23 @@
             </table>
           </div>
         </div>
-        <div class="card-solid" style="margin-top:16px;">
+        <div class="card-solid" id="rolesCard" data-pm="admin" style="margin-top:16px;">
           <div class="card-head">
             <div>
               <h3>Roles &amp; Permissions</h3>
-              <div class="sub">Click a cell to grant or revoke Technician access. Administrator always has full access.
-                Technicians can always see only their own payslip, never the full payroll table.</div>
+              <div class="sub">Choose exactly what a Technician can open and do. Administrator always has full access.
+                Switch a row off to restrict it, or use <b>Allow everything</b> to give Technicians the same access as an
+                Administrator (the Administrator-only items at the bottom always stay locked).</div>
             </div>
           </div>
-          <div class="table-wrap" style="border:none;background:transparent;">
-            <table class="roles-table">
-              <thead>
-                <tr>
-                  <th>Module</th>
-                  <th>Administrator</th>
-                  <th>Technician</th>
-                </tr>
-              </thead>
-              <tbody id="rolesMatrixBody"></tbody>
-            </table>
+          <div class="perm-bar">
+            <button type="button" class="btn btn-ghost btn-sm" onclick="setAllTechPerms('all')"><i class="fa-solid fa-lock-open"></i>Allow everything</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="setAllTechPerms('none')"><i class="fa-solid fa-lock"></i>Restrict everything</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="setAllTechPerms('default')"><i class="fa-solid fa-rotate-left"></i>Recommended</button>
+            <span class="perm-sum" id="permSummary" aria-live="polite"></span>
           </div>
+          <div class="perm-head" aria-hidden="true"><span>Feature</span><span>Administrator</span><span>Technician</span></div>
+          <div id="rolesMatrixBody"></div>
         </div>
       </section>
 
@@ -3768,6 +3860,32 @@
   </div>
   </div>
 
+  <div class="login-screen" id="loginScreen">
+    <form class="login-card" id="loginForm" novalidate role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <div class="login-brand" aria-hidden="true"><span class="brand-emblem"></span><span class="brand-wordmark"></span></div>
+      <h1 id="loginTitle">Sign in</h1>
+      <p class="login-sub" id="loginSub">Use the username and password your administrator gave you.</p>
+      <div class="form-group">
+        <label for="loginUser">Username</label>
+        <input class="input" id="loginUser" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="form-group" id="loginPassGroup">
+        <label for="loginPass">Password</label>
+        <div class="login-pass">
+          <input class="input" id="loginPass" name="password" type="password" autocomplete="current-password">
+          <button type="button" class="login-eye" id="loginEye" aria-label="Show password" aria-pressed="false">Show</button>
+        </div>
+      </div>
+      <div id="loginNewGroup" style="display:none;">
+        <div class="form-group"><label for="loginNew">New password</label><input class="input" id="loginNew" name="new-password" type="password" autocomplete="new-password"></div>
+        <div class="form-group"><label for="loginNew2">Confirm new password</label><input class="input" id="loginNew2" name="confirm-password" type="password" autocomplete="new-password"></div>
+        <p class="login-hint">At least 6 characters.</p>
+      </div>
+      <div class="login-error" id="loginError" role="alert" style="display:none;"></div>
+      <button type="submit" class="btn btn-primary login-submit" id="loginSubmit">Sign in</button>
+      <button type="button" class="btn btn-ghost btn-sm login-back" id="loginBack" style="display:none;">Back</button>
+    </form>
+  </div>
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modalBox"></div>
   </div>
@@ -3821,6 +3939,23 @@
     }
 
     /* ---- Storage bridge ---- */
+    // If the page it is opened in does not provide window.storage (for example the file is opened straight on a
+    // phone), fall back to the browser's own localStorage so logins, passwords and data survive a refresh.
+    // If that is blocked too, the app still runs, in memory only.
+    (function () {
+      if (typeof window === 'undefined' || window.storage) return;
+      let ls = null;
+      try { ls = window.localStorage; const t = '__7m_test__'; ls.setItem(t, '1'); ls.removeItem(t); } catch (e) { ls = null; }
+      if (!ls) return;
+      const P = '7majestic:';
+      const k = (key, shared) => P + (shared ? 's:' : 'p:') + key;
+      window.storage = {
+        async get(key, shared) { const v = ls.getItem(k(key, shared)); if (v === null) throw new Error('Key not found'); return { key, value: v, shared: !!shared }; },
+        async set(key, value, shared) { ls.setItem(k(key, shared), String(value)); return { key, value, shared: !!shared }; },
+        async delete(key, shared) { const had = ls.getItem(k(key, shared)) !== null; ls.removeItem(k(key, shared)); return { key, deleted: had, shared: !!shared }; },
+        async list(prefix, shared) { const pre = k(prefix || '', shared), keys = []; for (let i = 0; i < ls.length; i++) { const kk = ls.key(i); if (kk && kk.indexOf(pre) === 0) keys.push(kk.slice(P.length + 2)); } return { keys, prefix, shared: !!shared }; },
+      };
+    })();
     const STORAGE_AVAILABLE = (typeof window !== 'undefined' && !!window.storage);
     async function storageGet(key, shared) { if (!STORAGE_AVAILABLE) return null; try { return await window.storage.get(key, !!shared); } catch (e) { return null; } }
     async function storageSet(key, value, shared) { if (!STORAGE_AVAILABLE) return null; try { return await window.storage.set(key, value, !!shared); } catch (e) { return null; } }
@@ -3991,7 +4126,7 @@
           if (Array.isArray(loaded) && loaded.length) { EMPLOYEES.splice(0, EMPLOYEES.length, ...loaded.map(normalizeEmployee)); return; }
         } catch (e) { }
       }
-      await saveRoster();
+      saveRoster();
     }
 
     /* ============================================================
@@ -4032,7 +4167,7 @@
           if (Array.isArray(loaded) && loaded.length) { CUSTOMERS.splice(0, CUSTOMERS.length, ...loaded); return; }
         } catch (e) { }
       }
-      await saveCustomers();
+      saveCustomers();
     }
     function custById(id) { return CUSTOMERS.find(c => c.id === id); }
 
@@ -4053,7 +4188,7 @@
           if (Array.isArray(loaded)) { ANNOUNCEMENTS = loaded; return; }
         } catch (e) { }
       }
-      await saveAnnouncements();
+      saveAnnouncements();
     }
 
     /* ============================================================
@@ -4143,7 +4278,7 @@
       if (gotP && gotP.value) { try { const l = JSON.parse(gotP.value); if (Array.isArray(l) && l.length) { PAY_PERIODS.splice(0, PAY_PERIODS.length, ...l); } } catch (e) { } }
       const gotD = await storageGet('payroll:data', true);
       if (gotD && gotD.value) { try { const l = JSON.parse(gotD.value); if (l && typeof l === 'object') { PAYROLL_DATA = l; } } catch (e) { } }
-      else { await savePayrollData(); await savePayPeriods(); }
+      else { savePayrollData(); savePayPeriods(); }
       const draft = PAY_PERIODS.find(p => p.status === 'draft');
       CURRENT_PERIOD_ID = draft ? draft.id : PAY_PERIODS[PAY_PERIODS.length - 1].id;
     }
@@ -4224,7 +4359,7 @@
           <div class="cell-primary">${cust ? esc(cust.name) : 'No customer linked'}</div>
           <div class="cell-muted" style="font-size:12px;">${esc(j.note || 'Service job')}${techs.length ? ' — ' + techs.map(id => empById(id)?.name).filter(Boolean).join(', ') : ' — <span style="color:var(--warning);">no team assigned</span>'}</div>
         </div>
-        ${cust && cust.phone && CURRENT_ROLE !== 'Technician' ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
+        ${cust && cust.phone && can('phones') ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
         <div style="text-align:right;flex-shrink:0;">
           <div style="font-weight:700;font-size:12px;color:var(--warning);">Not scheduled</div>
           <a href="#" onclick="event.stopPropagation();openEventEditModal('${j.id}');return false;" style="font-size:12px;">Set date &amp; team</a>
@@ -4268,7 +4403,7 @@
       const got = await storageGet('calendar:events', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l)) { EVENTS = l.map(normalizeEvent); return; } } catch (e) { } }
       EVENTS = EVENTS.map(normalizeEvent);
-      await saveEvents();
+      saveEvents();
     }
 
     /* ---- Data-access layer (bookings/jobs) ----
@@ -4344,7 +4479,7 @@
     async function loadTeamsFromStorage() {
       const got = await storageGet('schedule:teams', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l) && l.length) { TEAMS = l.map(normalizeTeam); return; } } catch (e) { } }
-      await saveTeams();
+      saveTeams();
     }
 
     /* ============================================================
@@ -4367,13 +4502,13 @@
     async function loadNotificationsFromStorage() {
       const got = await storageGet('system:notifications', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l)) { NOTIFICATIONS = l; return; } } catch (e) { } }
-      await saveNotifications();
+      saveNotifications();
     }
     async function saveActivity() { await storageSet('system:activity', JSON.stringify(ACTIVITY), true); }
     async function loadActivityFromStorage() {
       const got = await storageGet('system:activity', true);
       if (got && got.value) { try { const l = JSON.parse(got.value); if (Array.isArray(l)) { ACTIVITY = l; return; } } catch (e) { } }
-      await saveActivity();
+      saveActivity();
     }
 
     /* ---- who is currently acting, for activity text + self-notify suppression ---- */
@@ -4382,7 +4517,7 @@
         const t = empById(CURRENT_TECH_ID);
         return { role: 'Technician', techId: CURRENT_TECH_ID, label: t ? t.name : 'A technician' };
       }
-      return { role: 'Administrator', techId: null, label: 'Admin' };
+      return { role: 'Administrator', techId: null, label: (sessionUser() && sessionUser().name) || 'Admin' };
     }
     // Business events only need to notify OTHER people — never the person who
     // just performed the action (they get a toast instead, at the mutation
@@ -4509,6 +4644,8 @@
       SCHEDULE_TODAY: { icon: 'fa-calendar-day', bg: 'var(--info-bg)', color: 'var(--info)' },
       PAYROLL_RELEASED: { icon: 'fa-paper-plane', bg: 'var(--success-bg)', color: 'var(--success)' },
       PAYROLL_DRAFT: { icon: 'fa-hourglass-half', bg: 'var(--warning-bg)', color: 'var(--warning)' },
+      PAYROLL_DELETED: { icon: 'fa-trash', bg: 'var(--danger-bg)', color: 'var(--red-light)' },
+      PAYROLL_RESTORED: { icon: 'fa-rotate-left', bg: 'var(--success-bg)', color: 'var(--success)' },
       ANNOUNCEMENT_POSTED: { icon: 'fa-bullhorn', bg: 'var(--violet-bg)', color: 'var(--violet)' },
       CUSTOMER_ADDED: { icon: 'fa-user-plus', bg: 'rgba(46,159,214,.18)', color: 'var(--navy-light)' },
       CUSTOMER_UPDATED: { icon: 'fa-user-pen', bg: 'rgba(46,159,214,.18)', color: 'var(--navy-light)' },
@@ -4605,52 +4742,147 @@
     async function loadCompanyInfoFromStorage() {
       const got = await storageGet('settings:company', true);
       if (got && got.value) { try { Object.assign(COMPANY_INFO, JSON.parse(got.value)); return; } catch (e) { } }
-      await saveCompanyInfoToStorage();
+      saveCompanyInfoToStorage();
     }
     async function savePayrollDefaultsToStorage() { await storageSet('settings:payrolldefaults', JSON.stringify(PAYROLL_DEFAULTS), true); }
     async function loadPayrollDefaultsFromStorage() {
       const got = await storageGet('settings:payrolldefaults', true);
       if (got && got.value) { try { Object.assign(PAYROLL_DEFAULTS, JSON.parse(got.value)); return; } catch (e) { } }
-      await savePayrollDefaultsToStorage();
+      savePayrollDefaultsToStorage();
     }
 
     /* ============================================================
        ROLES & PERMISSIONS
-       Modules a Technician's access can be toggled for. Payroll is not
-       in this list — Technicians can always see only their own payslip,
-       never the shared payroll table, regardless of this matrix.
+       Every page and action a Technician's access can be toggled for.
+       "Payroll" for a Technician always means their own payslip only,
+       never the shared payroll table. Administrators always have full access.
        ============================================================ */
-    const PERM_MODULES = ['Employees', 'Calendar', 'Schedule', 'Settings'];
-    const MODULE_PAGE_ID = { Employees: 'employees', Calendar: 'calendar', Schedule: 'schedule', Settings: 'settings' };
-    let PERMS = { Technician: [0, 1, 1, 0] }; // Employees off, Calendar on, Schedule on (own jobs only), Settings off
+    /* Every page and every action a Technician could use. 1 = allowed, 0 = restricted.
+       Defaults match how the app behaved before: a Technician sees their own payslip, calendar,
+       schedule and announcements, and can update their own jobs. Everything else is off. */
+    const PERM_PAGES = [
+      { key: 'dashboard', label: 'Dashboard', desc: 'Company overview, totals and recent activity', def: 0 },
+      { key: 'stats', label: 'Statistics', desc: 'Charts and totals for jobs, income and payroll', def: 0 },
+      { key: 'payroll', label: 'Payroll / Payslip', desc: 'Their own payslip and payslip history only, never anyone else\'s or the full payroll table', def: 1 },
+      { key: 'employees', label: 'Employees', desc: 'The team roster and staff profiles', def: 0 },
+      { key: 'customers', label: 'Customers', desc: 'Customer list and service history', def: 0 },
+      { key: 'bookings', label: 'Booking Requests', desc: 'New requests that came in from the website', def: 0 },
+      { key: 'followups', label: 'Maintenance Follow-Ups', desc: 'Customers due or overdue for their next cleaning', def: 0 },
+      { key: 'calendar', label: 'Calendar', desc: 'The calendar, showing only the jobs assigned to them', def: 1 },
+      { key: 'schedule', label: 'Schedule', desc: 'Their own team\'s jobs, day by day', def: 1 },
+      { key: 'announcements', label: 'Announcements', desc: 'Read announcements sent to technicians', def: 1 },
+      { key: 'settings', label: 'Settings', desc: 'Company information and payroll defaults (user accounts and permissions are never shown)', def: 0 },
+    ];
+    const PERM_ACTIONS = [
+      { group: 'Jobs & teams', key: 'jobUpdate', label: 'Update their own jobs', desc: 'Mark Arrived, Start, Complete or Cancel a job and add notes', def: 1 },
+      { group: 'Jobs & teams', key: 'jobManage', label: 'Create, edit, reschedule & delete jobs', desc: 'Add Job, Edit, Reschedule, Change Team, Delete, and Book Again', def: 0 },
+      { group: 'Jobs & teams', key: 'teamManage', label: 'Manage teams', desc: 'Create, rename and reassign teams on the Schedule page', def: 0 },
+      { group: 'People & customers', key: 'empManage', label: 'Add, edit & delete employees', desc: 'New Employee, Edit and Delete on the Employees page', def: 0 },
+      { group: 'People & customers', key: 'rates', label: 'See pay rates & loan balances', desc: 'Hourly rate, overtime rate, loan balance and weekly pay on the Employees page', def: 0 },
+      { group: 'People & customers', key: 'custManage', label: 'Add, edit & delete customers', desc: 'New Customer, Edit and Delete on the Customers page', def: 0 },
+      { group: 'People & customers', key: 'phones', label: 'See customer phone numbers', desc: 'Shows phone numbers and the Call buttons everywhere they appear', def: 0 },
+      { group: 'People & customers', key: 'bookingManage', label: 'Accept, decline & undo booking requests', desc: 'Accept and assign, Decline and Undo on the Booking Requests page', def: 0 },
+      { group: 'Messages, data & settings', key: 'announceManage', label: 'Post, pin & delete announcements', desc: 'The "Post an Announcement" form, pin and delete', def: 0 },
+      { group: 'Messages, data & settings', key: 'settingsManage', label: 'Edit company information & payroll defaults', desc: 'Change and save the company details and default pay rates', def: 0 },
+      { group: 'Messages, data & settings', key: 'export', label: 'Export lists to CSV', desc: 'The Export buttons. An export includes every column of that list, so only allow it for people you trust', def: 0 },
+    ];
+    const PERM_LOCKED = [
+      { label: 'Payroll administration', desc: 'Edit time logs, release or delete pay weeks and payslips, adjust loan balances' },
+      { label: 'User accounts & permissions', desc: 'Create accounts, reset passwords, suspend access, and change this table' },
+    ];
+    const PERM_ALL = PERM_PAGES.concat(PERM_ACTIONS);
+    const PERM_DEFAULTS = (() => { const d = {}; PERM_ALL.forEach(p => { d[p.key] = p.def ? 1 : 0; }); return d; })();
+    let PERMS = { v: 2, Technician: Object.assign({}, PERM_DEFAULTS) };
+    function techCan(key) { return !!(PERMS.Technician && PERMS.Technician[key]); }
+    // Administrators can always do everything; Technicians only what the matrix allows.
+    // The special key 'admin' is never granted to a Technician.
+    function can(key) { return CURRENT_ROLE === 'Administrator' || techCan(key); }
     async function savePermissionsToStorage() { await storageSet('settings:permissions', JSON.stringify(PERMS), true); }
     async function loadPermissionsFromStorage() {
       const got = await storageGet('settings:permissions', true);
+      let complete = false;
       if (got && got.value) {
         try {
-          const loaded = JSON.parse(got.value);
-          // Older saved permission sets were 3 slots (before "Schedule" existed
-          // as its own toggle) — a stale array here would silently misalign
-          // every module after it, so re-seed with today's defaults instead of
-          // trusting a shape that no longer matches PERM_MODULES.
-          if (loaded && Array.isArray(loaded.Technician) && loaded.Technician.length === PERM_MODULES.length) Object.assign(PERMS, loaded);
-          else await savePermissionsToStorage();
+          const loaded = JSON.parse(got.value), t = loaded && loaded.Technician;
+          if (t && !Array.isArray(t) && typeof t === 'object') {
+            Object.keys(PERM_DEFAULTS).forEach(k => { if (k in t) PERMS.Technician[k] = t[k] ? 1 : 0; });
+            complete = Object.keys(PERM_DEFAULTS).every(k => k in t);
+          } else if (Array.isArray(t) && t.length === 4) {
+            // Oldest format: [Employees, Calendar, Schedule, Settings]
+            ['employees', 'calendar', 'schedule', 'settings'].forEach((k, i) => { PERMS.Technician[k] = t[i] ? 1 : 0; });
+          }
         } catch (e) { }
-      } else { await savePermissionsToStorage(); }
+      }
+      if (!complete) savePermissionsToStorage();
       recomputeRoleHiddenPages();
     }
-    const ROLE_HIDDEN_PAGES = { Administrator: [], Technician: [] };
+    // 'noaccess' is a hidden helper page shown only when nothing at all is allowed.
+    const ROLE_HIDDEN_PAGES = { Administrator: ['noaccess'], Technician: ['noaccess'] };
     function recomputeRoleHiddenPages() {
-      ROLE_HIDDEN_PAGES.Technician = ['dashboard', 'stats', 'customers', 'bookings', 'followups'].concat(PERM_MODULES.filter((m, i) => !PERMS.Technician[i]).map(m => MODULE_PAGE_ID[m]));
-      ROLE_HIDDEN_PAGES.Administrator = [];
+      ROLE_HIDDEN_PAGES.Technician = ['noaccess'].concat(PERM_PAGES.filter(p => !techCan(p.key)).map(p => p.key));
+      ROLE_HIDDEN_PAGES.Administrator = ['noaccess'];
     }
-    function toggleModulePermission(idx) {
-      PERMS.Technician[idx] = PERMS.Technician[idx] ? 0 : 1;
+    function firstAllowedPage() {
+      const hid = ROLE_HIDDEN_PAGES[CURRENT_ROLE] || [];
+      const order = ['dashboard', 'payroll', 'schedule', 'calendar', 'announcements', 'employees', 'customers', 'bookings', 'followups', 'stats', 'settings'];
+      return order.find(p => !hid.includes(p)) || 'noaccess';
+    }
+    // Hides/shows every control tagged data-pm="<action>" (needs that action) or data-pv="<page>" (needs that page).
+    function applyPermissionUI() {
+      let st = document.getElementById('pmStyle');
+      if (!st) { st = document.createElement('style'); st.id = 'pmStyle'; document.head.appendChild(st); }
+      const sel = PERM_ACTIONS.filter(a => !can(a.key)).map(a => `[data-pm~="${a.key}"]`)
+        .concat(CURRENT_ROLE === 'Administrator' ? [] : ['[data-pm~="admin"]'])
+        .concat(PERM_PAGES.filter(p => !can(p.key)).map(p => `[data-pv="${p.key}"]`));
+      st.textContent = sel.length ? sel.join(',') + '{display:none!important}' : '';
+      document.body.classList.toggle('not-admin', CURRENT_ROLE !== 'Administrator');
+    }
+    function permAfterChange(focusKey) {
       recomputeRoleHiddenPages();
       savePermissionsToStorage();
       renderSettings();
       applyRoleView($('#roleSwitch').value);
-      showToast('success', `Technician access to ${PERM_MODULES[idx]} ${PERMS.Technician[idx] ? 'granted' : 'revoked'}`);
+      if (focusKey) { const b = document.querySelector(`.perm-switch[data-perm-key="${focusKey}"]`); if (b) b.focus(); }
+    }
+    function togglePerm(key) {
+      const item = PERM_ALL.find(p => p.key === key); if (!item) return;
+      PERMS.Technician[key] = PERMS.Technician[key] ? 0 : 1;
+      permAfterChange(key);
+      showToast('success', `Technician access to "${item.label}" ${PERMS.Technician[key] ? 'granted' : 'restricted'}`);
+    }
+    function setAllTechPerms(mode) {
+      const apply = () => {
+        const prev = Object.assign({}, PERMS.Technician);
+        PERM_ALL.forEach(p => { PERMS.Technician[p.key] = mode === 'all' ? 1 : mode === 'none' ? 0 : (p.def ? 1 : 0); });
+        permAfterChange();
+        const msg = mode === 'all' ? 'Technicians can now open and do everything except the Administrator-only items'
+          : mode === 'none' ? 'Technician access restricted everywhere' : 'Technician access reset to the recommended settings';
+        showToast('success', msg, { label: 'Undo', onClick: () => { Object.assign(PERMS.Technician, prev); permAfterChange(); } });
+      };
+      if (mode === 'all') confirmAction('Give Technicians access to every page and action? That includes adding, editing and deleting employees, customers and jobs, seeing pay rates and phone numbers, and exporting lists. Payroll administration and user accounts stay Administrator-only. You can switch any row off again, or press Undo.', apply, 'Allow everything');
+      else if (mode === 'none') confirmAction('Restrict Technicians from every page and action? They will not be able to open anything, including their own payslip, until you allow something again. You can press Undo afterwards.', apply, 'Restrict everything');
+      else apply();
+    }
+    function permSwitchHTML(item) {
+      const on = techCan(item.key);
+      return `<button type="button" class="perm-switch" role="switch" aria-checked="${on ? 'true' : 'false'}" data-perm-key="${item.key}" aria-label="Technician: ${esc(item.label)}" onclick="togglePerm('${item.key}')"><span class="track" aria-hidden="true"></span><span class="state">${on ? 'Allowed' : 'Restricted'}</span></button>`;
+    }
+    function permRowHTML(item) {
+      return `<div class="perm-row"><div class="perm-info"><div class="perm-name">${esc(item.label)}</div><div class="perm-desc">${esc(item.desc)}</div></div><span class="perm-admin"><i class="fa-solid fa-check"></i>Full access</span>${permSwitchHTML(item)}</div>`;
+    }
+    function renderPermMatrix() {
+      const body = $('#rolesMatrixBody'); if (!body) return;
+      let html = `<div class="perm-group">Pages <small>Can the Technician open this page?</small></div>` + PERM_PAGES.map(permRowHTML).join('');
+      let g = '';
+      PERM_ACTIONS.forEach(a => {
+        if (a.group !== g) { g = a.group; html += `<div class="perm-group">${esc(g)} <small>What can the Technician do?</small></div>`; }
+        html += permRowHTML(a);
+      });
+      html += `<div class="perm-group">Administrator only <small>Never available to Technicians</small></div>` + PERM_LOCKED.map(l =>
+        `<div class="perm-row"><div class="perm-info"><div class="perm-name">${esc(l.label)}</div><div class="perm-desc">${esc(l.desc)}</div></div><span class="perm-admin"><i class="fa-solid fa-check"></i>Full access</span><span class="perm-lock"><i class="fa-solid fa-lock"></i>Admin only</span></div>`).join('');
+      body.innerHTML = html;
+      const on = PERM_ALL.filter(p => techCan(p.key)).length;
+      $('#permSummary').textContent = `${on} of ${PERM_ALL.length} allowed for Technicians`;
     }
     function renderSettings() {
       $('#setCoName').value = COMPANY_INFO.name;
@@ -4659,17 +4891,8 @@
       $('#setCoEmail').value = COMPANY_INFO.email;
       $('#setDefRate').value = PAYROLL_DEFAULTS.rateHr;
       $('#setDefOT').value = PAYROLL_DEFAULTS.otRateHr;
-      const rows = [`<tr><td>Payroll <span class="cell-muted" style="font-size:11px;">(own payslip)</span></td>
-      <td class="perm-locked" title="Administrator always has full access"><i class="fa-solid fa-check"></i></td>
-      <td class="perm-locked" title="Technicians can always view only their own payslip"><span class="badge badge-info" style="font-size:11px;">Own payslip only</span></td></tr>`];
-      PERM_MODULES.forEach((m, i) => {
-        const label = m === 'Schedule' ? `Schedule <span class="cell-muted" style="font-size:11px;">(own team's jobs only)</span>` : m;
-        rows.push(`<tr><td>${label}</td>
-      <td class="perm-locked" title="Administrator always has full access"><i class="fa-solid fa-check"></i></td>
-      <td class="perm-editable" onclick="toggleModulePermission(${i})" title="Click to toggle Technician access to ${m}"><i class="fa-solid ${PERMS.Technician[i] ? 'fa-check' : 'fa-xmark'}"></i></td>
-    </tr>`);
-      });
-      $('#rolesMatrixBody').innerHTML = rows.join('');
+      ['#setCoName', '#setCoAddress', '#setCoPhone', '#setCoEmail', '#setDefRate', '#setDefOT'].forEach(s => { $(s).disabled = !can('settingsManage'); });
+      renderPermMatrix();
       renderAccounts();
     }
     function saveCompanyInfo() {
@@ -4700,11 +4923,11 @@
       <td>${badge(e.role)}</td>
       <td>${badge(e.status)}</td>
       <td>${fmtDateShort(e.hire)}</td>
-      <td class="tabular">${peso(e.rateHr)}</td>
+      <td class="tabular" data-pm="rates">${peso(e.rateHr)}</td>
       <td style="white-space:nowrap;">
         <button class="btn btn-ghost btn-sm btn-icon" onclick="openEmployeeDrawer('${e.id}')" title="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="openEmployeeModal('${e.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="deleteEmployee('${e.id}')" title="Delete"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="empManage" onclick="openEmployeeModal('${e.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="empManage" onclick="deleteEmployee('${e.id}')" title="Delete"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button>
       </td>
     </tr>`).join('') : `<tr><td colspan="8"><div class="table-empty">No employees match your filters. <button type="button" class="btn btn-outline btn-sm" onclick="uxClearFilters('emp')">Clear filters</button></div></td></tr>`;
     }
@@ -4720,16 +4943,16 @@
     <div class="detail-row"><span class="k">Hire Date</span><span class="v">${(e.hire ? fmtDate(e.hire) : '—')}</span></div>
     <div class="detail-row"><span class="k">Phone</span><span class="v">${esc(e.phone)}</span></div>
     <div class="detail-row"><span class="k">Email</span><span class="v">${esc(e.email)}</span></div>
-    <div class="detail-row"><span class="k">Rate / hr</span><span class="v">${peso(e.rateHr)}</span></div>
-    <div class="detail-row"><span class="k">OT Rate / hr</span><span class="v">${peso(e.otRateHr)}</span></div>
-    <div class="detail-row"><span class="k">Loan Balance</span><span class="v" style="${e.caBalance > 0 ? 'color:var(--red-light);font-weight:700;' : ''}">${e.caBalance > 0 ? peso(e.caBalance) : 'No balance'}</span></div>
-    ${e.caBalance > 0 && e.loanWeekly > 0 ? `<div class="detail-row"><span class="k">Weekly Deduction</span><span class="v">${peso(e.loanWeekly)} / week</span></div>` : ''}
-    ${ps ? `<div class="detail-row"><span class="k">This week's net pay</span><span class="v" style="color:var(--success);">${peso(ps.net)}</span></div>
-    <div class="detail-row"><span class="k">Loan follow-up</span><span class="v">${ps.rec.followUp.cleared ? badge('Cleared') : badge('Pending')}</span></div>` : ''}
+    <div class="detail-row" data-pm="rates"><span class="k">Rate / hr</span><span class="v">${peso(e.rateHr)}</span></div>
+    <div class="detail-row" data-pm="rates"><span class="k">OT Rate / hr</span><span class="v">${peso(e.otRateHr)}</span></div>
+    <div class="detail-row" data-pm="rates"><span class="k">Loan Balance</span><span class="v" style="${e.caBalance > 0 ? 'color:var(--red-light);font-weight:700;' : ''}">${e.caBalance > 0 ? peso(e.caBalance) : 'No balance'}</span></div>
+    ${e.caBalance > 0 && e.loanWeekly > 0 ? `<div class="detail-row" data-pm="rates"><span class="k">Weekly Deduction</span><span class="v">${peso(e.loanWeekly)} / week</span></div>` : ''}
+    ${ps ? `<div class="detail-row" data-pm="rates"><span class="k">This week's net pay</span><span class="v" style="color:var(--success);">${peso(ps.net)}</span></div>
+    <div class="detail-row" data-pm="rates"><span class="k">Loan follow-up</span><span class="v">${ps.rec.followUp.cleared ? badge('Cleared') : badge('Pending')}</span></div>` : ''}
     <div style="display:flex;gap:8px;margin-top:18px;">
-      <button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center;" onclick="openEmployeeModal('${e.id}')"><i class="fa-solid fa-pen"></i>Edit</button>
-      <button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center;" onclick="closeDrawer();goToPage('payroll');setTimeout(()=>openPayslip('${e.id}'),150);"><i class="fa-solid fa-file-invoice-dollar"></i>Payslip</button>
-      <button class="btn btn-danger btn-sm" style="flex:1;justify-content:center;" onclick="deleteEmployee('${e.id}')"><i class="fa-solid fa-trash"></i>Delete</button>
+      <button class="btn btn-ghost btn-sm" data-pm="empManage" style="flex:1;justify-content:center;" onclick="openEmployeeModal('${e.id}')"><i class="fa-solid fa-pen"></i>Edit</button>
+      <button class="btn btn-ghost btn-sm" data-pm="admin" style="flex:1;justify-content:center;" onclick="closeDrawer();goToPage('payroll');setTimeout(()=>openPayslip('${e.id}'),150);"><i class="fa-solid fa-file-invoice-dollar"></i>Payslip</button>
+      <button class="btn btn-danger btn-sm" data-pm="empManage" style="flex:1;justify-content:center;" onclick="deleteEmployee('${e.id}')"><i class="fa-solid fa-trash"></i>Delete</button>
     </div>
   `);
     }
@@ -4958,23 +5181,23 @@
 
       const q = ($('#custSearch')?.value || '').toLowerCase();
       const statusF = $('#custStatusFilter')?.value || '';
-      let rows = CUSTOMERS.filter(c => (c.name + c.address + c.unit + (c.barangay || '') + (c.city || '') + (c.propertyType || '') + (c.preferredServiceType || '') + (c.airconType || '') + (c.phone || '')).toLowerCase().includes(q) && (!statusF || c.status === statusF));
+      let rows = CUSTOMERS.filter(c => (c.name + c.address + c.unit + (c.barangay || '') + (c.city || '') + (c.propertyType || '') + (c.preferredServiceType || '') + (c.airconType || '') + (can('phones') ? (c.phone || '') : '')).toLowerCase().includes(q) && (!statusF || c.status === statusF));
       rows = applySort(rows, 'cust', (c, f) => c[f]);
       $('#custTableBody').innerHTML = rows.length ? rows.map(c => `
     <tr>
       <td class="mono cell-muted">${c.id}</td>
       <td><div style="display:flex;align-items:center;gap:10px;"><div class="avatar" style="background:linear-gradient(135deg,var(--violet),#5a3ca8);">${initials(c.name)}</div><div><div class="cell-primary">${esc(c.name)}</div><div class="cell-muted" style="font-size:11px;">${esc(c.address)}</div></div></div></td>
-      <td><div style="font-size:12px;">${esc(c.phone || '—')}</div></td>
+      <td data-pm="phones"><div style="font-size:12px;">${esc(c.phone || '—')}</div></td>
       <td>${esc(c.unit || '—')}</td>
       <td>${c.preferredServiceType ? esc(c.preferredServiceType) : '<span class="cell-muted">—</span>'}</td>
       <td>${badge(c.status)}</td>
       <td>${c.lastService ? fmtDateShort(c.lastService) : '—'}</td>
       <td>${c.nextService ? fmtDateShort(c.nextService) : '—'}</td>
       <td style="white-space:nowrap;">
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="openEventModal('${c.id}')" title="Book Again — new booking for this customer"><i class="fa-solid fa-calendar-plus"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="jobManage" onclick="openEventModal('${c.id}')" title="Book Again — new booking for this customer"><i class="fa-solid fa-calendar-plus"></i></button>
         <button class="btn btn-ghost btn-sm btn-icon" onclick="openCustomerDrawer('${c.id}')" title="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="openCustomerModal('${c.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="deleteCustomer('${c.id}')" title="Delete"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="custManage" onclick="openCustomerModal('${c.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="custManage" onclick="deleteCustomer('${c.id}')" title="Delete"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button>
       </td>
     </tr>`).join('') : `<tr><td colspan="9"><div class="table-empty">No customers match your filters. <button type="button" class="btn btn-outline btn-sm" onclick="uxClearFilters('cust')">Clear filters</button></div></td></tr>`;
     }
@@ -5004,7 +5227,7 @@
           <div class="cell-primary">${cust ? esc(cust.name) : 'No customer linked'}${e.source === 'website' ? ' <span class="badge badge-info" style="font-size:11px;vertical-align:middle;"><i class="fa-solid fa-globe"></i> Website</span>' : ''}</div>
           <div class="cell-muted" style="font-size:11px;">${esc(detailBits)}</div>
           ${e.customerDetails ? `<div class="cell-muted" style="font-size:11px;margin-top:1px;font-style:italic;">"${esc(e.customerDetails)}"</div>` : ''}
-          ${cust && cust.phone && cust.phone !== '—' ? `<div class="cell-muted" style="font-size:11px;margin-top:1px;"><i class="fa-solid fa-phone"></i> ${esc(cust.phone)}</div>` : ''}
+          ${cust && cust.phone && cust.phone !== '—' ? `<div class="cell-muted" data-pm="phones" style="font-size:11px;margin-top:1px;"><i class="fa-solid fa-phone"></i> ${esc(cust.phone)}</div>` : ''}
         </div>
       </div>
       <div class="followup-dates">
@@ -5012,9 +5235,9 @@
         ${requestedTime ? `<div><span class="fu-label">Requested Time</span>${requestedTime}</div>` : ''}
       </div>
       <div class="followup-actions">
-        <button class="btn btn-ghost btn-sm btn-icon" style="color:var(--success);" onclick="openAcceptBookingModal('${e.id}')" title="Accept &amp; assign technician"><i class="fa-solid fa-check"></i></button>
-        <button class="btn btn-ghost btn-sm btn-icon" style="color:var(--red-light);" onclick="declineBooking('${e.id}')" title="Decline booking"><i class="fa-solid fa-xmark"></i></button>
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="openEventEditModal('${e.id}')" title="Edit booking"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="bookingManage" style="color:var(--success);" onclick="openAcceptBookingModal('${e.id}')" title="Accept &amp; assign technician"><i class="fa-solid fa-check"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="bookingManage" style="color:var(--red-light);" onclick="declineBooking('${e.id}')" title="Decline booking"><i class="fa-solid fa-xmark"></i></button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-pm="jobManage" onclick="openEventEditModal('${e.id}')" title="Edit booking"><i class="fa-solid fa-pen"></i></button>
         ${cust ? `<button class="btn btn-ghost btn-sm btn-icon" onclick="openCustomerDrawer('${cust.id}')" title="View customer"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>` : ''}
       </div>
     </div>`;
@@ -5155,8 +5378,8 @@
         ${accepted
             ? (e.date
               ? `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;" onclick="jumpToCalendarDate('${e.date}')"><i class="fa-solid fa-calendar-days"></i> View on Calendar</button>`
-              : `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;color:var(--warning);" onclick="openEventEditModal('${e.id}')"><i class="fa-solid fa-calendar-xmark"></i> Set Schedule</button>`)
-            : `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;" onclick="undoDeclineBooking('${e.id}')"><i class="fa-solid fa-rotate-left"></i> Undo</button>`}
+              : `<button class="btn btn-ghost btn-sm" data-pm="jobManage" style="padding:5px 12px;color:var(--warning);" onclick="openEventEditModal('${e.id}')"><i class="fa-solid fa-calendar-xmark"></i> Set Schedule</button>`)
+            : `<button class="btn btn-ghost btn-sm" data-pm="bookingManage" style="padding:5px 12px;" onclick="undoDeclineBooking('${e.id}')"><i class="fa-solid fa-rotate-left"></i> Undo</button>`}
       </div>
     </div>`;
       }).join('') : `<div class="empty-state"><i class="fa-solid fa-clock-rotate-left"></i><p>Nothing handled yet — accepted and declined requests will show up here.</p></div>`;
@@ -5218,7 +5441,7 @@
         <div><span class="fu-label">Next Service Due</span>${fmtDate(c.nextService)} ${dueBadge}</div>
       </div>
       <div class="followup-actions">
-        ${c.phone && c.phone !== '—' ? `<a class="btn btn-ghost btn-sm btn-icon" href="tel:${esc(c.phone)}" title="Call ${esc(c.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
+        ${c.phone && c.phone !== '—' ? `<a class="btn btn-ghost btn-sm btn-icon" data-pm="phones" href="tel:${esc(c.phone)}" title="Call ${esc(c.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
         <button class="btn btn-ghost btn-sm" onclick="openCustomerDrawer('${c.id}')">View</button>
       </div>
     </div>`;
@@ -5263,7 +5486,7 @@
         <div><span class="fu-label">Next Service Due</span>${fmtDate(c.nextService)} ${dueBadge}</div>
       </div>
       <div class="followup-actions">
-        ${c.phone && c.phone !== '—' ? `<a class="btn btn-ghost btn-sm btn-icon" href="tel:${esc(c.phone)}" title="Call ${esc(c.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
+        ${c.phone && c.phone !== '—' ? `<a class="btn btn-ghost btn-sm btn-icon" data-pm="phones" href="tel:${esc(c.phone)}" title="Call ${esc(c.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
         <button class="btn btn-ghost btn-sm" onclick="openCustomerDrawer('${c.id}')">View</button>
       </div>
     </div>`;
@@ -5283,7 +5506,7 @@
     <div><div style="font-weight:700;font-size:16px;">${esc(c.name)}</div><div style="color:var(--text-3);font-size:12px;" class="mono">${c.id}</div></div>
   `, `
     <div class="detail-row"><span class="k">Status</span><span class="v">${badge(c.status)}</span></div>
-    <div class="detail-row"><span class="k">Phone</span><span class="v">${c.phone ? `<a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>` : '—'}</span></div>
+    <div class="detail-row" data-pm="phones"><span class="k">Phone</span><span class="v">${c.phone ? `<a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>` : '—'}</span></div>
     <div class="detail-row"><span class="k">Address</span><span class="v" style="text-align:right;max-width:220px;">${esc(c.address || '—')}</span></div>
     ${(c.barangay || c.city) ? `<div class="detail-row"><span class="k">Barangay / City</span><span class="v" style="text-align:right;max-width:220px;">${esc([c.barangay, c.city].filter(Boolean).join(', ') || '—')}</span></div>` : ''}
     <div class="detail-row"><span class="k">Landmark</span><span class="v" style="text-align:right;max-width:220px;">${c.landmark ? esc(c.landmark) : '—'}</span></div>
@@ -5307,9 +5530,9 @@
         </div>`).join('')}
     </div>`: ''}
     <div style="display:flex;gap:8px;margin-top:18px;">
-      <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center;" onclick="closeDrawer();openEventModal('${c.id}')" title="Create a new booking for this customer without sending them back to the website form"><i class="fa-solid fa-calendar-plus"></i>Book Again</button>
-      <button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center;" onclick="openCustomerModal('${c.id}')"><i class="fa-solid fa-pen"></i>Edit</button>
-      <button class="btn btn-danger btn-sm" style="flex:1;justify-content:center;" onclick="deleteCustomer('${c.id}')"><i class="fa-solid fa-trash"></i>Delete</button>
+      <button class="btn btn-primary btn-sm" data-pm="jobManage" style="flex:1;justify-content:center;" onclick="closeDrawer();openEventModal('${c.id}')" title="Create a new booking for this customer without sending them back to the website form"><i class="fa-solid fa-calendar-plus"></i>Book Again</button>
+      <button class="btn btn-ghost btn-sm" data-pm="custManage" style="flex:1;justify-content:center;" onclick="openCustomerModal('${c.id}')"><i class="fa-solid fa-pen"></i>Edit</button>
+      <button class="btn btn-danger btn-sm" data-pm="custManage" style="flex:1;justify-content:center;" onclick="deleteCustomer('${c.id}')"><i class="fa-solid fa-trash"></i>Delete</button>
     </div>
   `);
     }
@@ -5489,8 +5712,10 @@
         <td>${ps.rec.followUp.cleared ? badge('Cleared') : `<span style="cursor:pointer;" onclick="openFollowUpModal('${e.id}')">${badge('Pending')}</span>`}</td>
         <td class="tabular cell-primary">${peso(ps.net)}</td>
         <td style="white-space:nowrap;">
-          <button class="btn btn-ghost btn-sm btn-icon" onclick="openEditWeekModal('${e.id}')" title="Edit time log"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="openEditWeekModal('${e.id}')" title="Edit time log" aria-label="Edit time log for ${esc(e.name)}"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="openPayslipHistory('${e.id}')" title="Payslip history" aria-label="Payslip history for ${esc(e.name)}"><i class="fa-solid fa-clock-rotate-left"></i></button>
           <button class="btn btn-ghost btn-sm" onclick="openPayslip('${e.id}')">Payslip</button>
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="deletePayslip('${e.id}')" title="Delete this payslip" aria-label="Delete payslip for ${esc(e.name)}"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button>
         </td>
       </tr>`).join('') : `<tr><td colspan="9"><div class="table-empty">No employees yet.</div></td></tr>`;
       } else {
@@ -5511,15 +5736,15 @@
       <div style="max-width:460px;margin:0 auto;">
         ${payslipSheetHTML(CURRENT_PERIOD_ID, CURRENT_TECH_ID)}
         <div style="text-align:center;margin-top:14px;"><button class="btn btn-primary btn-sm" onclick="uxPrintPayslip(this)"><i class="fa-solid fa-print" aria-hidden="true"></i>Print This Payslip</button></div>
-      </div>` : `<div class="empty-state"><i class="fa-solid fa-file-invoice-dollar"></i><p>No payslip yet for this week.</p></div>`);
+      </div>` : `<div class="empty-state"><i class="fa-solid fa-file-invoice-dollar"></i><p>No payslip yet for this week.</p></div>`) + techPayslipHistoryHTML();
       }
 
       if (isAdmin) {
         $('#payrollHistoryWrap').style.display = 'block';
         $('#payrollHistoryWrap').innerHTML = `
       <div style="margin:22px 0 10px;font-size:12px;font-weight:700;color:var(--text-2);">Pay Week History</div>
-      <div class="table-wrap"><table><thead><tr><th>Period</th><th>Status</th><th>Employees</th><th>Total Net</th></tr></thead><tbody>
-      ${PAY_PERIODS.slice().reverse().map(pp => { const s = computePeriodStats(pp.id); return `<tr style="cursor:pointer;" onclick="switchPayPeriod('${pp.id}')"><td>${esc(pp.label)}</td><td>${pp.status === 'released' ? badge('Released') : badge('Draft')}</td><td>${EMPLOYEES.length}</td><td class="tabular">${peso(s.net)}</td></tr>`; }).join('')}
+      <div class="table-wrap"><table><thead><tr><th>Period</th><th>Status</th><th>Employees</th><th>Total Net</th><th></th></tr></thead><tbody>
+      ${(() => { const latestRel = PAY_PERIODS.slice().reverse().find(x => x.status === 'released'); return PAY_PERIODS.slice().reverse().map(pp => { const s = computePeriodStats(pp.id); const n = Object.keys(PAYROLL_DATA[pp.id] || {}).filter(id => empById(id)).length; return `<tr style="cursor:pointer;" onclick="switchPayPeriod('${pp.id}')" title="Open this pay week"><td>${esc(pp.label)}${latestRel && pp.id === latestRel.id ? ' <span class="badge badge-info">Latest</span>' : ''}</td><td>${pp.status === 'released' ? badge('Released') : badge('Draft')}</td><td>${n}</td><td class="tabular">${peso(s.net)}</td><td style="white-space:nowrap;"><button class="btn btn-ghost btn-sm btn-icon" onclick="event.stopPropagation();deletePayWeek('${pp.id}')" title="Delete this pay week" aria-label="Delete pay week ${esc(pp.label)}"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button></td></tr>`; }).join(''); })()}
       </tbody></table></div>`;
       } else {
         $('#payrollHistoryWrap').style.display = 'none';
@@ -5621,7 +5846,7 @@
       const canEditRestday = CURRENT_ROLE === 'Administrator';
       const dayRows = rec.logs.map((d, i) => `
     <tr><td style="text-align:left;">${d.day}</td><td>${d.restday ? '—' : (d.timeIn || '—')}</td><td>${d.restday ? '—' : (d.timeOut || '—')}</td><td>${d.restday ? 'Restday' : d.totals}</td>
-    ${canEditRestday ? `<td class="no-print"><button class="btn btn-ghost btn-sm" style="padding:3px 9px;font-size:11px;white-space:nowrap;" onclick="quickToggleRestday('${empId}',${i})" title="${d.restday ? 'Unmark' : 'Mark'} ${d.day} as restday">${d.restday ? '<i class="fa-solid fa-rotate-left"></i> Undo Restday' : '<i class="fa-solid fa-bed"></i> Set Restday'}</button></td>` : ''}</tr>`).join('');
+    ${canEditRestday ? `<td class="no-print"><button class="btn btn-ghost btn-sm" style="padding:3px 9px;font-size:11px;white-space:nowrap;" onclick="quickToggleRestday('${empId}',${i},'${periodId}')" title="${d.restday ? 'Unmark' : 'Mark'} ${d.day} as restday">${d.restday ? '<i class="fa-solid fa-rotate-left"></i> Undo Restday' : '<i class="fa-solid fa-bed"></i> Set Restday'}</button></td>` : ''}</tr>`).join('');
       return `
   <div class="payslip-sheet">
     <div class="ps-head">
@@ -5646,15 +5871,19 @@
     ${!rec.followUp.cleared ? `<div class="ps-followup"><i class="fa-solid fa-triangle-exclamation"></i> Loan follow-up: ${esc(rec.followUp.note || 'Outstanding loan balance to collect.')}</div>` : ''}
   </div>`;
     }
-    function openPayslip(empId) {
+    function openPayslip(empId, periodId, fromHistory) {
       const e = empById(empId); if (!e) return;
-      openModal(`Payslip — ${esc(e.name)}`, payslipSheetHTML(CURRENT_PERIOD_ID, empId), [{ label: 'Print Payslip', primary: true, onClick: printModal }]);
+      if (CURRENT_ROLE !== 'Administrator' && empId !== CURRENT_TECH_ID) return;
+      const actions = [{ label: 'Print Payslip', primary: true, onClick: printModal }];
+      if (fromHistory) actions.unshift({ label: 'Back to history', onClick: () => openPayslipHistory(empId) });
+      openModal(`Payslip — ${esc(e.name)}`, payslipSheetHTML(periodId || CURRENT_PERIOD_ID, empId), actions);
     }
     // Quick one-click restday toggle right from the payslip, so admins don't have to
     // open the full Edit Week modal just to flag a day off. Always confirms first,
     // since it changes pay — marking a day restday clears any time in/out on it.
-    function quickToggleRestday(empId, dayIndex) {
-      const e = empById(empId); const rec = (PAYROLL_DATA[CURRENT_PERIOD_ID] || {})[empId]; if (!e || !rec) return;
+    function quickToggleRestday(empId, dayIndex, periodId) {
+      const pid = periodId || CURRENT_PERIOD_ID;
+      const e = empById(empId); const rec = (PAYROLL_DATA[pid] || {})[empId]; if (!e || !rec) return;
       const day = rec.logs[dayIndex]; if (!day) return;
       const turningOn = !day.restday;
       openModal(turningOn ? `Mark ${esc(day.day)} as Restday?` : `Undo ${esc(day.day)}'s Restday?`, `
@@ -5671,9 +5900,96 @@
           recordActivity('PAYROLL_DRAFT', 'employee', empId, `${currentActor().label} ${turningOn ? 'marked' : 'unmarked'} ${e.name}'s ${day.day} as ${turningOn ? 'a restday' : 'a working day'}.`);
           renderPayroll();
           showToast('success', `${day.day} ${turningOn ? 'set as restday' : 'unmarked as restday'} for ${e.name}`);
-          openPayslip(empId); // refresh the payslip view with the updated day
+          openPayslip(empId, pid); // refresh the payslip view with the updated day
         }
       }]);
+    }
+
+    /* ---- Payslip history (recent + past weeks), and deleting a payslip or a whole pay week ---- */
+    function techPayslipHistoryHTML() {
+      const list = PAY_PERIODS.filter(p => p.status === 'released' && payslipFor(p.id, CURRENT_TECH_ID)).slice().reverse();
+      if (!list.length) return '';
+      return `<div class="card-solid" style="max-width:460px;margin:16px auto 0;">
+        <div class="card-head"><h3><i class="fa-solid fa-clock-rotate-left" style="color:var(--info);margin-right:6px;"></i>Payslip History</h3></div>
+        ${list.map((p, i) => { const ps = payslipFor(p.id, CURRENT_TECH_ID); return `
+        <div class="ps-hist-row">
+          <div class="ps-hist-main"><div class="ps-hist-title">${esc(p.label)}${i === 0 ? ' <span class="badge badge-info">Latest</span>' : ''}</div><div class="cell-muted" style="font-size:12px;">Released ${fmtDate(uxLocalDay(p.releasedAt))}</div></div>
+          <div class="ps-hist-net tabular">${peso(ps.net)}</div>
+          <button class="btn btn-ghost btn-sm" onclick="openPayslip('${CURRENT_TECH_ID}','${p.id}')" aria-label="View payslip for ${esc(p.label)}"><i class="fa-solid fa-file-invoice-dollar"></i>View</button>
+        </div>`; }).join('')}
+      </div>`;
+    }
+    function openPayslipHistory(empId) {
+      const e = empById(empId); if (!e) return;
+      const isAdmin = CURRENT_ROLE === 'Administrator';
+      const list = PAY_PERIODS.filter(p => payslipFor(p.id, empId) && (isAdmin || p.status === 'released')).slice().reverse();
+      const latestRel = list.find(p => p.status === 'released');
+      openModal(`Payslip History — ${esc(e.name)}`, list.length ? `<div class="ps-hist-list">${list.map(p => { const ps = payslipFor(p.id, empId); return `
+        <div class="ps-hist-row">
+          <div class="ps-hist-main"><div class="ps-hist-title">${esc(p.label)}${latestRel && latestRel.id === p.id ? ' <span class="badge badge-info">Latest</span>' : ''}</div><div style="margin-top:3px;">${p.status === 'released' ? badge('Released') : badge('Draft')}</div></div>
+          <div class="ps-hist-net tabular">${peso(ps.net)}</div>
+          <button class="btn btn-ghost btn-sm" onclick="openPayslip('${empId}','${p.id}',true)" aria-label="View payslip for ${esc(p.label)}"><i class="fa-solid fa-file-invoice-dollar"></i>View</button>
+          ${isAdmin ? `<button class="btn btn-ghost btn-sm btn-icon" onclick="deletePayslip('${empId}','${p.id}',true)" title="Delete this payslip" aria-label="Delete payslip for ${esc(p.label)}"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button>` : ''}
+        </div>`; }).join('')}</div>` : `<div class="empty-state"><i class="fa-solid fa-file-invoice-dollar"></i><p>No payslips yet.</p></div>`, []);
+    }
+    function deletePayslip(empId, periodId, reopenHistory) {
+      if (CURRENT_ROLE !== 'Administrator') return;
+      const pid = periodId || CURRENT_PERIOD_ID;
+      const e = empById(empId), p = PAY_PERIODS.find(x => x.id === pid), rec = (PAYROLL_DATA[pid] || {})[empId];
+      if (!e || !p || !rec) return;
+      const restore = p.status === 'draft' ? (rec.cashAdvance || 0) : 0;   // a draft's loan deduction was never paid out, so it goes back on the balance
+      const msg = `Delete ${e.name}'s payslip for ${p.label}?` + (p.status === 'released' ? ' This week was already released, so they will no longer see it.' : '') + (restore > 0 ? ` Its ${peso(restore)} loan payment goes back onto their loan balance.` : '') + ' You can undo this right after.';
+      confirmAction(msg, () => {
+        const prev = { caBalance: e.caBalance, loanWeekly: e.loanWeekly };
+        delete PAYROLL_DATA[pid][empId];
+        if (restore > 0) { e.caBalance = Math.round(((e.caBalance || 0) + restore) * 100) / 100; saveRoster(); }
+        savePayrollData();
+        recordActivity('PAYROLL_DELETED', 'employee', empId, `${currentActor().label} deleted ${e.name}'s payslip for ${p.label}.`);
+        renderPayroll(); syncDependentViews();
+        if (reopenHistory) openPayslipHistory(empId);
+        showToast('success', `${e.name}'s payslip deleted`, {
+          label: 'Undo', onClick: () => {
+            (PAYROLL_DATA[pid] = PAYROLL_DATA[pid] || {})[empId] = rec;
+            if (restore > 0) { e.caBalance = prev.caBalance; e.loanWeekly = prev.loanWeekly; saveRoster(); }
+            savePayrollData();
+            recordActivity('PAYROLL_RESTORED', 'employee', empId, `${currentActor().label} restored ${e.name}'s payslip for ${p.label}.`);
+            renderPayroll(); syncDependentViews();
+            showToast('success', `${e.name}'s payslip restored`);
+          }
+        });
+      }, 'Delete Payslip');
+    }
+    function deletePayWeek(periodId) {
+      if (CURRENT_ROLE !== 'Administrator') return;
+      const p = PAY_PERIODS.find(x => x.id === periodId); if (!p) return;
+      if (PAY_PERIODS.length <= 1) { showToast('info', 'Keep at least one pay week — start a new week first, then delete this one'); return; }
+      const data = PAYROLL_DATA[periodId] || {};
+      const count = Object.keys(data).length;
+      const restoreMap = {};
+      if (p.status === 'draft') Object.keys(data).forEach(id => { const amt = data[id].cashAdvance || 0; if (amt > 0 && empById(id)) restoreMap[id] = amt; });
+      const restoreTotal = Object.values(restoreMap).reduce((a, b) => a + b, 0);
+      const msg = `Delete the whole pay week ${p.label}? This removes ${count} payslip${count === 1 ? '' : 's'}${p.status === 'released' ? ', including the ones employees can already see' : ''}.` + (restoreTotal > 0 ? ` Loan payments totalling ${peso(restoreTotal)} go back onto the loan balances.` : '') + ' You can undo this right after.';
+      confirmAction(msg, () => {
+        const idx = PAY_PERIODS.findIndex(x => x.id === periodId), wasCurrent = CURRENT_PERIOD_ID === periodId;
+        const snap = {};
+        Object.keys(restoreMap).forEach(id => { const e = empById(id); snap[id] = { caBalance: e.caBalance, loanWeekly: e.loanWeekly }; e.caBalance = Math.round(((e.caBalance || 0) + restoreMap[id]) * 100) / 100; });
+        PAY_PERIODS.splice(idx, 1); delete PAYROLL_DATA[periodId];
+        if (wasCurrent) { const d = PAY_PERIODS.find(x => x.status === 'draft'); CURRENT_PERIOD_ID = d ? d.id : PAY_PERIODS[PAY_PERIODS.length - 1].id; }
+        savePayPeriods(); savePayrollData(); if (restoreTotal > 0) saveRoster();
+        recordActivity('PAYROLL_DELETED', 'payroll', periodId, `${currentActor().label} deleted the pay week ${p.label}.`);
+        renderPayroll(); syncDependentViews();
+        showToast('success', `${p.label} deleted`, {
+          label: 'Undo', onClick: () => {
+            PAY_PERIODS.splice(Math.min(idx, PAY_PERIODS.length), 0, p); PAYROLL_DATA[periodId] = data;
+            Object.keys(snap).forEach(id => { const e = empById(id); if (e) { e.caBalance = snap[id].caBalance; e.loanWeekly = snap[id].loanWeekly; } });
+            if (wasCurrent) CURRENT_PERIOD_ID = periodId;
+            savePayPeriods(); savePayrollData(); if (restoreTotal > 0) saveRoster();
+            recordActivity('PAYROLL_RESTORED', 'payroll', periodId, `${currentActor().label} restored the pay week ${p.label}.`);
+            renderPayroll(); syncDependentViews();
+            showToast('success', `${p.label} restored`);
+          }
+        });
+      }, 'Delete Pay Week');
     }
 
     /* ---- Follow-up (cash advance / loan) note editor ---- */
@@ -5787,12 +6103,12 @@
           const names = eventTechs(e).map(id => empById(id)?.name).filter(Boolean);
           return names.length ? names.join(' & ') : 'Unassigned';
         }).join(', ')));
-      $('#calAdminActions').style.display = CURRENT_ROLE === 'Administrator' ? 'flex' : 'none';
+      $('#calAdminActions').style.display = can('jobManage') ? 'flex' : 'none';
       const todayISO = toISODate(TODAY);
       showAgenda(todayISO, events[todayISO] || []);
     }
     function canActOnEvent(e) {
-      return CURRENT_ROLE === 'Administrator' || (CURRENT_ROLE === 'Technician' && eventTechs(e).includes(CURRENT_TECH_ID));
+      return CURRENT_ROLE === 'Administrator' || (CURRENT_ROLE === 'Technician' && can('jobUpdate') && eventTechs(e).includes(CURRENT_TECH_ID));
     }
     // Renders one job as an item in the calendar's day panel — same card used
     // whether it ends up inside a team group or the "No team" group below.
@@ -5810,8 +6126,8 @@
         ${(canAct && e.type === 'Ongoing') ? `<button class="btn btn-primary btn-sm" style="padding:5px 12px;background:var(--success);border-color:var(--success);" onclick="openDoneModal('${e.id}')"><i class="fa-solid fa-check"></i> Complete Job</button>` : ''}
         ${(canAct && e.type === 'Ongoing') ? `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;color:var(--red-light);" onclick="openCancelModal('${e.id}','ongoing')"><i class="fa-solid fa-ban"></i> Cancel Job</button>` : ''}
         ${canAct ? `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;" onclick="openRemarksModal('${e.id}')"><i class="fa-solid fa-note-sticky"></i> Add Note</button>` : ''}
-        ${(CURRENT_ROLE === 'Administrator' && e.type !== 'Completed' && e.type !== 'Cancelled') ? `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;" onclick="openRescheduleModal('${e.id}')"><i class="fa-solid fa-calendar-days"></i> Reschedule</button>` : ''}
-        ${(CURRENT_ROLE === 'Administrator' && e.type !== 'Completed' && e.type !== 'Cancelled') ? `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;" onclick="openMoveTeamModal('${e.id}')"><i class="fa-solid fa-people-arrows"></i> Change Team</button>` : ''}`;
+        ${(can('jobManage') && e.type !== 'Completed' && e.type !== 'Cancelled') ? `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;" onclick="openRescheduleModal('${e.id}')"><i class="fa-solid fa-calendar-days"></i> Reschedule</button>` : ''}
+        ${(can('jobManage') && e.type !== 'Completed' && e.type !== 'Cancelled') ? `<button class="btn btn-ghost btn-sm" style="padding:5px 12px;" onclick="openMoveTeamModal('${e.id}')"><i class="fa-solid fa-people-arrows"></i> Change Team</button>` : ''}`;
     }
     function agendaItemHTML(e, teamName) {
       const techs = eventTechs(e).map(id => empById(id)).filter(Boolean);
@@ -5838,8 +6154,8 @@
         <span class="badge badge-muted">${esc(e.type)}</span>
         ${cust ? `<a href="#" onclick="openCustomerDrawer('${cust.id}');return false;" title="View customer details"><i class="fa-solid fa-circle-info"></i> View</a>` : ''}
         ${jobActionButtonsHTML(e)}
-        ${CURRENT_ROLE === 'Administrator' ? `<a href="#" onclick="openEventEditModal('${e.id}');return false;" title="Edit job"><i class="fa-solid fa-pen"></i> Edit</a>` : ''}
-        ${CURRENT_ROLE === 'Administrator' ? `<a href="#" onclick="deleteEvent('${e.id}');return false;" style="color:var(--red-light);" title="Delete job"><i class="fa-solid fa-trash"></i></a>` : ''}
+        ${can('jobManage') ? `<a href="#" onclick="openEventEditModal('${e.id}');return false;" title="Edit job"><i class="fa-solid fa-pen"></i> Edit</a>` : ''}
+        ${can('jobManage') ? `<a href="#" onclick="deleteEvent('${e.id}');return false;" style="color:var(--red-light);" title="Delete job"><i class="fa-solid fa-trash"></i></a>` : ''}
       </div>
     </div>
   </div>`;
@@ -6328,7 +6644,7 @@
           ${j.remarks ? `<div class="cell-muted" style="font-size:11px;margin-top:2px;font-style:italic;"><i class="fa-solid fa-note-sticky"></i> ${esc(j.remarks)}</div>` : ''}
           ${j.payment ? `<div class="cell-muted" style="font-size:11px;margin-top:2px;"><i class="fa-solid fa-${j.payment.method === 'Cash' ? 'money-bill-wave' : 'mobile-screen'}" style="color:var(--success);"></i> ${peso(j.payment.amount)} — ${esc(j.payment.method)}</div>` : ''}
         </div>
-        ${cust && cust.phone && CURRENT_ROLE !== 'Technician' ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
+        ${cust && cust.phone && can('phones') ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
         <div style="text-align:right;flex-shrink:0;">
           <div style="font-weight:700;font-size:12px;">${j.time ? fmtTime(j.time) : 'No time set'}</div>
           <span class="badge badge-${statusClass(j.type)}" style="font-size:11px;">${esc(j.type)}</span>
@@ -6360,7 +6676,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           ${hasConflict ? `<span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Same-time conflict</span>` : ''}
-          ${isTech ? '' : `<button class="btn btn-ghost btn-sm" onclick="openTeamAssignModal('${team.id}')"><i class="fa-solid fa-pen"></i> Reassign</button>`}
+          ${!can('teamManage') ? '' : `<button class="btn btn-ghost btn-sm" onclick="openTeamAssignModal('${team.id}')"><i class="fa-solid fa-pen"></i> Reassign</button>`}
         </div>
       </div>
       ${rows}
@@ -6389,7 +6705,7 @@
             <div class="cell-primary">${cust ? esc(cust.name) : 'No customer linked'}</div>
             <div class="cell-muted" style="font-size:12px;">${esc(j.note || 'Service job')}</div>
           </div>
-          ${cust && cust.phone && CURRENT_ROLE !== 'Technician' ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
+          ${cust && cust.phone && can('phones') ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
           <div style="text-align:right;flex-shrink:0;">
             <div style="font-weight:700;font-size:12px;">${j.time ? fmtTime(j.time) : 'No time set'}</div>
             <a href="#" onclick="event.stopPropagation();openEventEditModal('${j.id}');return false;" style="font-size:12px;">Assign team</a>
@@ -6441,7 +6757,7 @@
           <div class="cell-muted" style="font-size:12px;">${esc(j.note || 'Service job')}${teamLabel}</div>
           ${j.remarks ? `<div class="cell-muted" style="font-size:11px;margin-top:2px;font-style:italic;"><i class="fa-solid fa-note-sticky"></i> ${esc(j.remarks)}</div>` : ''}
         </div>
-        ${cust && cust.phone && CURRENT_ROLE !== 'Technician' ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
+        ${cust && cust.phone && can('phones') ? `<a href="tel:${esc(cust.phone)}" class="btn btn-ghost btn-sm btn-icon sched-call-btn" onclick="event.stopPropagation();" title="Call ${esc(cust.phone)}"><i class="fa-solid fa-phone"></i></a>` : ''}
         <div style="text-align:right;flex-shrink:0;">
           <div style="font-weight:700;font-size:12px;">${j.time ? fmtTime(j.time) : 'No time set'}</div>
           <span class="badge badge-${statusClass(j.type)}" style="font-size:11px;">${esc(j.type)}</span>
@@ -6500,7 +6816,7 @@
     <div class="detail-row"><span class="k">Last Updated On</span><span class="v">${fmtDateTime(j.updatedAt)}</span></div>` : ''}
     ${c ? `
     <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin:18px 0 8px;">Customer Details</div>
-    ${CURRENT_ROLE !== 'Technician' ? `<div class="detail-row"><span class="k">Phone</span><span class="v">${c.phone ? `<a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>` : '—'}</span></div>` : ''}
+    ${can('phones') ? `<div class="detail-row"><span class="k">Phone</span><span class="v">${c.phone ? `<a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>` : '—'}</span></div>` : ''}
     <div class="detail-row"><span class="k">Address</span><span class="v" style="text-align:right;max-width:220px;">${esc(c.address || '—')}</span></div>
     ${c.landmark ? `<div class="detail-row"><span class="k">Landmark</span><span class="v" style="text-align:right;max-width:220px;">${esc(c.landmark)}</span></div>` : ''}
     <div class="detail-row"><span class="k">Unit / Service</span><span class="v" style="text-align:right;max-width:220px;">${esc(c.unit || '—')}</span></div>
@@ -6509,8 +6825,8 @@
     ${c.notes ? `<div style="margin-top:14px;"><div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:6px;">Notes</div><div style="font-size:13px;color:var(--text-2);line-height:1.6;">${esc(c.notes)}</div></div>` : ''}
     <div style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;">
       ${c.mapLink ? `<a href="${esc(c.mapLink)}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="flex:1;justify-content:center;"><i class="fa-solid fa-location-dot"></i>Open in Maps</a>` : ''}
-      ${CURRENT_ROLE !== 'Technician' ? `${c.phone ? `<a href="tel:${esc(c.phone)}" class="btn ${c.mapLink ? 'btn-ghost' : 'btn-primary'} btn-sm" style="flex:1;justify-content:center;"><i class="fa-solid fa-phone"></i>Call ${esc(c.phone)}</a>` : ''}
-      <button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center;" onclick="closeDrawer();goToPage('customers');setTimeout(()=>openCustomerDrawer('${c.id}'),150);"><i class="fa-solid fa-arrow-up-right-from-square"></i>Full Profile</button>` : ''}
+      ${can('phones') && c.phone ? `<a href="tel:${esc(c.phone)}" class="btn ${c.mapLink ? 'btn-ghost' : 'btn-primary'} btn-sm" style="flex:1;justify-content:center;"><i class="fa-solid fa-phone"></i>Call ${esc(c.phone)}</a>` : ''}
+      ${can('customers') ? `<button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center;" onclick="closeDrawer();goToPage('customers');setTimeout(()=>openCustomerDrawer('${c.id}'),150);"><i class="fa-solid fa-arrow-up-right-from-square"></i>Full Profile</button>` : ''}
     </div>` : `<p class="cell-muted" style="margin-top:14px;">No customer record linked to this job. Open the job's Edit screen to link one.</p>`}
   `);
     }
@@ -6922,7 +7238,7 @@
        ANNOUNCEMENTS — admin composes, everyone sees (per audience)
        ============================================================ */
     function renderAnnouncements() {
-      const isAdmin = CURRENT_ROLE === 'Administrator';
+      const isAdmin = can('announceManage');
       $('#announceComposerWrap').style.display = isAdmin ? 'block' : 'none';
       const visible = ANNOUNCEMENTS.filter(a => a.audience === 'All' || a.audience === CURRENT_ROLE);
       const sorted = [...visible].sort((a, b) => (b.pinned - a.pinned) || (new Date(b.date) - new Date(a.date)));
@@ -6943,7 +7259,7 @@
           <button class="btn btn-ghost btn-sm btn-icon" onclick="deleteAnnouncement('${a.id}')" title="Delete"><i class="fa-solid fa-trash" style="color:var(--red-light);"></i></button>
         </div>`: ''}
       </div>
-    </div>`).join('') : `<div class="empty-state"><i class="fa-solid fa-bullhorn"></i><p>No announcements yet.</p>${CURRENT_ROLE === 'Administrator' ? '<button type="button" class="btn btn-primary btn-sm" onclick="uxFocusComposer()">Post an announcement</button>' : ''}</div>`;
+    </div>`).join('') : `<div class="empty-state"><i class="fa-solid fa-bullhorn"></i><p>No announcements yet.</p>${can('announceManage') ? '<button type="button" class="btn btn-primary btn-sm" onclick="uxFocusComposer()">Post an announcement</button>' : ''}</div>`;
     }
     function postAnnouncement() {
       const titleEl = $('#fAnnTitle'), bodyEl = $('#fAnnBody');
@@ -7128,7 +7444,7 @@
     const ALWAYS_FRESH_PAGES = new Set(['payroll', 'dashboard', 'calendar', 'bookings', 'followups', 'schedule']);
     const initializedPages = new Set();
     function goToPage(id) {
-      if ((ROLE_HIDDEN_PAGES[CURRENT_ROLE] || []).includes(id)) { showToast('info', 'You do not have access to that page'); return; }
+      if (id !== 'noaccess' && (ROLE_HIDDEN_PAGES[CURRENT_ROLE] || []).includes(id)) { showToast('info', 'You do not have access to that page'); return; }
       $all('.page').forEach(p => p.classList.remove('active'));
       $('#page-' + id).classList.add('active');
       $all('.nav-item[data-page]').forEach(n => n.classList.toggle('active', n.dataset.page === id));
@@ -7170,14 +7486,18 @@
     }
     function applyRoleView(role) {
       CURRENT_ROLE = role;
+      initializedPages.clear();   // pages drawn under the other role must be drawn again
+      applyPermissionUI();
       $('#profileRoleLabel').textContent = ROLE_LABELS[role];
-      $('#techPickerWrap').style.display = role === 'Technician' ? 'block' : 'none';
+      // A signed-in technician is locked to their own account; only an Administrator can preview other views.
+      $('#roleSwitch').closest('.role-switch').style.display = sessionIsTech() ? 'none' : '';
+      $('#techPickerWrap').style.display = (role === 'Technician' && !sessionIsTech()) ? 'block' : 'none';
       if (role === 'Technician') {
         populateTechPicker();
         const e = empById(CURRENT_TECH_ID);
         $('#profileNameLabel').textContent = e ? e.name : 'Technician';
       } else {
-        $('#profileNameLabel').textContent = 'Admin User';
+        $('#profileNameLabel').textContent = (sessionUser() && sessionUser().name) || 'Admin User';
       }
       const hidden = ROLE_HIDDEN_PAGES[role] || [];
       $all('.nav-item[data-page]').forEach(n => { n.style.display = hidden.includes(n.dataset.page) ? 'none' : 'flex'; });
@@ -7193,9 +7513,17 @@
       $('#schedPageSub').textContent = isTech
         ? 'Your confirmed jobs, day by day. Jobs not yet assigned to you won\'t show up here.'
         : 'Jobs by team for the selected day. Only same-time clashes are flagged.';
-      $('#schedManageTeamsBtn').style.display = isTech ? 'none' : 'inline-flex';
+      $('#schedManageTeamsBtn').style.display = can('teamManage') ? 'inline-flex' : 'none';
       const activePageId = document.querySelector('.page.active').id.replace('page-', '');
-      if (hidden.includes(activePageId)) goToPage('payroll'); else pageInit[activePageId] && pageInit[activePageId]();
+      // Hide a sidebar heading when nothing under it is visible.
+      let lbl = null, any = false;
+      const flush = () => { if (lbl) lbl.style.display = any ? '' : 'none'; };
+      Array.from($('#sidebarNav').children).forEach(el => {
+        if (el.classList.contains('nav-section-label')) { flush(); lbl = el; any = false; }
+        else if (el.matches('.nav-item[data-page]') && !hidden.includes(el.dataset.page)) any = true;
+      });
+      flush();
+      if (hidden.includes(activePageId)) goToPage(firstAllowedPage()); else pageInit[activePageId] && pageInit[activePageId]();
       renderNotifications();
     }
     $('#roleSwitch').addEventListener('change', e => {
@@ -7225,7 +7553,7 @@
     $('#sidebarBackdrop').addEventListener('click', () => { $('#sidebar').classList.remove('mobile-open'); $('#sidebarBackdrop').classList.remove('open'); });
     $('#sidebarCloseBtn').addEventListener('click', () => { $('#sidebar').classList.remove('mobile-open'); $('#sidebarBackdrop').classList.remove('open'); });
     // The logo and company name take you home (Dashboard, or Payroll for a technician).
-    function goHome() { goToPage((ROLE_HIDDEN_PAGES[CURRENT_ROLE] || []).includes('dashboard') ? 'payroll' : 'dashboard'); }
+    function goHome() { goToPage(firstAllowedPage()); }
     $('#brandHome').addEventListener('click', goHome);
     $('#topbarBrand').addEventListener('click', goHome);
     // Account menu (phone): light/dark switch and who is signed in. The top bar keeps only icons on a phone.
@@ -7262,17 +7590,7 @@
       return [...emp, ...cust];
     }
     let searchIndex = [];
-    function openShortcutsHelp() {
-      openModal('Keyboard Shortcuts &amp; Tips', `
-    <div class="detail-row"><span class="k">Open global search</span><span class="v"><kbd style="background:var(--bg-elevated-2);border:1px solid var(--border-strong);border-radius:5px;padding:2px 7px;font-family:var(--font-mono);font-size:12px;">⌘K</kbd> / <kbd style="background:var(--bg-elevated-2);border:1px solid var(--border-strong);border-radius:5px;padding:2px 7px;font-family:var(--font-mono);font-size:12px;">Ctrl K</kbd></span></div>
-    <div class="detail-row"><span class="k">Close any dialog or panel</span><span class="v"><kbd style="background:var(--bg-elevated-2);border:1px solid var(--border-strong);border-radius:5px;padding:2px 7px;font-family:var(--font-mono);font-size:12px;">Esc</kbd></span></div>
-    <div class="detail-row"><span class="k">Sort a table</span><span class="v">Click any column header</span></div>
-    <div class="detail-row"><span class="k">Edit a week's time log</span><span class="v">Pencil icon on the Payroll table row</span></div>
-    <div class="detail-row"><span class="k">Undo a delete</span><span class="v">Click "Undo" on the confirmation toast</span></div>
-    <div class="detail-row"><span class="k">Switch what you can see</span><span class="v">"Viewing as" role selector, bottom of sidebar</span></div>
-  `, []);
-    }
-    function openCmdk() { $('#cmdkOverlay').classList.add('open'); $('#cmdkInput').value = ''; $('#cmdkInput').focus(); renderCmdkResults(''); }
+    function openCmdk() { if (document.body.classList.contains('is-locked')) return; $('#cmdkOverlay').classList.add('open'); $('#cmdkInput').value = ''; $('#cmdkInput').focus(); renderCmdkResults(''); }
     function closeCmdk() { $('#cmdkOverlay').classList.remove('open'); }
     function renderCmdkResults(q) {
       q = q.toLowerCase();
@@ -7308,6 +7626,138 @@
       setInterval(updateLiveClock, 1000);
     }
 
+    /* ============================================================
+       LOG IN / LOG OUT
+       Accounts are the ones in Settings → User Accounts. An account that has no
+       password yet (new, or never set) is asked to create one the first time.
+       ============================================================ */
+    let SESSION_USER_ID = null;
+    function sessionUser() { return SESSION_USER_ID ? empById(SESSION_USER_ID) : null; }
+    function sessionIsTech() { const u = sessionUser(); return !!u && u.role !== 'Admin'; }
+    async function saveSession(id) { if (id) await storageSet('session:user', id, false); else await storageDelete('session:user', false); }
+    async function initSession() {
+      const got = await storageGet('session:user', false);
+      const u = got && got.value ? empById(got.value) : null;
+      if (u && u.acctStatus !== 'Suspended') { enterApp(u); return true; }
+      return false;
+    }
+    let loginMode = 'signin', loginPending = null, loginFails = 0, loginLockUntil = 0, loginReady = false;
+    setTimeout(() => { loginReady = true; }, 8000);   // safety net: never leave sign-in locked if loading stalls
+    function setLoginError(msg) { const el = $('#loginError'); el.textContent = msg || ''; el.style.display = msg ? 'block' : 'none'; }
+    function setLoginMode(mode, emp) {
+      loginMode = mode; loginPending = emp ? emp.id : null;
+      const setup = mode === 'setup';
+      $('#loginTitle').textContent = setup ? 'Create your password' : 'Sign in';
+      $('#loginSub').textContent = setup ? `Welcome, ${emp.name}. This account has no password yet. Choose one to continue.` : 'Use the username and password your administrator gave you.';
+      $('#loginPassGroup').style.display = setup ? 'none' : '';
+      $('#loginNewGroup').style.display = setup ? '' : 'none';
+      $('#loginUser').readOnly = setup;
+      $('#loginSubmit').textContent = setup ? 'Save password and sign in' : 'Sign in';
+      $('#loginBack').style.display = setup ? '' : 'none';
+      $('#loginNew').value = ''; $('#loginNew2').value = '';
+      setLoginError('');
+      if (setup) setTimeout(() => { try { $('#loginNew').focus(); } catch (e) { } }, 30);
+    }
+    function showLogin() {
+      document.body.classList.add('is-locked');
+      setLoginMode('signin');
+      $('#loginUser').value = ''; $('#loginPass').value = '';
+      $('#loginPass').type = 'password'; $('#loginEye').textContent = 'Show'; $('#loginEye').setAttribute('aria-pressed', 'false'); $('#loginEye').setAttribute('aria-label', 'Show password');
+      setTimeout(() => { try { $('#loginUser').focus(); } catch (e) { } }, 60);
+    }
+    function enterApp(emp) {
+      SESSION_USER_ID = emp.id;
+      saveSession(emp.id);
+      const admin = emp.role === 'Admin';
+      if (!admin) CURRENT_TECH_ID = emp.id;
+      const sel = $('#roleSwitch'); sel.value = admin ? 'Administrator' : 'Technician';
+      document.body.classList.remove('is-locked');
+      $('#loginPass').value = ''; $('#loginNew').value = ''; $('#loginNew2').value = '';
+      applyRoleView(sel.value);
+      goToPage(firstAllowedPage());
+      if (!STORAGE_AVAILABLE) showToast('info', 'Saving is unavailable. Your changes will be lost when you close or refresh this page.');
+    }
+    async function logOut() {
+      closeModal(); closeDrawer(); closeCmdk(); closeAllDropdowns();
+      $('#sidebar').classList.remove('mobile-open'); $('#sidebarBackdrop').classList.remove('open');
+      SESSION_USER_ID = null;
+      saveSession(null);
+      $('#roleSwitch').value = 'Administrator';
+      applyRoleView('Administrator');
+      goToPage('dashboard');
+      showLogin();
+    }
+    async function submitLogin(ev) {
+      if (ev) ev.preventDefault();
+      if (!loginReady) { setLoginError('Still loading your data. Please try again in a moment.'); return; }
+      const wait = Math.ceil((loginLockUntil - Date.now()) / 1000);
+      if (wait > 0) { setLoginError(`Too many tries. Please wait ${wait} second${wait === 1 ? '' : 's'} and try again.`); return; }
+      if (loginMode === 'setup') {
+        const emp = empById(loginPending);
+        if (!emp || emp.password || emp.acctStatus === 'Suspended') { setLoginMode('signin'); setLoginError('Please sign in again.'); return; }
+        const p1 = $('#loginNew').value, p2 = $('#loginNew2').value;
+        if (p1.length < 6) { setLoginError('Use at least 6 characters for your password.'); $('#loginNew').focus(); return; }
+        if (p1 !== p2) { setLoginError('The two passwords do not match.'); $('#loginNew2').focus(); return; }
+        emp.password = p1;
+        saveRoster();   // not awaited: a slow or failing save must never keep someone waiting at the login screen
+        enterApp(emp);
+        return;
+      }
+      const uname = $('#loginUser').value.trim().toLowerCase(), pw = $('#loginPass').value;
+      if (!uname) { setLoginError('Enter your username.'); $('#loginUser').focus(); return; }
+      const acct = EMPLOYEES.find(e => String(e.username || '').toLowerCase() === uname) || null;
+      if (acct && acct.acctStatus !== 'Suspended' && !acct.password && pw === '') { setLoginMode('setup', acct); return; }
+      if (!pw) { setLoginError('Enter your password.'); $('#loginPass').focus(); return; }
+      if (!acct || !acct.password || acct.password !== pw) {
+        if (++loginFails >= 5) { loginFails = 0; loginLockUntil = Date.now() + 30000; setLoginError('Too many tries. Please wait 30 seconds and try again.'); }
+        else setLoginError('Incorrect username or password.');
+        $('#loginPass').value = ''; $('#loginPass').focus();
+        return;
+      }
+      if (acct.acctStatus === 'Suspended') { setLoginError('This account is suspended. Please contact your administrator.'); return; }
+      loginFails = 0;
+      enterApp(acct);
+    }
+    $('#loginForm').addEventListener('submit', submitLogin);
+    $('#loginBack').addEventListener('click', () => { $('#loginPass').value = ''; setLoginMode('signin'); $('#loginUser').focus(); });
+    $('#loginEye').addEventListener('click', () => {
+      const p = $('#loginPass'), show = p.type === 'password';
+      p.type = show ? 'text' : 'password';
+      $('#loginEye').textContent = show ? 'Hide' : 'Show';
+      $('#loginEye').setAttribute('aria-pressed', show ? 'true' : 'false');
+      $('#loginEye').setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    });
+    $('#loginUser').addEventListener('input', () => setLoginError(''));
+    $('#loginPass').addEventListener('input', () => setLoginError(''));
+    $('#menuLogout').addEventListener('click', e => { e.preventDefault(); logOut(); });
+    $('#sidebarLogout').addEventListener('click', () => logOut());
+
+    /* Permission guards: even if a button is somehow reached, the action itself refuses to run
+       unless the signed-in role is allowed. Administrators always pass. */
+    (function () {
+      const PERM_GUARDS = {
+        empManage: ['openEmployeeModal', 'saveEmployee', 'deleteEmployee'],
+        custManage: ['openCustomerModal', 'saveCustomer', 'deleteCustomer'],
+        bookingManage: ['openAcceptBookingModal', 'declineBooking', 'undoDeclineBooking'],
+        jobManage: ['openEventModal', 'openEventEditModal', 'deleteEvent', 'openRescheduleModal', 'openMoveTeamModal'],
+        jobUpdate: ['markArrived', 'startJob', 'openCancelModal', 'openDoneModal', 'openRemarksModal'],
+        teamManage: ['openManageTeamsModal', 'addTeam', 'removeTeam', 'renameTeam', 'updateTeamTechs', 'openTeamAssignModal'],
+        announceManage: ['postAnnouncement', 'toggleAnnouncementPin', 'deleteAnnouncement'],
+        settingsManage: ['saveCompanyInfo', 'savePayrollDefaults'],
+        export: ['exportToCSV'],
+        admin: ['openAccountModal', 'saveAccount', 'resetAccountPassword', 'toggleAcctStatus', 'openNewPayPeriod', 'confirmReleasePayroll', 'releasePayrollPeriod',
+          'openAdjustBalanceModal', 'setExactCaBalance', 'adjustCaBalance', 'openEditWeekModal', 'openFollowUpModal', 'togglePerm', 'setAllTechPerms'],
+      };
+      Object.keys(PERM_GUARDS).forEach(key => PERM_GUARDS[key].forEach(name => {
+        const fn = window[name];
+        if (typeof fn !== 'function') return;
+        window[name] = function () {
+          if (!can(key)) { showToast('error', key === 'admin' ? 'Only an administrator can do that' : 'You do not have permission to do that'); return; }
+          return fn.apply(this, arguments);
+        };
+      }));
+    })();
+
     document.addEventListener('DOMContentLoaded', async () => {
       await loadTheme();
       if (!STORAGE_AVAILABLE) showToast('info', 'Saving is unavailable. Your changes will be lost when you close or refresh this page.');
@@ -7328,8 +7778,8 @@
       runAutomaticReminders();
       renderNotifications();
       searchIndex = buildSearchIndex();
-      goToPage('dashboard');
-      applyRoleView($('#roleSwitch').value);
+      if (!SESSION_USER_ID) { goToPage('dashboard'); applyRoleView($('#roleSwitch').value); }
+      try { if (!SESSION_USER_ID && !(await initSession())) showLogin(); } finally { loginReady = true; }
       startNotificationPolling();
       startLiveClock();
       _scheduleMidnightRefresh();
@@ -7808,7 +8258,7 @@
       function ini() {
         var el = Q('.topbar .avatar'), nm = '';
         if (!el) return;
-        try { if (CURRENT_ROLE === 'Technician') { var e = empById(CURRENT_TECH_ID); nm = e ? String(e.name || '') : ''; } } catch (x) { }
+        try { if (CURRENT_ROLE === 'Technician') { var e = empById(CURRENT_TECH_ID); nm = e ? String(e.name || '') : ''; } else if (sessionUser()) nm = String(sessionUser().name || ''); } catch (x) { }
         el.textContent = nm ? nm.trim().split(/\s+/).map(function (w) { return w.charAt(0); }).slice(0, 2).join('').toUpperCase() : 'AD';
       }
       var _ar = window.applyRoleView;
