@@ -3329,6 +3329,146 @@
       .payslip-sheet th.no-print { width: 34px; }
       .payslip-sheet td.no-print .btn { padding: 5px 6px !important; }
     }
+
+    /* ================= Accept booking: what the customer filled in ================= */
+    .bkd { border: 1px solid var(--border); border-radius: var(--r-md); background: var(--glass-bg); padding: 14px 16px; margin-bottom: 14px; }
+    .bkd-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+    .bkd-title { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
+    .bkd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+    .bkd-item { min-width: 0; }
+    .bkd-item.full { grid-column: 1 / -1; }
+    .bkd-k { font-size: 11px; color: var(--text-3); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+    .bkd-k i { width: 12px; text-align: center; color: var(--navy-light); }
+    .bkd-v { font-size: 13.5px; color: var(--text-1); font-weight: 600; line-height: 1.45; word-break: break-word; }
+    .bkd-v a { color: var(--navy-text); text-decoration: none; }
+    .bkd-v a:hover { text-decoration: underline; }
+    .bkd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .bkd-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--r-full); background: var(--info-bg); color: var(--navy-text); font-size: 12px; font-weight: 700; }
+    .bkd-want { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 12px; border-radius: var(--r-sm); background: var(--warning-bg); border: 1px dashed var(--warning); }
+    .bkd-want .bkd-v { font-size: 14px; }
+    .bkd-note { grid-column: 1 / -1; padding: 10px 12px; border-radius: var(--r-sm); background: var(--muted-bg); font-style: italic; font-weight: 500; }
+    .bkd-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); display: flex; gap: 6px 16px; flex-wrap: wrap; }
+    @media (max-width: 560px) { .bkd-grid { grid-template-columns: 1fr; } }
+
+    /* ================= Calendar: Total Schedule / Need to Schedule ================= */
+    .cl-card { margin-top: 16px; }
+    .cl-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    .cl-tabs { display: inline-flex; background: var(--muted-bg); border-radius: var(--r-full); padding: 4px; gap: 4px; flex-wrap: wrap; }
+    .cl-tab { border: 0; background: transparent; color: var(--text-2); font: inherit; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: var(--r-full); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .cl-tab:hover { color: var(--text-1); }
+    .cl-tab.active { background: var(--red); color: #18110a; }
+    .cl-count { min-width: 22px; text-align: center; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 800; background: rgba(127, 127, 127, .22); }
+    .cl-tab.active .cl-count { background: rgba(0, 0, 0, .18); }
+    .cl-count.warn { background: var(--warning); color: #18110a; }
+    .cl-tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0 4px; }
+    .cl-chips { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+    .cl-chip { border: 1px solid var(--border); background: transparent; color: var(--text-2); font: inherit; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+    .cl-chip:hover { border-color: var(--border-strong); color: var(--text-1); }
+    .cl-chip.active { border-color: var(--red); color: var(--red-light); background: var(--red-glow); }
+    .cl-chip small { opacity: .75; font-weight: 800; margin-left: 4px; }
+    .cl-search { width: 100%; max-width: 270px; }
+    .cl-month { display: flex; justify-content: space-between; align-items: baseline; margin: 18px 0 8px; font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); }
+    .cl-month span { font-weight: 700; letter-spacing: 0; text-transform: none; }
+    .cl-row { display: flex; gap: 14px; align-items: center; padding: 11px 12px; border: 1px solid var(--border); border-radius: var(--r-md); margin-bottom: 8px; cursor: pointer; background: var(--glass-bg); transition: background .15s, border-color .15s; }
+    .cl-row:hover { background: var(--glass-bg-hover); border-color: var(--border-strong); }
+    .cl-date { flex: 0 0 52px; text-align: center; border-radius: 12px; padding: 7px 0 6px; background: var(--muted-bg); }
+    .cl-date .d { display: block; font-size: 20px; font-weight: 800; line-height: 1; }
+    .cl-date .w { display: block; margin-top: 3px; font-size: 10px; text-transform: uppercase; color: var(--text-3); font-weight: 800; letter-spacing: .06em; }
+    .cl-date.today { background: var(--red); color: #18110a; }
+    .cl-date.today .w { color: #3a2a08; }
+    .cl-date.none { color: var(--warning); background: var(--warning-bg); }
+    .cl-main { flex: 1; min-width: 0; }
+    .cl-name { font-weight: 700; font-size: 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .cl-meta { font-size: 12px; color: var(--text-3); display: flex; flex-wrap: wrap; gap: 3px 14px; margin-top: 3px; }
+    .cl-meta i { margin-right: 4px; }
+    .cl-meta .warn { color: var(--warning); font-weight: 700; }
+    .cl-side { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .cl-group { display: flex; align-items: center; gap: 10px; margin: 18px 0 8px; }
+    .cl-group:first-child { margin-top: 12px; }
+    .cl-group-ic { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font-size: 13px; }
+    .cl-group h4 { margin: 0; font-size: 14px; }
+    .cl-group small { color: var(--text-3); font-size: 12px; display: block; }
+    .cl-more { display: block; margin: 12px auto 0; }
+    .cl-empty { text-align: center; padding: 30px 10px; color: var(--text-3); }
+    .cl-empty i { font-size: 28px; display: block; margin-bottom: 8px; opacity: .6; }
+    @media (max-width: 640px) { .cl-row { flex-wrap: wrap; } .cl-side { width: 100%; justify-content: flex-start; } }
+
+    /* ================= Dashboard ================= */
+    .dx-hero { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; padding: 22px 24px; border-radius: var(--r-xl); border: 1px solid var(--border); background: linear-gradient(135deg, rgba(46, 159, 214, .20), rgba(227, 169, 59, .14) 70%); position: relative; overflow: hidden; }
+    .dx-hero::after { content: ""; position: absolute; right: -60px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(227, 169, 59, .22), transparent 70%); pointer-events: none; }
+    .dx-eyebrow { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--navy-text); font-weight: 800; }
+    .dx-hero h1 { margin: 4px 0 4px; font-size: 26px; letter-spacing: -.01em; }
+    .dx-hero p { margin: 0; color: var(--text-2); font-size: 14px; }
+    .dx-actions { display: flex; gap: 8px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .dx-kpis { display: grid; grid-template-columns: repeat(var(--dx-n, 6), minmax(0, 1fr)); gap: 14px; margin-bottom: 16px; }
+    @media (max-width: 1500px) { .dx-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 720px) { .dx-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .dx-kpi { position: relative; padding: 18px 18px 16px; border-radius: var(--r-lg); border: 1px solid var(--border); background: var(--bg-elevated); overflow: hidden; text-align: left; font: inherit; color: inherit; transition: transform .15s, border-color .15s, box-shadow .15s; }
+    .dx-kpi::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--dx-accent, var(--red)); }
+    .dx-kpi.click { cursor: pointer; }
+    .dx-kpi.click:hover { transform: translateY(-2px); border-color: var(--border-strong); box-shadow: var(--shadow-card); }
+    .dx-kpi-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .dx-kpi-ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: var(--dx-bg, var(--muted-bg)); color: var(--dx-accent, var(--red)); font-size: 16px; }
+    .dx-kpi-val { font-size: 28px; overflow-wrap: anywhere; font-weight: 800; margin-top: 12px; letter-spacing: -.02em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+    .dx-kpi-lbl { font-size: 11.5px; color: var(--text-2); font-weight: 800; margin-top: 5px; text-transform: uppercase; letter-spacing: .06em; }
+    .dx-kpi-sub { font-size: 12px; color: var(--text-3); margin-top: 8px; line-height: 1.4; }
+    .dx-delta { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+    .dx-delta.up { background: var(--success-bg); color: var(--success); }
+    .dx-delta.down { background: var(--danger-bg); color: var(--danger); }
+    .dx-delta.flat { background: var(--muted-bg); color: var(--text-2); }
+    .dx-goal { margin-top: 10px; }
+    .dx-goal .progress { height: 6px; }
+    .dx-goal small { display: flex; justify-content: space-between; margin-top: 5px; font-size: 11px; color: var(--text-3); }
+    .dx-row { display: grid; gap: 16px; margin-bottom: 16px; }
+    .dx-row > .card { margin: 0; min-width: 0; }
+    .dx-r-21 { grid-template-columns: 2fr 1fr; }
+    .dx-r-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (max-width: 1180px) { .dx-r-3 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 860px) { .dx-r-21, .dx-r-3 { grid-template-columns: 1fr; } }
+    .dx-plot { height: 232px; padding-top: 24px; box-sizing: border-box; }
+    .dx-plot-in { position: relative; height: 100%; display: flex; align-items: flex-end; gap: 14px; border-bottom: 1px solid var(--border-strong); }
+    .dx-col { flex: 1; min-width: 0; height: 100%; display: flex; align-items: flex-end; justify-content: center; }
+    .dx-fillwrap { position: relative; width: 100%; max-width: 68px; }
+    .dx-bar-fill { width: 100%; height: 100%; border-radius: 10px 10px 3px 3px; background: linear-gradient(180deg, var(--navy-light), var(--navy)); min-height: 3px; }
+    .dx-col.now .dx-bar-fill { background: linear-gradient(180deg, var(--red-light), var(--red-dim)); box-shadow: var(--glow-red); }
+    .dx-bar-val { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 5px; font-size: 11.5px; font-weight: 800; color: var(--text-2); white-space: nowrap; }
+    .dx-col.now .dx-bar-val { color: var(--red-light); }
+    .dx-axis { display: flex; gap: 14px; margin-top: 8px; }
+    .dx-axis span { flex: 1; text-align: center; font-size: 12px; color: var(--text-3); font-weight: 700; }
+    .dx-axis span.now { color: var(--red-light); }
+    .dx-goalline { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--success); pointer-events: none; z-index: 1; }
+    .dx-goalline span { position: absolute; left: 0; top: -19px; font-size: 10.5px; font-weight: 800; color: var(--success); }
+    .dx-att { display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 12px; margin-bottom: 8px; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--glass-bg); color: inherit; font: inherit; text-align: left; cursor: pointer; transition: background .15s, border-color .15s; }
+    .dx-att:hover { background: var(--glass-bg-hover); border-color: var(--border-strong); }
+    .dx-att-ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; flex: 0 0 auto; }
+    .dx-att-tx { flex: 1; min-width: 0; }
+    .dx-att-tx b { display: block; font-size: 13.5px; }
+    .dx-att-tx small { color: var(--text-3); font-size: 12px; }
+    .dx-att-go { color: var(--text-3); font-size: 12px; }
+    .dx-ok { text-align: center; padding: 26px 10px; color: var(--text-2); }
+    .dx-ok i { font-size: 30px; color: var(--success); display: block; margin-bottom: 8px; }
+    .dx-job { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .dx-job:last-child { border-bottom: 0; }
+    .dx-job-time { flex: 0 0 62px; font-size: 12px; font-weight: 800; color: var(--navy-text); }
+    .dx-job-main { flex: 1; min-width: 0; }
+    .dx-job-main b { display: block; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dx-job-main small { color: var(--text-3); font-size: 12px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dx-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 14px; }
+    .dx-day { border: 1px solid var(--border); background: var(--glass-bg); border-radius: 12px; padding: 8px 2px; text-align: center; cursor: pointer; font: inherit; color: inherit; }
+    .dx-day:hover { border-color: var(--border-strong); background: var(--glass-bg-hover); }
+    .dx-day .w { display: block; font-size: 10px; text-transform: uppercase; font-weight: 800; color: var(--text-3); letter-spacing: .05em; }
+    .dx-day .d { display: block; font-size: 16px; font-weight: 800; margin: 2px 0; }
+    .dx-day .n { display: inline-block; min-width: 20px; padding: 1px 6px; border-radius: 999px; font-size: 11px; font-weight: 800; background: var(--muted-bg); color: var(--text-2); }
+    .dx-day .n.has { background: var(--info-bg); color: var(--navy-text); }
+    .dx-day.today { border-color: var(--red); background: rgba(227, 169, 59, .12); }
+    .dx-hbar { margin-bottom: 12px; }
+    .dx-hbar-top { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; margin-bottom: 5px; }
+    .dx-hbar-top span:first-child { font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dx-hbar-top span:last-child { color: var(--text-3); font-weight: 700; white-space: nowrap; }
+    .dx-hbar .progress { height: 8px; }
+    .dx-mini { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .dx-mini:last-child { border-bottom: 0; }
+    .dx-mini b { font-size: 16px; }
   </style>
 </head>
 
@@ -3372,7 +3512,7 @@
           class="nav-label">Maintenance Follow-Ups</span><span class="nav-badge" id="followUpNavBadge"
           style="display:none;"></span></a>
       <a class="nav-item" data-page="calendar" href="#"><i class="fa-solid fa-calendar-days"></i><span class="nav-label"
-          id="navCalendarLabel">Calendar</span></a>
+          id="navCalendarLabel">Calendar</span><span class="nav-badge" id="calNavBadge" title="Jobs that still need to be scheduled" style="display:none;"></span></a>
       <a class="nav-item" data-page="schedule" href="#"><i class="fa-solid fa-route"></i><span class="nav-label"
           id="navScheduleLabel">Team Schedule</span></a>
 
@@ -3423,8 +3563,6 @@
         </div>
         <button class="icon-btn hide-phone" onclick="toggleTheme()" title="Toggle light / dark mode"
           aria-label="Toggle light or dark mode"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
-        <button class="icon-btn hide-phone hide-tablet" onclick="openShortcutsHelp()" title="Keyboard shortcuts &amp; help"
-          aria-label="Keyboard shortcuts and help"><i class="fa-solid fa-circle-question"></i></button>
         <div class="dropdown-wrap">
           <button class="icon-btn" id="notifBtn" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span
               class="notif-dot" id="notifDot" style="display:none;"></span></button>
@@ -3466,49 +3604,7 @@
 
       <!-- ============ DASHBOARD PAGE ============ -->
       <section class="page active" id="page-dashboard">
-        <div class="page-header">
-          <div>
-            <h1>Dashboard</h1>
-            <p>Company overview — payroll, bookings, and customers at a glance.</p>
-          </div>
-          <div class="page-header-actions">
-            <button class="btn btn-ghost btn-sm" data-pv="payroll" onclick="goToPage('payroll')"><i class="fa-solid fa-sack-dollar"></i>Go
-              to Payroll</button>
-            <button class="btn btn-primary btn-sm"
-              data-pm="custManage" onclick="goToPage('customers');setTimeout(()=>openCustomerModal(),150);"><i
-                class="fa-solid fa-plus"></i>New Customer</button>
-          </div>
-        </div>
-        <div class="stats-grid stats-grid-5" id="dashStatsGrid"></div>
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <h3>Jobs by Status</h3>
-              <div class="sub">This month's jobs across all technicians</div>
-            </div>
-          </div>
-          <div id="dashJobsChart"></div>
-        </div>
-        <div class="grid-8-4" style="margin-top:16px;">
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <h3>Recent Activity</h3>
-                <div class="sub">Latest updates across payroll, customers, and the team</div>
-              </div>
-            </div>
-            <div id="dashActivityList"></div>
-          </div>
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <h3>Customer Snapshot</h3>
-                <div class="sub">Status breakdown</div>
-              </div>
-            </div>
-            <div id="dashCustomerSnapshot"></div>
-          </div>
-        </div>
+        <div id="dxRoot"></div>
       </section>
 
       <!-- ============ PAYROLL / PAYSLIP PAGE ============ -->
@@ -3670,6 +3766,9 @@
             <p>Accept, edit or decline new requests.</p>
           </div>
           <div class="page-header-actions">
+            <span id="inboxStatus" style="font-size:12px;margin-right:6px;"></span>
+            <button class="btn btn-ghost btn-sm" onclick="importWebsiteBookings({manual:true})" title="Look for new bookings made on the website right now"><i
+                class="fa-solid fa-rotate"></i>Check website bookings</button>
             <button class="btn btn-ghost btn-sm" data-pm="export" onclick="exportToCSV('bookings')"><i
                 class="fa-solid fa-download"></i>Export</button>
           </div>
@@ -3769,6 +3868,23 @@
             </div>
             <div id="agendaList"></div>
           </div>
+        </div>
+        <div class="card cl-card" id="calListsCard">
+          <div class="cl-head">
+            <div>
+              <h3 style="margin:0;">All Schedules</h3>
+              <div class="sub" id="clSub">Every job in one list, so you don't have to flip through each month.</div>
+            </div>
+            <div class="cl-tabs" role="tablist" aria-label="Schedule lists">
+              <button type="button" class="cl-tab active" id="clTabTotal" role="tab" onclick="clSetTab('total')"><i class="fa-solid fa-list-ul"></i>Total Schedule <span class="cl-count" id="clCountTotal">0</span></button>
+              <button type="button" class="cl-tab" id="clTabNeed" role="tab" onclick="clSetTab('need')"><i class="fa-solid fa-calendar-xmark"></i>Need to Schedule <span class="cl-count warn" id="clCountNeed">0</span></button>
+            </div>
+          </div>
+          <div class="cl-tools">
+            <div class="cl-chips" id="clChips"></div>
+            <input class="input cl-search" id="clSearch" type="search" placeholder="Search customer, service or team" oninput="clSearch(this.value)" aria-label="Search schedule">
+          </div>
+          <div id="clBody"></div>
         </div>
       </section>
 
@@ -4131,9 +4247,13 @@
       const headers = { 'Content-Type': 'application/json', apikey: cfg.key };
       if (/^eyJ/.test(cfg.key)) headers.Authorization = 'Bearer ' + cfg.key;   // older "anon" keys are JWTs; the newer publishable keys are not
       let res;
-      try { res = await fetch(cfg.url + '/rest/v1/rpc/' + fn, { method: 'POST', headers, body: JSON.stringify(args || {}) }); }
-      catch (e) { throw new Error('network'); }
-      let body = null; try { const t = await res.text(); body = t ? JSON.parse(t) : null; } catch (e) { }
+      const _ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      const _tm = _ctl ? setTimeout(() => _ctl.abort(), 25000) : null;   // a request that never answers is treated as a network error
+      let body = null;
+      try { res = await fetch(cfg.url + '/rest/v1/rpc/' + fn, { method: 'POST', headers, body: JSON.stringify(args || {}), signal: _ctl ? _ctl.signal : undefined }); }
+      catch (e) { if (_tm) clearTimeout(_tm); throw new Error('network'); }
+      try { const t = await res.text(); body = t ? JSON.parse(t) : null; } catch (e) { }
+      if (_tm) clearTimeout(_tm);
       if (!res.ok) { const m = (body && (body.message || body.hint || body.error)) || ''; throw new Error(/^[a-z_]+$/.test(m) ? m : (m || 'http_' + res.status)); }
       return body;
     }
@@ -4855,6 +4975,7 @@
     function syncDependentViews() {
       enforceSession();
       renderNotifications();
+      try { updateNeedBadge(); } catch (x) { }
       const activeEl = document.querySelector('.page.active');
       const activeId = activeEl ? activeEl.id.replace('page-', '') : null;
       if (activeId && pageInit[activeId]) pageInit[activeId]();
@@ -5002,7 +5123,17 @@
        This pulls whatever is new, files it exactly as the customer entered it, and only then marks it done.
        Safe to run repeatedly: a booking is never filed twice, and nothing is marked done unless it was saved.
        ============================================================ */
-    let _inboxBusy = false, _inboxWarned = false, _inboxTimer = null;
+    const INBOX_BUILD = 'v2';
+    let _inboxBusy = false, _inboxBusySince = 0, _inboxWarned = false, _inboxTimer = null, _inboxState = { state: 'idle', msg: '', at: null };
+    function _inboxSet(state, msg) { _inboxState = { state, msg: msg || '', at: new Date() }; try { _inboxPaint(); } catch (x) { } }
+    function _inboxPaint() {
+      const el = document.getElementById('inboxStatus'); if (!el) return;
+      const st = _inboxState, t = st.at ? st.at.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : '';
+      el.title = 'Website booking connection ' + INBOX_BUILD;
+      if (st.state === 'ok') el.innerHTML = '<span style="color:#1a9b5a;">&#9679;</span> Website bookings connected &middot; checked ' + t;
+      else if (st.state === 'error') el.innerHTML = '<span style="color:#d64545;">&#9679;</span> <b style="color:#d64545;">Website bookings problem:</b> ' + esc(st.msg);
+      else el.innerHTML = '<span style="color:#999;">&#9679;</span> Website bookings: waiting for first check';
+    }
     function _ibStr(v, max) { return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, max || 500); }
     function _ibPhoneKey(p) { let d = String(p || '').replace(/\D/g, ''); if (d.length === 12 && d.startsWith('63')) d = '0' + d.slice(2); else if (d.length === 10 && d.startsWith('9')) d = '0' + d; return d; }
     function _ibNextCustId(list) { let max = 0; list.forEach(c => { const m = /^CUST-(\d+)$/.exec((c && c.id) || ''); if (m) max = Math.max(max, parseInt(m[1], 10)); }); return 'CUST-' + String(max + 1).padStart(3, '0'); }
@@ -5083,31 +5214,34 @@
       };
     }
 
-    async function importWebsiteBookings() {
-      if (_inboxBusy || !SB_TOKEN) return 0;
-      if (typeof can === 'function' && !can('bookingManage')) return 0;
+    async function importWebsiteBookings(opts) {
+      const manual = !!(opts && opts.manual);
+      const fail = msg => { _inboxSet('error', msg); if (manual) showToast('error', msg); return 0; };
+      if (_inboxBusy && Date.now() - _inboxBusySince > 30000) _inboxBusy = false;     // a stuck check never blocks the next one
+      if (_inboxBusy) { if (manual) showToast('info', 'Already checking. Please wait a few seconds.'); return 0; }
+      if (!SB_TOKEN) return 0;
+      if (typeof can === 'function' && !can('bookingManage')) return fail("This login is not allowed to manage bookings.");
       const ov = document.getElementById('modalOverlay');
-      if (ov && ov.classList.contains('open')) return 0;     // never swap data out from under a pop-up that is being edited
-      _inboxBusy = true;
+      if (ov && ov.classList.contains('open')) { if (manual) showToast('info', 'Close the open window first, then check again.'); return 0; }   // never swap data out from under a pop-up that is being edited
+      _inboxBusy = true; _inboxBusySince = Date.now();
       try {
         let rows;
         try { rows = await sbRpc('app_inbox_pull', { p_token: SB_TOKEN }); }
         catch (e) {
           const m = String((e && e.message) || '');
-          if (m === 'not_signed_in') sbHandleError(e);
-          else if (/could not find the function|http_404|PGRST202/i.test(m) && !_inboxWarned && CURRENT_ROLE === 'Administrator') {
-            _inboxWarned = true;
-            showToast('error', 'Website bookings are not connected yet. Run supabase_booking_inbox.sql once in Supabase.');
-          }
-          return 0;
+          if (m === 'not_signed_in') { sbHandleError(e); return 0; }
+          if (/could not find the function|does not exist|http_404|PGRST202/i.test(m)) return fail('the website booking SQL has not been run in this Supabase project (supabase_booking_inbox.sql).');
+          if (m === 'network') return fail("can't reach Supabase. Check the internet connection.");
+          return fail(sbErrorText(e));
         }
-        if (!Array.isArray(rows) || !rows.length) return 0;
+        if (!Array.isArray(rows)) return fail('unexpected answer from Supabase while checking bookings.');
+        if (!rows.length) { _inboxSet('ok'); if (manual) showToast('info', 'No new website bookings waiting.'); return 0; }
 
         // read the latest shared data right now, merge into THAT, and save it straight back
         const [evGot, cuGot] = await Promise.all([storageGet('calendar:events', true), storageGet('customers:list', true)]);
         let events, customers;
-        try { events = JSON.parse(evGot.value); customers = JSON.parse(cuGot.value); } catch (e) { return 0; }
-        if (!Array.isArray(events) || !Array.isArray(customers)) return 0;
+        try { events = JSON.parse(evGot.value); customers = JSON.parse(cuGot.value); } catch (e) { return fail(rows.length + ' booking(s) are waiting, but the shared bookings/customers data could not be read. Try again in a moment.'); }
+        if (!Array.isArray(events) || !Array.isArray(customers)) return fail('the shared bookings/customers data has an unexpected format.');
 
         const doneIds = [], filed = [];
         rows.forEach(row => {
@@ -5118,11 +5252,11 @@
         if (filed.length) {
           const savedC = await storageSet('customers:list', JSON.stringify(customers), true);
           const savedE = savedC ? await storageSet('calendar:events', JSON.stringify(events), true) : null;
-          if (!savedC || !savedE) return 0;                     // not saved: leave them in the inbox, try again next time
+          if (!savedC || !savedE) return fail(filed.length + ' new booking(s) found but they could not be saved. It will retry automatically.');
           const chk = await storageGet('calendar:events', true);
           let verified = false;
           try { const l = JSON.parse(chk.value); verified = filed.every(f => l.some(x => x.id === f.event.id)); } catch (e) { }
-          if (!verified) return 0;
+          if (!verified) return fail('new booking(s) were saved but could not be confirmed. It will retry automatically.');
 
           // bring this screen up to date WITHOUT replacing objects that a pop-up might be holding
           filed.forEach(f => {
@@ -5138,15 +5272,16 @@
 
         if (doneIds.length) { try { await sbRpc('app_inbox_ack', { p_token: SB_TOKEN, p_ids: doneIds }); } catch (e) { console.warn('[7 Majestic] could not mark bookings as filed (will retry)', e); } }
 
+        _inboxSet('ok');
         if (filed.length) {
           try { searchIndex = buildSearchIndex(); } catch (e) { }
           syncDependentViews();
           showToast('success', filed.length === 1 ? 'New website booking received' : filed.length + ' new website bookings received');
-        }
+        } else if (manual) showToast('info', 'No new website bookings waiting.');
         return filed.length;
       } catch (err) {
         console.warn('[7 Majestic] website booking check failed', err);
-        return 0;
+        return fail('something went wrong while checking bookings (' + String((err && err.message) || err) + ').');
       } finally { _inboxBusy = false; }
     }
     function startWebsiteInboxPolling() {
@@ -5722,6 +5857,8 @@
     function renderBookingRequests() {
       const wrap = $('#bookingReqList');
       if (!wrap) return;
+      try { _inboxPaint(); } catch (x) { }
+      try { updateNeedBadge(); } catch (x) { }
       const countBadge = $('#bookingReqCount');
       const navBadge = $('#bookingNavBadge');
       const list = EVENTS.filter(e => e.type === 'Pending').slice().sort((a, b) => (new Date(a.createdAt || 0) - new Date(b.createdAt || 0)) || String(a.id).localeCompare(String(b.id)));   // #1 = the request that came in first
@@ -5764,18 +5901,63 @@
       }).join('') : `<div class="empty-state"><i class="fa-solid fa-calendar-check"></i><p>No pending booking requests right now.</p></div>`;
       renderBookingHandledList();
     }
+
+    /* ---- Accept Booking: the full picture of what the customer entered on the booking form ---- */
+    function acceptBookingDetailsHTML(e, cust) {
+      const blank = v => !v || v === '—';
+      const item = (icon, label, html, full) => html ? `<div class="bkd-item${full ? ' full' : ''}"><div class="bkd-k"><i class="fa-solid ${icon}"></i>${label}</div><div class="bkd-v">${html}</div></div>` : '';
+      const name = cust ? esc(cust.name) : 'No customer linked';
+      const web = e.source === 'website' ? ' <span class="badge badge-info" style="font-size:11px;"><i class="fa-solid fa-globe"></i> Website</span>' : '';
+      const addr = cust && !blank(cust.address) ? String(cust.address) : '';
+      const low = addr.toLowerCase();
+      const brgyCity = cust ? [cust.barangay, cust.city].filter(x => !blank(x) && !low.includes(String(x).toLowerCase())).join(', ') : '';
+      const phone = cust && !blank(cust.phone) ? cust.phone : '';
+      const mapOk = cust && /^https?:\/\//i.test(cust.mapLink || '');
+      const services = String(e.serviceType || '').split(',').map(x => x.trim()).filter(Boolean);
+      const aircons = String(e.airconType || '').split(/,\s*/).map(x => x.trim()).filter(Boolean);
+      let units = 0; aircons.forEach(a => { const m = /x\s*(\d+)\s*$/i.exec(a); units += m ? parseInt(m[1], 10) : 0; });
+      const prefDate = /^\d{4}-\d{2}-\d{2}$/.test(e.preferredDate || '') ? e.preferredDate : '';
+      const prefTimeRaw = e.preferredTime || '';
+      const prefTimeHHMM = /^\d{1,2}:\d{2}$/.test(prefTimeRaw) ? prefTimeRaw : '';
+      const prefTimeText = prefTimeRaw ? (prefTimeHHMM ? fmtTime(prefTimeRaw) : prefTimeRaw) : '';
+      const wantTxt = [prefDate ? fmtDate(prefDate) : '', prefTimeText].filter(Boolean).join(' · ');
+      const useBtn = (prefDate || prefTimeHHMM) ? `<button type="button" class="btn btn-outline btn-sm" onclick="useRequestedAcceptDate('${prefDate}','${prefTimeHHMM}')"><i class="fa-solid fa-check"></i> Use this schedule</button>` : '';
+      const any = e.serviceType || e.propertyType || e.airconType || e.customerDetails || addr || phone || wantTxt;
+      if (!any && !cust) return '';
+      return `
+    <div class="bkd">
+      <div class="bkd-head"><span class="bkd-title"><i class="fa-solid fa-file"></i> What the customer booked</span></div>
+      <div class="bkd-grid">
+        ${item('fa-user-tie', 'Customer', name + web)}
+        ${item('fa-phone', 'Contact number', phone && can('phones') ? `<a href="tel:${esc(phone)}">${esc(phone)}</a>` : (phone ? 'Hidden for your role' : ''))}
+        ${item('fa-location-dot', 'Address', esc(addr) + (brgyCity ? `<div class="cell-muted" style="font-size:12px;font-weight:500;">${esc(brgyCity)}</div>` : ''), true)}
+        ${item('fa-thumbtack', 'Landmark', cust && !blank(cust.landmark) ? esc(cust.landmark) : '')}
+        ${item('fa-route', 'Google Maps pin', mapOk ? `<a href="${esc(cust.mapLink)}" target="_blank" rel="noopener noreferrer">Open map <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px;"></i></a>` : '')}
+        ${item('fa-key', 'Property type', e.propertyType ? esc(e.propertyType) : '')}
+        ${item('fa-calculator', 'Total aircon units', units ? String(units) : '')}
+        ${item('fa-screwdriver-wrench', 'Service required', services.length ? `<div class="bkd-chips">${services.map(x => `<span class="bkd-chip">${esc(x)}</span>`).join('')}</div>` : '', true)}
+        ${item('fa-gear', 'Aircon type', aircons.length ? aircons.map(a => esc(a)).join('<br>') : '', true)}
+        ${wantTxt ? `<div class="bkd-want"><div><div class="bkd-k"><i class="fa-solid fa-calendar-day"></i>Customer's requested schedule</div><div class="bkd-v">${esc(wantTxt)}</div></div>${useBtn}</div>` : ''}
+        ${e.customerDetails ? `<div class="bkd-note"><div class="bkd-k" style="font-style:normal;"><i class="fa-solid fa-note-sticky"></i>Remarks from the customer</div>${esc(e.customerDetails)}</div>` : ''}
+      </div>
+      <div class="bkd-foot">
+        ${e.bookingId ? `<span><i class="fa-solid fa-receipt"></i> Reference <b class="mono">${esc(e.bookingId)}</b></span>` : ''}
+        ${e.createdAt ? `<span><i class="fa-solid fa-clock"></i> Booked ${esc(fmtDateTime(e.createdAt))}</span>` : ''}
+        <span><i class="fa-solid ${e.source === 'website' ? 'fa-globe' : 'fa-user-pen'}"></i> ${e.source === 'website' ? 'From the website booking form' : 'Added by the office'}</span>
+      </div>
+    </div>`;
+    }
+    function useRequestedAcceptDate(d, t) {
+      const de = document.getElementById('fAcceptDate'), te = document.getElementById('fAcceptTime');
+      if (de && /^\d{4}-\d{2}-\d{2}$/.test(d || '')) { de.value = d; de.dispatchEvent(new Event('input', { bubbles: true })); }
+      if (te && /^\d{1,2}:\d{2}$/.test(t || '')) { te.value = t.length === 4 ? '0' + t : t; te.dispatchEvent(new Event('input', { bubbles: true })); }
+    }
     function openAcceptBookingModal(id) {
       const e = EVENTS.find(x => x.id === id); if (!e) return;
       const cust = custById(e.customerId);
       const requestedTime = /^\d{1,2}:\d{2}$/.test(e.preferredTime || '') ? e.preferredTime : (e.time || '');   // "Morning" etc. is shown as text, not put in the time box
       window.__acceptingEventId = e.id;
-      const bookingDetailsHTML = (e.serviceType || e.propertyType || e.airconType || e.customerDetails) ? `
-    <div class="callout" style="margin-bottom:14px;">
-      ${e.serviceType ? `<div class="detail-row"><span class="k">Service Type</span><span class="v">${esc(e.serviceType)}</span></div>` : ''}
-      ${e.propertyType ? `<div class="detail-row"><span class="k">Property Type</span><span class="v">${esc(e.propertyType)}</span></div>` : ''}
-      ${e.airconType ? `<div class="detail-row"><span class="k">Aircon Type</span><span class="v">${esc(e.airconType)}</span></div>` : ''}
-      ${e.customerDetails ? `<div class="detail-row"><span class="k">Customer Details</span><span class="v" style="text-align:right;max-width:220px;">${esc(e.customerDetails)}</span></div>` : ''}
-    </div>` : '';
+      const bookingDetailsHTML = acceptBookingDetailsHTML(e, cust);
       openModal('Accept Booking — Confirm Schedule', `
     <p style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:14px;">Confirm the date and time for this job${cust ? ' for ' + esc(cust.name) : ''}. The customer's date and time above are just their request — you decide the actual schedule. <strong>None of this is required</strong> — accept now and fill in the rest whenever it's ready (e.g. once a technician becomes available).</p>
     ${bookingDetailsHTML}
@@ -6313,19 +6495,7 @@
       </tr>`).join('') : `<tr><td colspan="9"><div class="table-empty">No employees yet.</div></td></tr>`;
       } else {
         const myPs = payslipFor(CURRENT_PERIOD_ID, CURRENT_TECH_ID);
-        const myAnnouncements = ANNOUNCEMENTS.filter(a => a.audience === 'All' || a.audience === 'Technician')
-          .slice().sort((a, b) => (b.pinned - a.pinned) || (new Date(b.date) - new Date(a.date)));
-        const annHTML = myAnnouncements.length ? `
-      <div class="card-solid" style="max-width:460px;margin:0 auto 16px;">
-        <div class="card-head"><h3><i class="fa-solid fa-bullhorn" style="color:var(--violet);margin-right:6px;"></i>From the Office</h3><a href="#" onclick="goToPage('announcements');return false;" style="font-size:12px;">View all</a></div>
-        ${myAnnouncements.slice(0, 2).map((a, i) => `
-          <div style="padding:${i === 0 ? '0' : '10px'} 0 10px;${i === 0 ? '' : 'border-top:1px solid var(--border);'}">
-            <div style="display:flex;align-items:center;gap:6px;">${a.pinned ? '<i class="fa-solid fa-thumbtack" style="color:var(--red-light);font-size:11px;"></i>' : ''}<span style="font-weight:700;font-size:13px;">${esc(a.title)}</span></div>
-            <div class="cell-muted" style="font-size:12px;margin-top:3px;line-height:1.5;">${esc(a.body)}</div>
-            <div class="cell-muted" style="font-size:11px;margin-top:5px;"><i class="fa-solid fa-calendar-day"></i> ${fmtDate(a.date)}</div>
-          </div>`).join('')}
-      </div>` : '';
-        $('#payrollTechWrap').innerHTML = annHTML + (myPs ? `
+        $('#payrollTechWrap').innerHTML = (myPs ? `
       <div style="max-width:460px;margin:0 auto;">
         ${payslipSheetHTML(CURRENT_PERIOD_ID, CURRENT_TECH_ID)}
         <div style="text-align:center;margin-top:14px;"><button class="btn btn-primary btn-sm" onclick="uxPrintPayslip(this)"><i class="fa-solid fa-print" aria-hidden="true"></i>Print This Payslip</button></div>
@@ -6802,8 +6972,140 @@
       source.forEach(e => { (ev[e.date] = ev[e.date] || []).push(e); });
       return ev;
     }
+
+    /* ============================================================
+       CALENDAR LISTS: "Total Schedule" (every job, every month, one list)
+       and "Need to Schedule" (everything still waiting on the office)
+       ============================================================ */
+    let CL = { tab: 'total', filter: 'upcoming', q: '', limit: 60 };
+    const CL_FILTERS = [['upcoming', 'Upcoming'], ['today', 'Today'], ['month', 'This month'], ['done', 'Completed'], ['cancelled', 'Cancelled'], ['all', 'All']];
+    function clToday() { return toISODate(new Date()); }
+    function clView() { return (isFieldView() && CURRENT_TECH_ID) ? EVENTS.filter(e => eventTechs(e).includes(CURRENT_TECH_ID)) : EVENTS.slice(); }
+    function clShowNeed() { return !isFieldView() && (can('bookingManage') || can('jobManage')); }
+    function eventHasTeam(e) { return !!(e.teamId && teamById(e.teamId)) || eventTechs(e).length > 0; }
+    function eventTeamLabel(e) {
+      if (e.teamId && teamById(e.teamId)) return teamById(e.teamId).name;
+      return eventTechs(e).map(id => empById(id)).filter(Boolean).map(t => t.name).join(', ');
+    }
+    const clByTime = (a, b) => String(a.date || '9999').localeCompare(String(b.date || '9999')) || String(a.time || '99:99').localeCompare(String(b.time || '99:99')) || String(a.id).localeCompare(String(b.id));
+    function needToScheduleGroups() {
+      const today = clToday();
+      const accept = EVENTS.filter(e => e.type === 'Pending').sort((a, b) => (new Date(a.createdAt || 0) - new Date(b.createdAt || 0)) || String(a.id).localeCompare(String(b.id)));
+      const nodate = EVENTS.filter(e => e.type === 'Confirmed' && !e.date).sort((a, b) => String(a.id).localeCompare(String(b.id)));
+      const noteam = EVENTS.filter(e => e.type === 'Confirmed' && e.date && e.date >= today && !eventHasTeam(e)).sort(clByTime);
+      return { accept, nodate, noteam, total: accept.length + nodate.length + noteam.length };
+    }
+    function updateNeedBadge() {
+      const b = document.getElementById('calNavBadge'); if (!b) return;
+      const n = clShowNeed() ? needToScheduleGroups().total : 0;
+      b.style.display = n ? 'inline-flex' : 'none'; b.textContent = n || '';
+    }
+    function clApplyFilter(list, f) {
+      const today = clToday(), month = today.slice(0, 7);
+      list = list.filter(e => e.date);
+      if (f === 'upcoming') return list.filter(e => e.date >= today && e.type !== 'Cancelled' && e.type !== 'Completed');
+      if (f === 'today') return list.filter(e => e.date === today && e.type !== 'Cancelled');
+      if (f === 'month') return list.filter(e => e.date.slice(0, 7) === month && e.type !== 'Cancelled');
+      if (f === 'done') return list.filter(e => e.type === 'Completed');
+      if (f === 'cancelled') return list.filter(e => e.type === 'Cancelled');
+      return list;
+    }
+    function clMatches(e, q) {
+      if (!q) return true;
+      const c = custById(e.customerId);
+      const hay = [c && c.name, c && c.city, c && c.barangay, c && c.address, e.note, e.serviceType, e.type, eventTeamLabel(e), e.bookingId].filter(Boolean).join(' ').toLowerCase();
+      return q.toLowerCase().split(/\s+/).filter(Boolean).every(w => hay.includes(w));
+    }
+    function clWantText(e) {
+      const d = /^\d{4}-\d{2}-\d{2}$/.test(e.preferredDate || '') ? fmtDate(e.preferredDate) : '';
+      const t = e.preferredTime ? (/^\d{1,2}:\d{2}$/.test(e.preferredTime) ? fmtTime(e.preferredTime) : e.preferredTime) : '';
+      return [d, t].filter(Boolean).join(' · ');
+    }
+    function clRow(e, mode) {
+      const c = custById(e.customerId), today = clToday();
+      const dateTile = e.date
+        ? (() => { const d = new Date(e.date + 'T00:00:00'); return `<div class="cl-date${e.date === today ? ' today' : ''}"><span class="d">${d.getDate()}</span><span class="w">${d.toLocaleDateString('en-US', { weekday: 'short' })}</span></div>`; })()
+        : `<div class="cl-date none"><span class="d"><i class="fa-solid fa-question" style="font-size:16px;"></i></span><span class="w">No date</span></div>`;
+      const web = e.source === 'website' ? '<span class="badge badge-info" style="font-size:11px;"><i class="fa-solid fa-globe"></i> Website</span>' : '';
+      const team = eventTeamLabel(e);
+      const loc = c ? [c.barangay, c.city].filter(x => x && x !== '—').join(', ') : '';
+      const want = mode === 'accept' ? clWantText(e) : '';
+      const meta = [
+        e.date && e.time ? `<span><i class="fa-solid fa-clock"></i>${esc(fmtTime(e.time))}</span>` : '',
+        want ? `<span><i class="fa-solid fa-calendar-day"></i>Wants ${esc(want)}</span>` : (mode === 'accept' ? '<span><i class="fa-solid fa-calendar-day"></i>No preferred date</span>' : ''),
+        `<span><i class="fa-solid fa-screwdriver-wrench"></i>${esc(e.serviceType || e.note || 'Service job')}</span>`,
+        e.airconType ? `<span><i class="fa-solid fa-gear"></i>${esc(e.airconType)}</span>` : '',
+        loc ? `<span><i class="fa-solid fa-location-dot"></i>${esc(loc)}</span>` : '',
+        mode === 'accept' ? (e.createdAt ? `<span><i class="fa-solid fa-clock"></i>Booked ${esc(timeAgo(e.createdAt))}</span>` : '') : (team ? `<span><i class="fa-solid fa-people-group"></i>${esc(team)}</span>` : (e.type === 'Cancelled' || e.type === 'Completed' ? '' : '<span class="warn"><i class="fa-solid fa-triangle-exclamation"></i>No team assigned</span>')),
+        c && c.phone && c.phone !== '—' && can('phones') ? `<span><i class="fa-solid fa-phone"></i>${esc(c.phone)}</span>` : ''
+      ].filter(Boolean).join('');
+      let side = '';
+      if (mode === 'accept') {
+        side = `${can('bookingManage') ? `<button type="button" class="btn btn-primary btn-sm" onclick="event.stopPropagation();openAcceptBookingModal('${e.id}')"><i class="fa-solid fa-check"></i> Accept</button>` : ''}`;
+      } else if (mode === 'nodate' || mode === 'noteam') {
+        side = can('jobManage') ? `<button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();openEventEditModal('${e.id}')"><i class="fa-solid ${mode === 'nodate' ? 'fa-calendar-plus' : 'fa-people-group'}"></i> ${mode === 'nodate' ? 'Set date &amp; team' : 'Assign team'}</button>` : '';
+      } else {
+        side = `${badge(e.type)}${e.date ? `<button type="button" class="btn btn-ghost btn-sm btn-icon" title="Show on calendar" onclick="event.stopPropagation();jumpToCalendarDate('${e.date}')"><i class="fa-solid fa-calendar-days"></i></button>` : ''}`;
+      }
+      const open = (mode === 'accept' && can('bookingManage')) ? `openAcceptBookingModal('${e.id}')` : `openScheduleJobDetail('${e.id}')`;
+      return `<div class="cl-row" onclick="${open}">${dateTile}<div class="cl-main"><div class="cl-name">${c ? esc(c.name) : 'No customer linked'} ${web}</div><div class="cl-meta">${meta}</div></div><div class="cl-side">${side}</div></div>`;
+    }
+    function clSetTab(t) { CL.tab = t; CL.limit = 60; renderCalendarLists(); }
+    function clSetFilter(f) { CL.filter = f; CL.limit = 60; renderCalendarLists(); }
+    function clSearch(v) { CL.q = v || ''; CL.limit = 60; renderCalendarLists(); }
+    function clMore() { CL.limit += 60; renderCalendarLists(); }
+    function clOpenNeed() { CL.tab = 'need'; CL.q = ''; goToPage('calendar'); setTimeout(() => { renderCalendarLists(); const c = document.getElementById('calListsCard'); if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); }
+    function clOpenDone() { CL.tab = 'total'; CL.filter = 'done'; CL.q = ''; goToPage('calendar'); setTimeout(() => { renderCalendarLists(); const c = document.getElementById('calListsCard'); if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); }
+    function renderCalendarLists() {
+      const card = document.getElementById('calListsCard'); if (!card) return;
+      const showNeed = clShowNeed();
+      if (!showNeed && CL.tab === 'need') CL.tab = 'total';
+      const q = CL.q.trim();
+      const tabNeed = document.getElementById('clTabNeed'), tabTotal = document.getElementById('clTabTotal');
+      tabNeed.style.display = showNeed ? '' : 'none';
+      tabTotal.classList.toggle('active', CL.tab === 'total'); tabNeed.classList.toggle('active', CL.tab === 'need');
+      const view = clView(), groups = needToScheduleGroups();
+      document.getElementById('clCountTotal').textContent = clApplyFilter(view, 'upcoming').length;
+      document.getElementById('clCountNeed').textContent = groups.total;
+      const body = document.getElementById('clBody'), chips = document.getElementById('clChips');
+      const sub = document.getElementById('clSub');
+      if (CL.tab === 'total') {
+        sub.textContent = (isFieldView() ? 'Your jobs' : 'Every job') + ' in one list, so you don\'t have to flip through each month.';
+        chips.style.display = '';
+        chips.innerHTML = CL_FILTERS.map(([k, l]) => `<button type="button" class="cl-chip${CL.filter === k ? ' active' : ''}" onclick="clSetFilter('${k}')">${l}<small>${clApplyFilter(view, k).length}</small></button>`).join('');
+        let list = clApplyFilter(view, CL.filter).filter(e => clMatches(e, q));
+        const desc = CL.filter === 'done' || CL.filter === 'cancelled';
+        list.sort(clByTime); if (desc) list.reverse();
+        if (!list.length) { body.innerHTML = `<div class="cl-empty"><i class="fa-solid fa-calendar"></i>${q ? 'No jobs match your search.' : 'No jobs in this view.'}</div>`; return; }
+        const months = []; const idx = {};
+        list.forEach(e => { const k = e.date.slice(0, 7); if (!(k in idx)) { idx[k] = months.length; months.push({ k, items: [] }); } months[idx[k]].items.push(e); });
+        let html = '', shown = 0;
+        for (const m of months) {
+          if (shown >= CL.limit) break;
+          const d = new Date(m.k + '-01T00:00:00');
+          html += `<div class="cl-month">${d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}<span>${m.items.length} job${m.items.length === 1 ? '' : 's'}</span></div>`;
+          for (const e of m.items) { if (shown >= CL.limit) break; html += clRow(e, 'total'); shown++; }
+        }
+        if (shown < list.length) html += `<button type="button" class="btn btn-outline btn-sm cl-more" onclick="clMore()">Show more (${list.length - shown} left)</button>`;
+        body.innerHTML = html;
+      } else {
+        sub.textContent = 'Everything still waiting on the office: requests to accept, and accepted jobs missing a date or a team.';
+        chips.style.display = 'none';
+        const f = list => list.filter(e => clMatches(e, q));
+        const sections = [
+          ['accept', f(groups.accept), 'fa-calendar-check', 'var(--warning-bg)', 'var(--warning)', 'Booking requests to accept', 'New requests, oldest first. Accept to confirm and schedule them.'],
+          ['nodate', f(groups.nodate), 'fa-calendar-xmark', 'var(--danger-bg)', 'var(--danger)', 'Accepted, but no date yet', 'Confirmed jobs that still need a date and a team.'],
+          ['noteam', f(groups.noteam), 'fa-people-group', 'var(--violet-bg)', 'var(--violet)', 'Scheduled, but no team yet', 'Upcoming jobs that have a date but nobody assigned.']
+        ];
+        const any = sections.some(x => x[1].length);
+        if (!any) { body.innerHTML = q ? `<div class="cl-empty"><i class="fa-solid fa-magnifying-glass"></i>No matches for your search.</div>` : `<div class="cl-empty"><i class="fa-solid fa-circle-check" style="color:var(--success);opacity:1;"></i><b style="color:var(--text-1);">All caught up.</b><br>Every job has a date and a team.</div>`; return; }
+        body.innerHTML = sections.filter(x => x[1].length).map(([mode, list, ic, bg, col, title, hint]) =>
+          `<div class="cl-group"><span class="cl-group-ic" style="background:${bg};color:${col};"><i class="fa-solid ${ic}"></i></span><div><h4>${title} <span class="cl-count warn">${list.length}</span></h4><small>${hint}</small></div></div>` + list.map(e => clRow(e, mode)).join('')).join('');
+      }
+    }
     function renderMainCalendar() {
       renderNeedsSchedulingBanner('calNeedsSchedulingBanner');
+      try { renderCalendarLists(); } catch (x) { console.warn('[7 Majestic] schedule lists', x); }
       const events = eventsByDate();
       const isTech = isFieldView();
       const me = isTech ? empById(CURRENT_TECH_ID) : null;
@@ -8046,65 +8348,189 @@
       }).join('');
       return `<div class="bar-chart">${cols}</div>`;
     }
+    /* ============================================================
+       DASHBOARD: everything below is computed live from the same jobs,
+       payments, customers and teams the rest of the system uses.
+       ============================================================ */
+    let DX_GOAL = { v: null, at: 0 };
+    async function dxLoadGoal() {
+      try {
+        const g = await storageGet('settings:incomeGoal', true);
+        let v = 0; if (g && g.value) { const n = Number(JSON.parse(g.value).amount); v = n > 0 ? n : 0; }
+        DX_GOAL = { v, at: Date.now() };
+      } catch (err) { DX_GOAL = { v: 0, at: Date.now() }; }
+      return DX_GOAL.v;
+    }
+    function dxMoney(n) {
+      n = Number(n) || 0; const a = Math.abs(n);
+      if (a >= 1e6) return '₱' + (n / 1e6).toFixed(a >= 1e7 ? 0 : 1).replace(/\.0$/, '') + 'M';
+      if (a >= 1e4) return '₱' + Math.round(n / 1e3) + 'k';
+      if (a >= 1e3) return '₱' + (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
+      return '₱' + Math.round(n).toLocaleString('en-PH');
+    }
+    function dxPaid(e) { return e.type === 'Completed' && e.date && e.payment && Number(e.payment.amount) > 0 ? Number(e.payment.amount) : 0; }
     function renderDashboard() {
-      const stats = computePeriodStats(CURRENT_PERIOD_ID);
-      const pendingBookings = EVENTS.filter(e => e.type === 'Pending').length;
-      const needsScheduling = unscheduledConfirmedEvents().length;
-      const startOfWeek = new Date(TODAY); startOfWeek.setDate(TODAY.getDate() - TODAY.getDay());
-      const endOfWeek = new Date(startOfWeek); endOfWeek.setDate(startOfWeek.getDate() + 6);
-      const jobsThisWeek = EVENTS.filter(e => {
-        if (!e.date) return false;
-        const d = new Date(e.date + 'T00:00:00');
-        return d >= startOfWeek && d <= endOfWeek && e.type !== 'Cancelled';
-      }).length;
-      $('#dashStatsGrid').innerHTML = `
-    <div class="card stat-card"><div class="stat-icon" style="background:var(--success-bg);color:var(--success);"><i class="fa-solid fa-sack-dollar"></i></div><div class="stat-value tabular" style="font-size:18px;">${peso(stats.net)}</div><div class="stat-label">Net Payout — ${esc(periodLabel(CURRENT_PERIOD_ID))}</div></div>
-    <div class="card stat-card" style="cursor:pointer;" onclick="goToPage('bookings')"><div class="stat-icon" style="background:var(--warning-bg);color:var(--warning);"><i class="fa-solid fa-calendar-check"></i></div><div class="stat-value">${pendingBookings}</div><div class="stat-label">Pending Booking Requests</div></div>
-    <div class="card stat-card" style="cursor:pointer;" onclick="goToPage('schedule')"><div class="stat-icon" style="background:var(--warning-bg);color:var(--warning);"><i class="fa-solid fa-calendar-xmark"></i></div><div class="stat-value">${needsScheduling}</div><div class="stat-label">Needs Scheduling</div></div>
-    <div class="card stat-card" style="cursor:pointer;" onclick="goToPage('calendar')"><div class="stat-icon" style="background:rgba(46,159,214,.18);color:var(--navy-light);"><i class="fa-solid fa-broom"></i></div><div class="stat-value">${jobsThisWeek}</div><div class="stat-label">Jobs This Week</div></div>
-    <div class="card stat-card"><div class="stat-icon" style="background:var(--danger-bg);color:var(--red-light);"><i class="fa-solid fa-hand-holding-dollar"></i></div><div class="stat-value">${stats.followUps}</div><div class="stat-label">Loan Follow-ups</div></div>`;
+      const root = document.getElementById('dxRoot'); if (!root) return;
+      const now = new Date(), todayISO = toISODate(now), field = isFieldView();
+      const evs = (field && CURRENT_TECH_ID) ? EVENTS.filter(e => eventTechs(e).includes(CURRENT_TECH_ID)) : EVENTS;
+      const showMoney = can('stats') && !field;
+      const goal = DX_GOAL.v || 0;
+      const monthKey = todayISO.slice(0, 7), yearKey = todayISO.slice(0, 4);
+      const addDays = (iso, n) => { const d = new Date(iso + 'T00:00:00'); d.setDate(d.getDate() + n); return toISODate(d); };
 
-      const monthEvents = EVENTS.filter(e => {
-        if (!e.date) return false;
-        const d = new Date(e.date + 'T00:00:00');
-        return d.getFullYear() === TODAY.getFullYear() && d.getMonth() === TODAY.getMonth();
+      // ---- jobs
+      const today = evs.filter(e => e.date === todayISO && e.type !== 'Cancelled').sort((a, b) => String(a.time || '99:99').localeCompare(String(b.time || '99:99')));
+      const todayDone = today.filter(e => e.type === 'Completed').length;
+      const todayLive = today.filter(e => e.type === 'Ongoing' || e.type === 'Arrived').length;
+      const todayNext = today.length - todayDone - todayLive;
+      const wkStart = toISODate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay()));
+      const wkEnd = addDays(wkStart, 6);
+      const week = evs.filter(e => e.date && e.date >= wkStart && e.date <= wkEnd && e.type !== 'Cancelled');
+      const weekDone = week.filter(e => e.type === 'Completed').length;
+      const monthJobs = evs.filter(e => e.date && e.date.slice(0, 7) === monthKey);
+      const monthLive = monthJobs.filter(e => e.type !== 'Cancelled');
+      const monthDone = monthJobs.filter(e => e.type === 'Completed');
+      const rate = monthLive.length ? Math.round(monthDone.length / monthLive.length * 100) : 0;
+      const groups = needToScheduleGroups();
+
+      // ---- income (month to date vs the same days last month)
+      let incMTD = 0, incPrevSame = 0, incMonth = 0;
+      const prevFirst = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const prevDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+      const prevStart = toISODate(prevFirst), prevEnd = toISODate(new Date(prevFirst.getFullYear(), prevFirst.getMonth(), Math.min(now.getDate(), prevDays)));
+      const months = [];
+      for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); months.push({ key: toISODate(d).slice(0, 7), label: d.toLocaleDateString('en-US', { month: 'short' }), full: d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }), v: 0, n: 0 }); }
+      const mIdx = {}; months.forEach(m => { mIdx[m.key] = m; });
+      if (showMoney) EVENTS.forEach(e => {
+        const amt = dxPaid(e); if (!amt) return;
+        if (e.date.slice(0, 7) === monthKey) { incMonth += amt; if (e.date <= todayISO) incMTD += amt; }
+        if (e.date >= prevStart && e.date <= prevEnd) incPrevSame += amt;
+        const m = mIdx[e.date.slice(0, 7)]; if (m) { m.v += amt; m.n++; }
       });
-      const jobCounts = {};
-      monthEvents.forEach(e => { jobCounts[e.type] = (jobCounts[e.type] || 0) + 1; });
-      const jobOrder = ['Completed', 'Ongoing', 'Arrived', 'Confirmed', 'Pending', 'Cancelled'];
-      const jobData = jobOrder.filter(t => jobCounts[t]).map(t => ({ label: t, value: jobCounts[t], color: EVENT_COLORS[t] }));
-      $('#dashJobsChart').innerHTML = jobData.length
-        ? donutChartHTML(jobData, monthEvents.length, 'Jobs This Month')
-        : `<div class="empty-state"><i class="fa-solid fa-calendar"></i><p>No jobs scheduled this month yet</p></div>`;
+      const noPayThisMonth = monthDone.filter(e => !dxPaid(e)).length;
 
-      const totalCustomers = CUSTOMERS.length;
-      const statusCounts = { Active: 0, Lead: 0, Inactive: 0 };
-      CUSTOMERS.forEach(c => { statusCounts[c.status] = (statusCounts[c.status] || 0) + 1; });
-      const statusColors = { Active: 'var(--success)', Lead: 'var(--warning)', Inactive: 'var(--text-3)' };
-      const statusData = Object.entries(statusCounts).filter(([, v]) => v > 0).map(([label, value]) => ({ label, value, color: statusColors[label] }));
-      $('#dashCustomerSnapshot').innerHTML = statusData.length
-        ? `<div class="status-rows">${statusData.map(d => {
-          const pct = Math.round(d.value / totalCustomers * 100); return `
-      <div class="status-row">
-        <div class="status-row-top"><span class="k"><i style="background:${d.color};"></i>${esc(d.label)}</span><span class="v">${d.value} · ${pct}%</span></div>
-        <div class="progress"><div class="progress-bar" style="width:${pct}%;background:${d.color};"></div></div>
-      </div>`;
-        }).join('')}</div>`
-        : `<div class="empty-state"><i class="fa-solid fa-user-tie"></i><p>No customers yet</p></div>`;
+      // ---- customers
+      const cStat = { Active: 0, Lead: 0, Inactive: 0 }; CUSTOMERS.forEach(c => { cStat[c.status] = (cStat[c.status] || 0) + 1; });
+      const followUps = CUSTOMERS.filter(c => c.status !== 'Lead' && c.nextService && daysUntil(c.nextService) <= 14).length;
 
-      // Recent Activity now reads straight from the centralized ACTIVITY log —
-      // one real audit trail written by recordActivity() at the moment each
-      // business event happens, instead of re-assembling loosely-related
-      // arrays (payroll, events, customers, announcements) on every render.
-      const recentActivity = ACTIVITY.slice(0, 6);
-      $('#dashActivityList').innerHTML = recentActivity.length ? recentActivity.map(a => {
-        const ic = EVENT_ICONS[a.action] || EVENT_ICONS.DEFAULT;
-        return `
-    <div class="activity-item">
-      <div class="activity-icon" style="background:${ic.bg};color:${ic.color};"><i class="fa-solid ${ic.icon}"></i></div>
-      <div style="flex:1;min-width:0;"><div class="activity-text">${esc(a.text)}</div><div class="activity-time">${timeAgo(a.ts)}</div></div>
-    </div>`;
-      }).join('') : `<div class="empty-state"><i class="fa-solid fa-clock-rotate-left"></i><p>No recent activity</p></div>`;
+      // ---- KPI cards
+      const kpi = (o) => `<${o.go ? 'button type="button"' : 'div'} class="dx-kpi${o.go ? ' click' : ''}" style="--dx-accent:${o.accent};--dx-bg:${o.bg};" ${o.go ? `onclick="${o.go}"` : ''}>
+      <div class="dx-kpi-top"><span class="dx-kpi-ic"><i class="fa-solid ${o.icon}"></i></span>${o.badge || ''}</div>
+      <div class="dx-kpi-val">${o.value}</div><div class="dx-kpi-lbl">${o.label}</div>${o.extra || ''}<div class="dx-kpi-sub">${o.sub}</div></${o.go ? 'button' : 'div'}>`;
+      let delta = '';
+      if (showMoney) {
+        if (incPrevSame > 0) { const pct = Math.round((incMTD - incPrevSame) / incPrevSame * 100); delta = `<span class="dx-delta ${pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat'}" title="Compared with the same days last month (${peso(incPrevSame)})">${pct > 0 ? '▲' : pct < 0 ? '▼' : '•'} ${Math.abs(pct)}%</span>`; }
+        else delta = `<span class="dx-delta flat" title="No payments recorded in the same days last month">New</span>`;
+      }
+      const goalHTML = (showMoney && goal > 0) ? (() => { const pct = Math.min(100, Math.round(incMonth / goal * 100)); return `<div class="dx-goal"><div class="progress"><div class="progress-bar ${pct >= 100 ? 'success' : ''}" style="width:${pct}%;background:var(--success);"></div></div><small><span>Goal ${esc(dxMoney(goal))}</span><span>${Math.round(incMonth / goal * 100)}%</span></small></div>`; })() : '';
+      const kpis = [];
+      if (showMoney) kpis.push(kpi({ icon: 'fa-sack-dollar', accent: 'var(--success)', bg: 'var(--success-bg)', value: esc(peso(incMTD)), label: 'Income this month', sub: incMTD ? `${months[5].n} paid job${months[5].n === 1 ? '' : 's'} so far` : 'No payments recorded yet this month', badge: delta, extra: goalHTML, go: "goToPage('stats')" }));
+      kpis.push(kpi({ icon: 'fa-calendar-day', accent: 'var(--navy-light)', bg: 'var(--info-bg)', value: today.length, label: "Jobs today", sub: today.length ? `${todayDone} done · ${todayLive} in progress · ${todayNext} to go` : 'Nothing scheduled today', go: "goToPage('calendar')" }));
+      if (!field) kpis.push(kpi({ icon: 'fa-calendar-xmark', accent: 'var(--warning)', bg: 'var(--warning-bg)', value: groups.total, label: 'Need to schedule', sub: groups.total ? `${groups.accept.length} to accept · ${groups.nodate.length} no date · ${groups.noteam.length} no team` : 'All caught up', go: groups.total ? 'clOpenNeed()' : "goToPage('calendar')" }));
+      kpis.push(kpi({ icon: 'fa-calendar-week', accent: 'var(--violet)', bg: 'var(--violet-bg)', value: week.length, label: 'Jobs this week', sub: week.length ? `${weekDone} done · ${week.length - weekDone} to go` : 'No jobs this week', go: "goToPage('calendar')" }));
+      kpis.push(kpi({ icon: 'fa-circle-check', accent: '#0ea5a5', bg: 'rgba(14,165,165,.16)', value: monthDone.length, label: 'Completed this month', sub: monthLive.length ? `${rate}% of this month's ${monthLive.length} job${monthLive.length === 1 ? '' : 's'}` : 'No jobs this month yet', go: 'clOpenDone()' }));
+      if (!field) kpis.push(kpi({ icon: 'fa-user-tie', accent: 'var(--red-light)', bg: 'var(--warning-bg)', value: CUSTOMERS.length, label: 'Customers', sub: `${cStat.Active} active · ${cStat.Lead} lead${cStat.Lead === 1 ? '' : 's'}${cStat.Inactive ? ` · ${cStat.Inactive} inactive` : ''}`, go: can('customers') ? "goToPage('customers')" : '' }));
+
+      // ---- income chart (last 6 months)
+      let incomeCard = '';
+      if (showMoney) {
+        const maxV = Math.max(1, ...months.map(m => m.v), goal || 0);
+        const hasAny = months.some(m => m.v > 0);
+        const cols = months.map((m, i) => `<div class="dx-col${i === 5 ? ' now' : ''}" title="${esc(m.full)}: ${esc(peso(m.v))} from ${m.n} paid job${m.n === 1 ? '' : 's'}"><div class="dx-fillwrap" style="height:${m.v ? Math.max(2, m.v / maxV * 100).toFixed(1) : 0}%;"><span class="dx-bar-val">${m.v ? esc(dxMoney(m.v)) : '₱0'}</span><div class="dx-bar-fill"></div></div></div>`).join('');
+        const axis = months.map((m, i) => `<span class="${i === 5 ? 'now' : ''}">${esc(m.label)}</span>`).join('');
+        const goalLine = goal > 0 ? `<div class="dx-goalline" style="bottom:${(goal / maxV * 100).toFixed(1)}%;"><span>Monthly goal ${esc(dxMoney(goal))}</span></div>` : '';
+        const total6 = months.reduce((t, m) => t + m.v, 0);
+        incomeCard = `<div class="card"><div class="card-head"><div><h3>Income, last 6 months</h3><div class="sub">Payments recorded when a job is marked Complete${hasAny ? ` · ${esc(peso(total6))} in total` : ''}</div></div><button type="button" class="btn btn-ghost btn-sm" onclick="goToPage('stats')">Full statistics</button></div>${hasAny ? `<div class="dx-plot"><div class="dx-plot-in">${goalLine}${cols}</div></div><div class="dx-axis">${axis}</div>` : `<div class="empty-state"><i class="fa-solid fa-chart-column"></i><p>Income will appear here once completed jobs have payments recorded.</p></div>`}</div>`;
+      }
+
+      // ---- needs attention
+      let attention = '';
+      if (!field) {
+        const items = [];
+        const oldest = groups.accept[0];
+        if (groups.accept.length && can('bookings')) items.push(['fa-calendar-check', 'var(--warning-bg)', 'var(--warning)', `${groups.accept.length} booking request${groups.accept.length === 1 ? '' : 's'} to accept`, oldest && oldest.createdAt ? `Oldest came in ${timeAgo(oldest.createdAt)}` : 'Waiting for the office', "goToPage('bookings')"]);
+        if (groups.nodate.length) items.push(['fa-calendar-xmark', 'var(--danger-bg)', 'var(--danger)', `${groups.nodate.length} accepted job${groups.nodate.length === 1 ? ' has' : 's have'} no date`, 'Set a date and team', 'clOpenNeed()']);
+        if (groups.noteam.length) items.push(['fa-people-group', 'var(--violet-bg)', 'var(--violet)', `${groups.noteam.length} upcoming job${groups.noteam.length === 1 ? ' has' : 's have'} no team`, 'Assign a team', 'clOpenNeed()']);
+        if (showMoney && noPayThisMonth) items.push(['fa-hand-holding-dollar', 'var(--info-bg)', 'var(--info)', `${noPayThisMonth} completed job${noPayThisMonth === 1 ? ' has' : 's have'} no payment recorded`, 'This month', 'clOpenDone()']);
+        if (followUps && can('followups')) items.push(['fa-broom', 'var(--orange-bg)', 'var(--orange)', `${followUps} customer${followUps === 1 ? ' is' : 's are'} due for maintenance`, 'Due within 14 days or overdue', "goToPage('followups')"]);
+        attention = `<div class="card"><div class="card-head"><div><h3>Needs your attention</h3><div class="sub">Things waiting on the office</div></div></div>${items.length ? items.map(([ic, bg, col, t, sm, go]) => `<button type="button" class="dx-att" onclick="${go}"><span class="dx-att-ic" style="background:${bg};color:${col};"><i class="fa-solid ${ic}"></i></span><span class="dx-att-tx"><b>${t}</b><small>${esc(sm)}</small></span><span class="dx-att-go"><i class="fa-solid fa-chevron-right"></i></span></button>`).join('') : `<div class="dx-ok"><i class="fa-solid fa-circle-check"></i><b style="color:var(--text-1);">You're all caught up</b><br>No requests or jobs are waiting.</div>`}</div>`;
+      }
+
+      // ---- today's jobs
+      const todayRows = today.slice(0, 6).map(e => { const c = custById(e.customerId), team = eventTeamLabel(e); return `<div class="dx-job" onclick="openScheduleJobDetail('${e.id}')"><div class="dx-job-time">${e.time ? esc(fmtTime(e.time)) : 'Any time'}</div><div class="dx-job-main"><b>${c ? esc(c.name) : 'No customer linked'}</b><small>${esc(e.serviceType || e.note || 'Service job')}${team ? ' · ' + esc(team) : ' · no team yet'}</small></div>${badge(e.type)}</div>`; }).join('');
+      const todayCard = `<div class="card"><div class="card-head"><div><h3>Today's jobs</h3><div class="sub">${esc(now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }))}</div></div></div>${today.length ? todayRows + (today.length > 6 ? `<div style="text-align:center;margin-top:8px;"><button type="button" class="btn btn-ghost btn-sm" onclick="jumpToCalendarDate('${todayISO}')">See all ${today.length}</button></div>` : '') : `<div class="empty-state"><i class="fa-solid fa-mug-hot"></i><p>No jobs scheduled today</p></div>`}</div>`;
+
+      // ---- next 7 days
+      let weekHTML = '', next7 = 0;
+      for (let i = 0; i < 7; i++) {
+        const iso = addDays(todayISO, i), d = new Date(iso + 'T00:00:00');
+        const n = evs.filter(e => e.date === iso && e.type !== 'Cancelled').length; next7 += n;
+        weekHTML += `<button type="button" class="dx-day${i === 0 ? ' today' : ''}" onclick="jumpToCalendarDate('${iso}')" title="${esc(fmtDate(iso))}"><span class="w">${d.toLocaleDateString('en-US', { weekday: 'short' })}</span><span class="d">${d.getDate()}</span><span class="n${n ? ' has' : ''}">${n}</span></button>`;
+      }
+      const upcoming = evs.filter(e => e.date && e.date > todayISO && e.type !== 'Cancelled' && e.type !== 'Completed').sort(clByTime).slice(0, 3);
+      const weekCard = `<div class="card"><div class="card-head"><div><h3>Next 7 days</h3><div class="sub">${next7} job${next7 === 1 ? '' : 's'} coming up · tap a day to open it</div></div></div><div class="dx-week">${weekHTML}</div>${upcoming.length ? upcoming.map(e => { const c = custById(e.customerId); return `<div class="dx-job" onclick="openScheduleJobDetail('${e.id}')"><div class="dx-job-time">${esc(fmtDateShort(e.date))}</div><div class="dx-job-main"><b>${c ? esc(c.name) : 'No customer linked'}</b><small>${esc(e.serviceType || e.note || 'Service job')}</small></div></div>`; }).join('') : `<div class="cell-muted" style="font-size:12.5px;">No further jobs scheduled after today.</div>`}</div>`;
+
+      // ---- jobs this month by status
+      const jobCounts = {}; monthJobs.forEach(e => { jobCounts[e.type] = (jobCounts[e.type] || 0) + 1; });
+      const jobData = ['Completed', 'Ongoing', 'Arrived', 'Confirmed', 'Pending', 'Cancelled'].filter(t => jobCounts[t]).map(t => ({ label: t, value: jobCounts[t], color: EVENT_COLORS[t] }));
+      const statusCard = `<div class="card"><div class="card-head"><div><h3>Jobs this month</h3><div class="sub">By status</div></div></div>${jobData.length ? donutChartHTML(jobData, monthJobs.length, 'Jobs') : `<div class="empty-state"><i class="fa-solid fa-calendar"></i><p>No jobs scheduled this month yet</p></div>`}</div>`;
+
+      // ---- most booked services (this year)
+      const svc = {}; let svcTotal = 0;
+      evs.forEach(e => {
+        if (!e.date || e.date.slice(0, 4) !== yearKey || e.type === 'Cancelled') return;
+        const names = e.serviceType ? String(e.serviceType).split(',').map(x => x.trim()).filter(Boolean) : [String(e.note || 'Service job').trim()];
+        names.forEach(n => { const k = n.toLowerCase(); (svc[k] = svc[k] || { name: n, n: 0 }).n++; svcTotal++; });
+      });
+      const svcTop = Object.values(svc).sort((a, b) => b.n - a.n || a.name.localeCompare(b.name)).slice(0, 5);
+      const svcCard = `<div class="card"><div class="card-head"><div><h3>Most booked services</h3><div class="sub">Jobs in ${esc(yearKey)}</div></div></div>${svcTop.length ? svcTop.map(x => { const pct = Math.round(x.n / svcTotal * 100); return `<div class="dx-hbar"><div class="dx-hbar-top"><span title="${esc(x.name)}">${esc(x.name)}</span><span>${x.n} · ${pct}%</span></div><div class="progress"><div class="progress-bar" style="width:${pct}%;background:var(--navy-light);"></div></div></div>`; }).join('') : `<div class="empty-state"><i class="fa-solid fa-screwdriver-wrench"></i><p>No jobs this year yet</p></div>`}</div>`;
+
+      // ---- team workload (next 14 days)
+      const wl = {}; let wlTotal = 0; const wlEnd = addDays(todayISO, 13);
+      evs.forEach(e => {
+        if (!e.date || e.date < todayISO || e.date > wlEnd || e.type === 'Cancelled' || e.type === 'Completed') return;
+        const n = eventTeamLabel(e) || 'No team assigned'; (wl[n] = wl[n] || { name: n, n: 0, none: n === 'No team assigned' }).n++; wlTotal++;
+      });
+      const wlTop = Object.values(wl).sort((a, b) => b.n - a.n || a.name.localeCompare(b.name)).slice(0, 6);
+      const wlMax = Math.max(1, ...wlTop.map(x => x.n));
+      const teamCard = `<div class="card"><div class="card-head"><div><h3>Team workload</h3><div class="sub">Upcoming jobs in the next 14 days</div></div></div>${wlTop.length ? wlTop.map(x => `<div class="dx-hbar"><div class="dx-hbar-top"><span title="${esc(x.name)}">${x.none ? '<i class="fa-solid fa-triangle-exclamation" style="color:var(--warning);"></i> ' : ''}${esc(x.name)}</span><span>${x.n} job${x.n === 1 ? '' : 's'}</span></div><div class="progress"><div class="progress-bar" style="width:${Math.round(x.n / wlMax * 100)}%;background:${x.none ? 'var(--warning)' : 'var(--violet)'};"></div></div></div>`).join('') : `<div class="empty-state"><i class="fa-solid fa-people-group"></i><p>No upcoming jobs in the next 14 days</p></div>`}</div>`;
+
+      // ---- customers
+      const cTotal = CUSTOMERS.length, cColors = { Active: 'var(--success)', Lead: 'var(--warning)', Inactive: 'var(--text-3)' };
+      const custCard = `<div class="card"><div class="card-head"><div><h3>Customer snapshot</h3><div class="sub">Status breakdown</div></div></div>${cTotal ? `<div class="status-rows">${Object.entries(cStat).filter(([, v]) => v > 0).map(([k, v]) => { const pct = Math.round(v / cTotal * 100); return `<div class="status-row"><div class="status-row-top"><span class="k"><i style="background:${cColors[k] || 'var(--text-3)'};"></i>${esc(k)}</span><span class="v">${v} · ${pct}%</span></div><div class="progress"><div class="progress-bar" style="width:${pct}%;background:${cColors[k] || 'var(--text-3)'};"></div></div></div>`; }).join('')}</div>` : `<div class="empty-state"><i class="fa-solid fa-user-tie"></i><p>No customers yet</p></div>`}</div>`;
+
+      // ---- recent activity (+ payroll for those allowed to see it)
+      const recent = ACTIVITY.slice(0, 6);
+      const actCard = `<div class="card"><div class="card-head"><div><h3>Recent activity</h3><div class="sub">Latest updates across bookings, jobs, customers and the team</div></div></div>${recent.length ? recent.map(a => { const ic = EVENT_ICONS[a.action] || EVENT_ICONS.DEFAULT; return `<div class="activity-item"><div class="activity-icon" style="background:${ic.bg};color:${ic.color};"><i class="fa-solid ${ic.icon}"></i></div><div style="flex:1;min-width:0;"><div class="activity-text">${esc(a.text)}</div><div class="activity-time">${timeAgo(a.ts)}</div></div></div>`; }).join('') : `<div class="empty-state"><i class="fa-solid fa-clock-rotate-left"></i><p>No recent activity</p></div>`}</div>`;
+      let payCard = '';
+      if (can('payroll') && !field) {
+        let st = null; try { st = computePeriodStats(CURRENT_PERIOD_ID); } catch (err) { st = null; }
+        if (st) payCard = `<div class="card"><div class="card-head"><div><h3>Payroll</h3><div class="sub">Current pay period</div></div><button type="button" class="btn btn-ghost btn-sm" onclick="goToPage('payroll')">Open</button></div><div class="dx-mini"><span>Net pay this period</span><b>${esc(peso(st.net))}</b></div><div class="dx-mini"><span>Loan follow-ups</span><b>${st.followUps}</b></div></div>`;
+      }
+
+      // ---- assemble
+      const hr = now.getHours(), part = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
+      const nm = (typeof sessionName === 'function' ? sessionName() : '') || '';
+      const first = nm.split(' ')[0] || 'there';
+      const bits = []; bits.push(`${today.length} job${today.length === 1 ? '' : 's'} today`);
+      if (!field && groups.accept.length) bits.push(`${groups.accept.length} booking request${groups.accept.length === 1 ? '' : 's'} waiting`);
+      if (!field && (groups.nodate.length + groups.noteam.length)) bits.push(`${groups.nodate.length + groups.noteam.length} to schedule`);
+      root.innerHTML = `
+    <div class="dx-hero">
+      <div><div class="dx-eyebrow">${esc(now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }))}</div><h1>${part}, ${esc(first)}</h1><p>${esc(bits.join(' · '))}</p></div>
+      <div class="dx-actions">
+        ${can('jobManage') ? `<button type="button" class="btn btn-primary btn-sm" onclick="openEventModal()"><i class="fa-solid fa-plus"></i>Add Job</button>` : ''}
+        ${can('bookings') && !field ? `<button type="button" class="btn btn-ghost btn-sm" onclick="goToPage('bookings')"><i class="fa-solid fa-calendar-check"></i>Booking Requests</button>` : ''}
+        <button type="button" class="btn btn-ghost btn-sm" onclick="goToPage('calendar')"><i class="fa-solid fa-calendar-days"></i>Calendar</button>
+      </div>
+    </div>
+    <div class="dx-kpis" style="--dx-n:${kpis.length};">${kpis.join('')}</div>
+    ${(incomeCard || attention) ? `<div class="dx-row ${incomeCard && attention ? 'dx-r-21' : ''}">${incomeCard}${attention}</div>` : ''}
+    <div class="dx-row dx-r-3">${todayCard}${weekCard}${statusCard}</div>
+    <div class="dx-row dx-r-3">${svcCard}${teamCard}${custCard}</div>
+    <div class="dx-row ${payCard ? 'dx-r-21' : ''}">${actCard}${payCard}</div>`;
+      try { updateNeedBadge(); } catch (x) { }
+      if (showMoney && (DX_GOAL.v === null || Date.now() - DX_GOAL.at > 60000)) dxLoadGoal().then(g => { if (g !== goal && document.getElementById('dxRoot') && document.querySelector('#page-dashboard.active')) renderDashboard(); });
     }
 
     /* ============================================================
@@ -8618,6 +9044,7 @@
       if (role === 'Technician') populateTechPicker();   // who is signed in decides which role's access applies
       recomputeRoleHiddenPages();
       applyPermissionUI();
+      try { updateNeedBadge(); } catch (x) { }   // the "jobs to schedule" badge is office-only
       $('#profileRoleLabel').textContent = role === 'Technician' ? (empById(CURRENT_TECH_ID)?.role || 'Staff') : ROLE_LABELS[role];
       $('#techPickerWrap').style.display = role === 'Technician' ? 'block' : 'none';
       if (role === 'Technician') {
