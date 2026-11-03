@@ -1658,7 +1658,7 @@
 
     .cal-grid {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: repeat(7, minmax(0, 1fr));   /* minmax(0,…) lets the 7 columns shrink to fit a phone instead of overflowing */
       gap: 8px;
     }
 
@@ -1710,6 +1710,14 @@
     .cal-day .dots {
       display: flex;
       gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 100%;
+    }
+    @media (max-width: 520px) {
+      .cal-grid { gap: 4px; }
+      .cal-day .dots { gap: 2px; }
+      .cal-day .dots span { width: 6px; height: 6px; }
     }
 
     .cal-day .dots span {
@@ -2158,6 +2166,11 @@
       align-items: center;
       gap: 12px;
     }
+    /* very long words (names, emails, links) wrap inside the card instead of pushing it wider than the screen */
+    .followup-item { max-width: 100%; }
+    .followup-info { max-width: 100%; }
+    .followup-info > div:not(.avatar):not(.bk-rank) { min-width: 0; overflow-wrap: anywhere; }
+    .cl-main, .bkd-v, .dx-att-tx { overflow-wrap: anywhere; }
 
     .followup-dates {
       display: flex;
@@ -3469,6 +3482,37 @@
     .dx-mini { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
     .dx-mini:last-child { border-bottom: 0; }
     .dx-mini b { font-size: 16px; }
+
+    /* ================= Edit Customer: same pickers as the booking form ================= */
+    .cp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .cp-chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid var(--border); background: var(--glass-bg); color: var(--text-2); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .cp-chip:hover { border-color: var(--border-strong); color: var(--text-1); }
+    .cp-chip .ck { display: none; font-size: 11px; }
+    .cp-chip.on { border-color: var(--red); background: var(--red-glow); color: var(--red-light); }
+    .cp-chip.on .ck { display: inline-block; }
+    .cp-units { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .cp-unit { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 12px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--glass-bg); min-height: 46px; }
+    .cp-unit.on { border-color: var(--red); background: var(--red-glow); }
+    .cp-unit .nm { flex: 1; min-width: 0; text-align: left; background: none; border: 0; padding: 0; font: inherit; font-size: 13px; font-weight: 600; color: var(--text-2); cursor: pointer; }
+    .cp-unit.on .nm { color: var(--text-1); }
+    .cp-step { display: inline-flex; align-items: center; gap: 4px; flex: 0 0 auto; }
+    .cp-step button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border-strong); background: var(--bg-elevated); color: var(--text-1); font: inherit; font-size: 16px; font-weight: 800; line-height: 1; cursor: pointer; }
+    .cp-step button:hover { border-color: var(--red); }
+    .cp-step b { min-width: 26px; text-align: center; font-size: 14px; }
+    .cp-other-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+    .cp-other-row .input { flex: 1; min-width: 0; }
+    .cp-total { margin-top: 10px; font-size: 12.5px; font-weight: 800; color: var(--navy-text); }
+    .cp-note { font-size: 11.5px; color: var(--text-3); margin-top: 6px; }
+    @media (max-width: 560px) { .cp-units { grid-template-columns: 1fr; } }
+
+    /* ================= Calendar page view switcher ================= */
+    .cl-views { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 16px; }
+    .cl-view { display: inline-flex; align-items: center; gap: 9px; padding: 10px 18px; border-radius: var(--r-full); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-2); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: border-color .15s, background .15s; }
+    .cl-view:hover { border-color: var(--border-strong); color: var(--text-1); }
+    .cl-view.active { background: var(--red); border-color: var(--red); color: #18110a; }
+    .cl-view .cl-count { background: rgba(127, 127, 127, .22); }
+    .cl-view.active .cl-count { background: rgba(0, 0, 0, .18); }
+    .cl-view .cl-count.warn { background: var(--warning); color: #18110a; }
   </style>
 </head>
 
@@ -3843,8 +3887,13 @@
             <button class="btn btn-primary btn-sm" onclick="openEventModal()"><i class="fa-solid fa-plus"></i>Add Job</button>
           </div>
         </div>
+        <div class="cl-views" id="calViews" role="tablist" aria-label="Calendar views">
+          <button type="button" class="cl-view active" id="clViewCalendar" role="tab" onclick="clSetView('calendar')"><i class="fa-solid fa-calendar-days"></i>Calendar</button>
+          <button type="button" class="cl-view" id="clViewTotal" role="tab" onclick="clSetView('total')"><i class="fa-solid fa-list-ul"></i>Total Schedule <span class="cl-count" id="clCountTotal">0</span></button>
+          <button type="button" class="cl-view" id="clViewNeed" role="tab" onclick="clSetView('need')"><i class="fa-solid fa-calendar-xmark"></i>Need to Schedule <span class="cl-count warn" id="clCountNeed">0</span></button>
+        </div>
         <div id="calNeedsSchedulingBanner"></div>
-        <div class="grid-8-4">
+        <div class="grid-8-4" id="calGridWrap">
           <div class="card">
             <div class="cal-head">
               <button class="icon-btn btn-sm" onclick="mainCalNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
@@ -3872,12 +3921,8 @@
         <div class="card cl-card" id="calListsCard">
           <div class="cl-head">
             <div>
-              <h3 style="margin:0;">All Schedules</h3>
+              <h3 style="margin:0;" id="clTitle">Total Schedule</h3>
               <div class="sub" id="clSub">Every job in one list, so you don't have to flip through each month.</div>
-            </div>
-            <div class="cl-tabs" role="tablist" aria-label="Schedule lists">
-              <button type="button" class="cl-tab active" id="clTabTotal" role="tab" onclick="clSetTab('total')"><i class="fa-solid fa-list-ul"></i>Total Schedule <span class="cl-count" id="clCountTotal">0</span></button>
-              <button type="button" class="cl-tab" id="clTabNeed" role="tab" onclick="clSetTab('need')"><i class="fa-solid fa-calendar-xmark"></i>Need to Schedule <span class="cl-count warn" id="clCountNeed">0</span></button>
             </div>
           </div>
           <div class="cl-tools">
@@ -4337,7 +4382,7 @@
     const $all = sel => Array.from(document.querySelectorAll(sel));
     const peso = n => new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', maximumFractionDigits: 2 }).format(n || 0);
     const empById = id => EMPLOYEES.find(e => e.id === id);
-    function initials(name) { return String(name || '').split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase(); }
+    function initials(name) { return esc(String(name || '').split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase()); }   // escaped: it is always placed inside HTML, and a name like "<img…" used to break the markup
     function esc(s) {
       return String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
     }
@@ -5702,7 +5747,7 @@
     function updateAcctRoleHint() {
       const box = $('#acctRoleHint'), sel = $('#fAcctRole'); if (!box || !sel) return;
       const role = sel.value;
-      if (role === 'Admin') { box.innerHTML = '<i class="fa-solid fa-shield-halved"></i><span>Administrators always have full access to everything.</span>'; return; }
+      if (role === 'Admin') { box.innerHTML = '<i class="fa-solid fa-lock"></i><span>Administrators always have full access to everything.</span>'; return; }
       if (role === '__other') { box.innerHTML = '<i class="fa-solid fa-circle-info"></i><span>A new role starts with limited (recommended) access. After you create the account, choose exactly what this role can open under <b>Settings → Roles &amp; Permissions</b>.</span>'; return; }
       const n = PERM_ALL.filter(p => roleCan(role, p.key)).length;
       box.innerHTML = `<i class="fa-solid fa-user-lock"></i><span><b>${esc(role)}</b> accounts can currently use ${n} of ${PERM_ALL.length} features. <a href="#" data-role="${esc(role)}" onclick="openRolePermissions(this.dataset.role);return false;">Choose what ${esc(role)} accounts can access →</a></span>`;
@@ -5884,6 +5929,7 @@
           <div class="cell-muted" style="font-size:11px;">${esc(detailBits)}</div>
           ${e.customerDetails ? `<div class="cell-muted" style="font-size:11px;margin-top:1px;font-style:italic;">"${esc(e.customerDetails)}"</div>` : ''}
           ${cust && cust.phone && cust.phone !== '—' ? `<div class="cell-muted" data-pm="phones" style="font-size:11px;margin-top:1px;"><i class="fa-solid fa-phone"></i> ${esc(cust.phone)}</div>` : ''}
+          ${cust && cust.address && cust.address !== '—' ? `<div class="cell-muted" style="font-size:11px;margin-top:1px;word-break:break-word;"><i class="fa-solid fa-location-dot"></i> ${esc(cust.address)}${cust.landmark && cust.landmark !== '—' ? ' · Near ' + esc(cust.landmark) : ''}${/^https?:\/\//i.test(cust.mapLink || '') ? ` · <a href="${esc(cust.mapLink)}" target="_blank" rel="noopener noreferrer" style="color:var(--navy-text);">Map pin</a>` : ''}</div>` : ''}
         </div>
       </div>
       <div class="followup-dates">
@@ -5991,6 +6037,8 @@
           e.decidedAt = new Date().toISOString();
           e.decidedAction = 'Accepted';
           saveEvents();
+          // the person now has confirmed work with us, so they are an Active customer (not a Lead any more)
+          if (cust && (cust.status === 'Lead' || cust.status === 'Inactive')) { cust.status = 'Active'; saveCustomers(); }
           closeModal();
           const scheduleBit = date ? `for ${fmtDate(date)}${time ? ' at ' + fmtTime(time) : ''}` : '(no date set yet)';
           recordActivity('BOOKING_ACCEPTED', 'job', e.id, `${currentActor().label} accepted the booking${cust ? ' from ' + cust.name : ''} ${scheduleBit}${techs.length ? '' : ' — not yet assigned to a team'}.`);
@@ -6146,6 +6194,7 @@
       showToast('info', 'Booking restored to Pending');
     }
     function jumpToCalendarDate(iso) {
+      CL.keepOnce = false; CL.view = 'calendar';
       goToPage('calendar');
       const d = new Date(iso + 'T00:00:00');
       mainCalDate = new Date(d.getFullYear(), d.getMonth(), 1);
@@ -6311,8 +6360,71 @@
     </div>
   `);
     }
+
+    /* ---- Edit Customer: the same choices the customer sees on the booking form ---- */
+    const CP_PROPERTY = ['Residential', 'Condominium', 'Commercial', 'Industrial'];
+    const CP_SERVICES = ['Aircon Installation', 'Aircon Cleaning', 'Aircon Repair', 'Preventive Maintenance', 'Relocation', 'Troubleshooting', 'Re-process', 'Dismantling', 'Pull Down Cleaning', 'Freon Charging', 'Aircon Maintenance'];
+    const CP_AIRCON = ['Window (Non-Inverter)', 'Window (Inverter)', 'Window (U-Type)', 'Split Type (Inverter)', 'Floor Mounted (Wall / Ceiling)', 'Ceiling Cassette', 'Portable (Mobile)'];
+    const CP_MAX_QTY = 20, CP_MAX_OTHER = 10;
+    let CP = null;
+    const cpNorm = v => String(v || '').toLowerCase().replace(/\s+/g, ' ').trim();
+    const cpClean = v => String(v || '').replace(/\s+/g, ' ').trim();
+    // Reads what is already saved on the customer (including older free-typed records) into pickable state. Nothing is dropped.
+    function cpParse(c) {
+      const st = { prop: '', propOther: '', svc: new Set(), svcOther: '', air: {}, airOther: [] };
+      const pv = cpClean(c && c.propertyType);
+      if (pv) { const m = CP_PROPERTY.find(x => cpNorm(x) === cpNorm(pv)); if (m) st.prop = m; else { st.prop = '__other'; st.propOther = pv; } }
+      const extra = [];
+      String((c && c.preferredServiceType) || '').split(',').map(cpClean).filter(Boolean).forEach(t => { const m = CP_SERVICES.find(x => cpNorm(x) === cpNorm(t)); if (m) st.svc.add(m); else extra.push(t); });
+      st.svcOther = extra.join(', ');
+      String((c && c.airconType) || '').split(',').map(cpClean).filter(Boolean).forEach(t => {
+        const mm = /^(.*?)(?:\s+[x×]\s*(\d+))?$/i.exec(t); const name = cpClean(mm[1]); if (!name) return;
+        const qty = Math.min(CP_MAX_QTY, Math.max(1, parseInt(mm[2], 10) || 1));
+        const m = CP_AIRCON.find(x => cpNorm(x) === cpNorm(name));
+        if (m) st.air[m] = Math.min(CP_MAX_QTY, (st.air[m] || 0) + qty);
+        else if (st.airOther.length < CP_MAX_OTHER) st.airOther.push({ text: name, qty });
+      });
+      return st;
+    }
+    function cpPropertyValue() { return CP.prop === '__other' ? cpClean(CP.propOther) : (CP.prop || ''); }
+    function cpServiceValue() { const known = CP_SERVICES.filter(x => CP.svc.has(x)); const extra = String(CP.svcOther || '').split(',').map(cpClean).filter(Boolean); return known.concat(extra).join(', '); }
+    function cpAirconValue() {
+      const items = CP_AIRCON.filter(a => CP.air[a]).map(a => `${a} x${CP.air[a]}`);
+      CP.airOther.forEach(o => { const t = cpClean(String(o.text || '').replace(/,/g, ' ')); if (t) items.push(`${t} x${o.qty}`); });
+      return items.join(', ');
+    }
+    function cpTotalUnits() { let n = 0; Object.keys(CP.air).forEach(k => { n += CP.air[k]; }); CP.airOther.forEach(o => { if (cpClean(o.text)) n += o.qty; }); return n; }
+    function cpRenderProp() {
+      const h = document.getElementById('cpProp'); if (!h || !CP) return;
+      h.innerHTML = `<select class="select" id="fCustPropSel" onchange="cpPropChange(this.value)"><option value="">Not set</option>${CP_PROPERTY.map(x => `<option value="${esc(x)}"${CP.prop === x ? ' selected' : ''}>${esc(x)}</option>`).join('')}<option value="__other"${CP.prop === '__other' ? ' selected' : ''}>Others (specify)</option></select>`
+        + (CP.prop === '__other' ? `<input class="input" id="fCustPropOther" maxlength="100" style="margin-top:8px;" placeholder="e.g. Church, School, Hospital" value="${esc(CP.propOther)}" oninput="CP.propOther=this.value">` : '');
+    }
+    function cpPropChange(v) { CP.prop = v; cpRenderProp(); if (v === '__other') { const i = document.getElementById('fCustPropOther'); if (i) i.focus(); } }
+    function cpRenderSvc() {
+      const h = document.getElementById('cpSvc'); if (!h || !CP) return;
+      h.innerHTML = `<div class="cp-chips">${CP_SERVICES.map((x, i) => `<button type="button" class="cp-chip${CP.svc.has(x) ? ' on' : ''}" aria-pressed="${CP.svc.has(x)}" onclick="cpToggleSvc(${i})"><i class="fa-solid fa-check ck"></i>${esc(x)}</button>`).join('')}</div>`
+        + `<input class="input" id="fCustSvcOther" maxlength="150" style="margin-top:8px;" placeholder="Other service (optional)" value="${esc(CP.svcOther)}" oninput="CP.svcOther=this.value">`;
+    }
+    function cpToggleSvc(i) { const x = CP_SERVICES[i]; if (CP.svc.has(x)) CP.svc.delete(x); else CP.svc.add(x); cpRenderSvc(); }
+    function cpRenderAir(focusLast) {
+      const h = document.getElementById('cpAir'); if (!h || !CP) return;
+      const units = CP_AIRCON.map((a, i) => { const q = CP.air[a]; return `<div class="cp-unit${q ? ' on' : ''}"><button type="button" class="nm" aria-pressed="${!!q}" onclick="cpToggleAir(${i})">${esc(a)}</button>${q ? `<span class="cp-step"><button type="button" aria-label="Fewer units" onclick="cpAirQty(${i},-1)">−</button><b>${q}</b><button type="button" aria-label="More units" onclick="cpAirQty(${i},1)">+</button></span>` : ''}</div>`; }).join('');
+      const others = CP.airOther.map((o, i) => `<div class="cp-other-row"><input class="input" maxlength="80" placeholder="Describe the aircon" value="${esc(o.text)}" oninput="CP.airOther[${i}].text=this.value"><span class="cp-step"><button type="button" aria-label="Fewer units" onclick="cpOtherQty(${i},-1)">−</button><b>${o.qty}</b><button type="button" aria-label="More units" onclick="cpOtherQty(${i},1)">+</button></span><button type="button" class="btn btn-ghost btn-sm btn-icon" title="Remove" aria-label="Remove this line" onclick="cpDelOther(${i})"><i class="fa-solid fa-xmark"></i></button></div>`).join('');
+      const tot = cpTotalUnits();
+      h.innerHTML = `<div class="cp-units">${units}</div>${others}`
+        + (CP.airOther.length < CP_MAX_OTHER ? `<div style="margin-top:8px;"><button type="button" class="btn btn-outline btn-sm" onclick="cpAddOther()"><i class="fa-solid fa-plus"></i>Others (specify)</button></div>` : '')
+        + (tot ? `<div class="cp-total">Total units: ${tot}</div>` : '');
+      if (focusLast) { const ins = h.querySelectorAll('.cp-other-row .input'); if (ins.length) ins[ins.length - 1].focus(); }
+    }
+    function cpToggleAir(i) { const a = CP_AIRCON[i]; if (CP.air[a]) delete CP.air[a]; else CP.air[a] = 1; cpRenderAir(); }
+    function cpAirQty(i, d) { const a = CP_AIRCON[i]; if (!CP.air[a]) return; CP.air[a] = Math.min(CP_MAX_QTY, Math.max(1, CP.air[a] + d)); cpRenderAir(); }
+    function cpOtherQty(i, d) { const o = CP.airOther[i]; if (!o) return; o.qty = Math.min(CP_MAX_QTY, Math.max(1, o.qty + d)); cpRenderAir(); }
+    function cpAddOther() { if (CP.airOther.length >= CP_MAX_OTHER) return; CP.airOther.push({ text: '', qty: 1 }); cpRenderAir(true); }
+    function cpDelOther(i) { CP.airOther.splice(i, 1); cpRenderAir(); }
+    function cpRenderAll() { cpRenderProp(); cpRenderSvc(); cpRenderAir(); }
     function openCustomerModal(editId) {
       const c = editId ? custById(editId) : null;
+      CP = cpParse(c);
       openModal(c ? 'Edit Customer' : 'New Customer', `
     <div class="form-grid">
       <div class="form-group full"><label>Full Name / Business Name *</label><input class="input" id="fCustName" placeholder="Juan Dela Cruz" value="${c ? esc(c.name) : ''}"></div>
@@ -6323,15 +6435,16 @@
       <div class="form-group full"><label>Landmark</label><input class="input" id="fCustLandmark" placeholder="e.g. Beside the wet market, across Petron gas station" value="${c && c.landmark ? esc(c.landmark) : ''}"></div>
       <div class="form-group full"><label>Google Maps Link</label><input class="input" id="fCustMapLink" placeholder="Paste pin link from customer, or add one yourself if they didn't provide it" value="${c && c.mapLink ? esc(c.mapLink) : ''}"></div>
       <div class="form-group full"><label>Unit / Service Type</label><input class="input" id="fCustUnit" placeholder="e.g. 2 Split-type units" value="${c ? esc(c.unit) : ''}"></div>
-      <div class="form-group"><label>Property Type</label><input class="input" id="fCustPropertyType" placeholder="e.g. Residential" value="${c && c.propertyType ? esc(c.propertyType) : ''}"></div>
-      <div class="form-group"><label>Preferred Service</label><input class="input" id="fCustPreferredService" placeholder="e.g. Aircon Cleaning" value="${c && c.preferredServiceType ? esc(c.preferredServiceType) : ''}"></div>
-      <div class="form-group full"><label>Aircon Type</label><input class="input" id="fCustAirconType" placeholder="e.g. Split Type (Inverter)" value="${c && c.airconType ? esc(c.airconType) : ''}"></div>
+      <div class="form-group full"><label>Property Type</label><div id="cpProp"></div></div>
+      <div class="form-group full"><label>Service Required <span class="cell-muted" style="font-weight:500;">(tick all that apply)</span></label><div id="cpSvc"></div></div>
+      <div class="form-group full"><label>Type of Aircon <span class="cell-muted" style="font-weight:500;">(choose the type, then how many units)</span></label><div id="cpAir"></div></div>
       <div class="form-group"><label>Status</label><select class="select" id="fCustStatus"><option ${c?.status === 'Active' ? 'selected' : ''}>Active</option><option ${c?.status === 'Lead' ? 'selected' : ''}>Lead</option><option ${c?.status === 'Inactive' ? 'selected' : ''}>Inactive</option></select></div>
       <div class="form-group"><label>Last Service</label><input class="input" type="date" id="fCustLast" value="${c && c.lastService ? c.lastService : ''}"></div>
       <div class="form-group full"><label>Next Service Due</label><input class="input" type="date" id="fCustNext" value="${c && c.nextService ? c.nextService : ''}"></div>
       <div class="form-group full"><label>Notes</label><textarea class="input" id="fCustNotes" placeholder="Access instructions, preferences, contract details…">${c ? esc(c.notes) : ''}</textarea></div>
     </div>
   `, [{ label: c ? 'Save Changes' : 'Add Customer', primary: true, onClick: () => saveCustomer(editId) }]);
+      cpRenderAll();
     }
     function saveCustomer(editId) {
       const nameEl = $('#fCustName');
@@ -6340,7 +6453,7 @@
         name: nameEl.value.trim(), phone: $('#fCustPhone').value || '—',
         address: $('#fCustAddress').value || '—', barangay: $('#fCustBarangay').value || '', city: $('#fCustCity').value || '',
         landmark: $('#fCustLandmark').value || '', mapLink: $('#fCustMapLink').value || '',
-        unit: $('#fCustUnit').value || '—', propertyType: $('#fCustPropertyType').value || '', preferredServiceType: $('#fCustPreferredService').value || '', airconType: $('#fCustAirconType').value || '',
+        unit: $('#fCustUnit').value || '—', propertyType: cpPropertyValue(), preferredServiceType: cpServiceValue(), airconType: cpAirconValue(),
         status: $('#fCustStatus').value,
         lastService: $('#fCustLast').value || '', nextService: $('#fCustNext').value || '', notes: $('#fCustNotes').value || ''
       };
@@ -6352,8 +6465,7 @@
         syncDependentViews();
         showToast('success', data.name + ' updated');
       } else {
-        const nextNum = String(CUSTOMERS.length + 1).padStart(3, '0');
-        const newId = 'CUST-' + nextNum;
+        const newId = _ibNextCustId(CUSTOMERS);   // highest existing number + 1, so it can never clash
         CUSTOMERS.push({ id: newId, ...data });
         closeModal(); renderCustomers();
         saveCustomers();
@@ -6977,7 +7089,7 @@
        CALENDAR LISTS: "Total Schedule" (every job, every month, one list)
        and "Need to Schedule" (everything still waiting on the office)
        ============================================================ */
-    let CL = { tab: 'total', filter: 'upcoming', q: '', limit: 60 };
+    let CL = { view: 'calendar', keepOnce: false, tab: 'total', filter: 'upcoming', q: '', limit: 60 };
     const CL_FILTERS = [['upcoming', 'Upcoming'], ['today', 'Today'], ['month', 'This month'], ['done', 'Completed'], ['cancelled', 'Cancelled'], ['all', 'All']];
     function clToday() { return toISODate(new Date()); }
     function clView() { return (isFieldView() && CURRENT_TECH_ID) ? EVENTS.filter(e => eventTechs(e).includes(CURRENT_TECH_ID)) : EVENTS.slice(); }
@@ -7050,23 +7162,31 @@
       const open = (mode === 'accept' && can('bookingManage')) ? `openAcceptBookingModal('${e.id}')` : `openScheduleJobDetail('${e.id}')`;
       return `<div class="cl-row" onclick="${open}">${dateTile}<div class="cl-main"><div class="cl-name">${c ? esc(c.name) : 'No customer linked'} ${web}</div><div class="cl-meta">${meta}</div></div><div class="cl-side">${side}</div></div>`;
     }
-    function clSetTab(t) { CL.tab = t; CL.limit = 60; renderCalendarLists(); }
+    function clSetView(v) { CL.view = v; if (v !== 'calendar') CL.tab = v; CL.limit = 60; renderCalendarLists(); }
+    function clSetTab(t) { clSetView(t); }
     function clSetFilter(f) { CL.filter = f; CL.limit = 60; renderCalendarLists(); }
     function clSearch(v) { CL.q = v || ''; CL.limit = 60; renderCalendarLists(); }
     function clMore() { CL.limit += 60; renderCalendarLists(); }
-    function clOpenNeed() { CL.tab = 'need'; CL.q = ''; goToPage('calendar'); setTimeout(() => { renderCalendarLists(); const c = document.getElementById('calListsCard'); if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); }
-    function clOpenDone() { CL.tab = 'total'; CL.filter = 'done'; CL.q = ''; goToPage('calendar'); setTimeout(() => { renderCalendarLists(); const c = document.getElementById('calListsCard'); if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); }
+    function clOpenNeed() { CL.view = 'need'; CL.tab = 'need'; CL.q = ''; CL.keepOnce = true; goToPage('calendar'); }
+    function clOpenDone() { CL.view = 'total'; CL.tab = 'total'; CL.filter = 'done'; CL.q = ''; CL.keepOnce = true; goToPage('calendar'); }
     function renderCalendarLists() {
       const card = document.getElementById('calListsCard'); if (!card) return;
       const showNeed = clShowNeed();
-      if (!showNeed && CL.tab === 'need') CL.tab = 'total';
+      if (!showNeed && CL.view === 'need') CL.view = 'calendar';
+      if (CL.view === 'need' || CL.view === 'total') CL.tab = CL.view;
       const q = CL.q.trim();
-      const tabNeed = document.getElementById('clTabNeed'), tabTotal = document.getElementById('clTabTotal');
-      tabNeed.style.display = showNeed ? '' : 'none';
-      tabTotal.classList.toggle('active', CL.tab === 'total'); tabNeed.classList.toggle('active', CL.tab === 'need');
+      const listing = CL.view !== 'calendar';
+      const gridWrap = document.getElementById('calGridWrap'), banner = document.getElementById('calNeedsSchedulingBanner');
+      if (gridWrap) gridWrap.style.display = listing ? 'none' : '';
+      if (banner) banner.style.display = listing ? 'none' : '';
+      card.style.display = listing ? '' : 'none';
+      document.getElementById('clViewNeed').style.display = showNeed ? '' : 'none';
+      ['calendar', 'total', 'need'].forEach(v => { const b = document.getElementById('clView' + v.charAt(0).toUpperCase() + v.slice(1)); b.classList.toggle('active', CL.view === v); b.setAttribute('aria-selected', CL.view === v ? 'true' : 'false'); });
       const view = clView(), groups = needToScheduleGroups();
       document.getElementById('clCountTotal').textContent = clApplyFilter(view, 'upcoming').length;
       document.getElementById('clCountNeed').textContent = groups.total;
+      if (!listing) return;
+      document.getElementById('clTitle').textContent = CL.tab === 'need' ? 'Need to Schedule' : 'Total Schedule';
       const body = document.getElementById('clBody'), chips = document.getElementById('clChips');
       const sub = document.getElementById('clSub');
       if (CL.tab === 'total') {
@@ -7076,7 +7196,11 @@
         let list = clApplyFilter(view, CL.filter).filter(e => clMatches(e, q));
         const desc = CL.filter === 'done' || CL.filter === 'cancelled';
         list.sort(clByTime); if (desc) list.reverse();
-        if (!list.length) { body.innerHTML = `<div class="cl-empty"><i class="fa-solid fa-calendar"></i>${q ? 'No jobs match your search.' : 'No jobs in this view.'}</div>`; return; }
+        if (!list.length) {
+          const total = clApplyFilter(view, 'all').length;
+          const hint = (!q && CL.filter !== 'all' && total) ? `<div style="margin-top:12px;"><button type="button" class="btn btn-outline btn-sm" onclick="clSetFilter('all')">Show all ${total} job${total === 1 ? '' : 's'}</button></div>` : '';
+          body.innerHTML = `<div class="cl-empty"><i class="fa-solid fa-calendar"></i>${q ? 'No jobs match your search.' : (CL.filter === 'upcoming' ? 'No upcoming jobs right now.' : 'No jobs in this view.')}${hint}</div>`; return;
+        }
         const months = []; const idx = {};
         list.forEach(e => { const k = e.date.slice(0, 7); if (!(k in idx)) { idx[k] = months.length; months.push({ k, items: [] }); } months[idx[k]].items.push(e); });
         let html = '', shown = 0;
@@ -8740,10 +8864,11 @@
       announcements: () => { renderAnnouncements(); },
       settings: () => { renderSettings(); },
     };
-    const ALWAYS_FRESH_PAGES = new Set(['payroll', 'dashboard', 'calendar', 'bookings', 'followups', 'schedule']);
+    const ALWAYS_FRESH_PAGES = new Set(['payroll', 'dashboard', 'calendar', 'bookings', 'followups', 'schedule', 'customers']);
     const initializedPages = new Set();
     function goToPage(id) {
       if (id !== 'noaccess' && (ROLE_HIDDEN_PAGES[CURRENT_ROLE] || []).includes(id)) { showToast('info', 'You do not have access to that page'); return; }
+      if (id === 'calendar') { if (CL.keepOnce) CL.keepOnce = false; else CL.view = 'calendar'; }   // opening Calendar from the menu shows the calendar; the dashboard links ask for a list view
       $all('.page').forEach(p => p.classList.remove('active'));
       $('#page-' + id).classList.add('active');
       $all('.nav-item[data-page]').forEach(n => n.classList.toggle('active', n.dataset.page === id));
