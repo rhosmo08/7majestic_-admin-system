@@ -3811,6 +3811,85 @@
       .sched-tech-card { padding: 8px 9px; }
       .btn-sm { padding: 3px 8px; }
     }
+
+    /* =====================================================================
+       LOAN BALANCES (Payroll page) — requested: much smaller and easier to
+       read. Short by default: one headline line with the totals, then only
+       the people who owe. One line per person on a laptop, two short lines
+       on a phone. The header folds the whole list away.
+       ===================================================================== */
+    .card.ca-card { padding: 0; margin-bottom: 14px; }
+    .ca-top {
+      -webkit-appearance: none; appearance: none; background: none; border: 0; margin: 0; width: 100%;
+      font: inherit; color: inherit; text-align: left; cursor: pointer;
+      border-radius: var(--r-lg) var(--r-lg) 0 0;
+      display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "ttl sum chv";
+      align-items: center; column-gap: 12px; row-gap: 5px; padding: 11px 16px;
+    }
+    .ca-top:focus-visible { outline-offset: -2px; }
+    .ca-card.ca-folded .ca-top { border-radius: var(--r-lg); }
+    .ca-title { grid-area: ttl; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text-1); white-space: nowrap; }
+    .ca-title i { color: var(--warning); font-size: 14px; }
+    .ca-sum { grid-area: sum; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+    .ca-chev { grid-area: chv; font-size: 12px; color: var(--text-3); transition: transform .18s ease; }
+    .ca-card.ca-folded .ca-chev { transform: rotate(-90deg); }
+    .ca-card.ca-folded .ca-body { display: none; }
+    .ca-chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: var(--r-full); font-size: 12px; font-weight: 700; line-height: 1.5; white-space: nowrap; background: var(--muted-bg); color: var(--text-2); }
+    .ca-chip i { font-size: 11px; }
+    .ca-chip-due { background: var(--warning-bg); color: var(--red-light); }
+    .ca-chip-ok { background: var(--success-bg); color: var(--success-text); }
+    .ca-body { padding: 0 16px 10px; }
+    .ca-note { margin: 0 0 6px; font-size: 12px; line-height: 1.4; color: var(--text-3); }
+    .ca-empty { display: flex; align-items: center; gap: 8px; padding: 6px 2px 8px; font-size: 13px; color: var(--text-2); }
+    .ca-empty i { color: var(--success-text); font-size: 14px; }
+    .ca-cols, .ca-row { display: grid; grid-template-columns: 26px minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.1fr) 96px; align-items: center; column-gap: 12px; }   /* fixed last column so the labels line up with the rows */
+    .ca-cols { padding: 4px 6px; border-bottom: 1px solid var(--border); font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); }
+    .ca-row { padding: 5px 6px; min-height: 40px; border-radius: var(--r-sm); }
+    .ca-row + .ca-row { border-top: 1px solid var(--border); border-top-left-radius: 0; border-top-right-radius: 0; }
+    .ca-row > .avatar { width: 26px; height: 26px; font-size: 10.5px; }
+    .ca-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .ca-owes { font-size: 13px; font-weight: 700; color: var(--red-light); }
+    .ca-wk { font-size: 12.5px; color: var(--text-2); }
+    .ca-clear .ca-name { font-weight: 500; color: var(--text-2); }
+    .ca-clear .ca-owes { font-weight: 500; color: var(--text-3); }
+    .ca-clear > .avatar { opacity: .65; }
+    .ca-m { display: none; }
+    .ca-row .ca-adj { justify-self: end; min-height: 28px; padding: 3px 11px; font-size: 12px; white-space: nowrap; }
+    .ca-row .ca-adj i { font-size: 11px; }
+    .ca-more {
+      display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin: 6px 0 0; padding: 7px 8px;
+      background: none; border: 0; border-top: 1px dashed var(--border); border-radius: 0 0 var(--r-md) var(--r-md);
+      color: var(--text-2); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+    }
+    .ca-more i { font-size: 10px; }
+    @media (hover: hover) {
+      .ca-top:hover { background: var(--row-hover); }
+      .ca-top:hover .ca-chev { color: var(--text-1); }
+      .ca-row:hover { background: var(--row-hover); }
+      .ca-more:hover { color: var(--text-1); background: var(--row-hover); }
+    }
+    @media (max-width: 640px) {
+      .card.ca-card { margin-bottom: 10px; }
+      .ca-top { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "ttl chv" "sum sum"; padding: 9px 12px; }
+      .ca-title { font-size: 13.5px; }
+      .ca-chip { font-size: 11.5px; padding: 1px 9px; }
+      .ca-body { padding: 0 12px 6px; }
+      .ca-note, .ca-cols { display: none; }
+      /* two short lines per person: name + amount owed on top, the weekly deduction underneath */
+      .ca-row { grid-template-columns: 26px minmax(0, 1fr) auto 32px; grid-template-areas: "av nm ow ad" "av wk wk ad"; column-gap: 8px; row-gap: 0; padding: 5px 0; min-height: 44px; border-radius: 0; }
+      .ca-row > .avatar { grid-area: av; align-self: center; }
+      .ca-name { grid-area: nm; align-self: end; white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.25; overflow-wrap: anywhere; }
+      .ca-owes { grid-area: ow; align-self: start; text-align: right; line-height: 1.25; }
+      .ca-wk { grid-area: wk; align-self: start; font-size: 11.5px; line-height: 1.3; color: var(--text-3); }
+      .ca-row .ca-adj { grid-area: ad; width: 32px; height: 32px; min-width: 32px; min-height: 32px; padding: 0; justify-content: center; }
+      .ca-adj span { display: none; }
+      .ca-d { display: none; }
+      .ca-m { display: inline; }
+      .ca-clear { grid-template-areas: "av nm ow ad"; }
+      .ca-clear .ca-wk { display: none; }
+      .ca-clear .ca-name, .ca-clear .ca-owes { align-self: center; }
+      .ca-more { margin-top: 4px; padding: 8px; }
+    }
   </style>
 </head>
 
@@ -3972,16 +4051,18 @@ class="nav-label">Collections</span></a>
           </div>
         </div>
         <div class="stats-grid" id="payrollStatsGrid"></div>
-        <div class="card" id="caBalanceCard" style="margin-bottom:20px;">
-          <div class="card-head">
-            <div>
-              <h3><i class="fa-solid fa-money-check-dollar" style="color:var(--warning);margin-right:6px;"></i>Loan
-                Balances</h3>
-              <div class="sub">Running total each employee currently owes on their loan. If a weekly deduction is set,
-                it's auto-deducted every new pay week until paid off. Always visible here so nothing gets lost.</div>
-            </div>
+        <!-- Loan Balances: kept short on purpose — the header always shows the totals, the list below it shows only
+             the people who owe, and the whole list can be folded away (see renderCaBalances / toggleCaCard) -->
+        <div class="card ca-card" id="caBalanceCard">
+          <button type="button" class="ca-top" id="caToggleBtn" onclick="toggleCaCard()" aria-expanded="true"
+            aria-controls="caBalanceBody" title="Show or hide the loan list">
+            <span class="ca-title"><i class="fa-solid fa-money-check-dollar" aria-hidden="true"></i>Loan Balances</span>
+            <span class="ca-sum" id="caBalanceSummary"></span>
+            <i class="fa-solid fa-chevron-down ca-chev" aria-hidden="true"></i>
+          </button>
+          <div class="ca-body" id="caBalanceBody">
+            <div id="caBalanceList"></div>
           </div>
-          <div id="caBalanceList"></div>
         </div>
         <div id="payrollAdminTableWrap" class="table-wrap">
           <table>
@@ -7426,22 +7507,58 @@ class="nav-label">Collections</span></a>
     }
 
     /* ---- Loan Balances — running totals, auto-deducted weekly from payroll ---- */
+    // Kept short on purpose: the header always shows "how many owe / how much in total", and the list shows only
+    // the people who owe. "Show … with no loan" adds everyone else (needed to hand out a new loan). The whole list can
+    // also be folded away; that choice is remembered on this device, the "show everyone" one starts short every visit.
+    let caShowAll = false;
+    let caFolded = null;   // null = not read from the device yet
+    function caFoldGet() { if (caFolded === null) { const p = prefGet('caFolded'); caFolded = !!(p && p.value === '1'); } return caFolded; }
+    function applyCaFold() {
+      const card = $('#caBalanceCard'), btn = $('#caToggleBtn'); if (!card || !btn) return;
+      const f = caFoldGet();
+      card.classList.toggle('ca-folded', f);
+      btn.setAttribute('aria-expanded', f ? 'false' : 'true');
+    }
+    function toggleCaCard() { caFolded = !caFoldGet(); prefSet('caFolded', caFolded ? '1' : '0'); applyCaFold(); }
+    function toggleCaShowAll() {
+      caShowAll = !caShowAll; renderCaBalances();
+      const b = $('#caBalanceList .ca-more'); if (b) b.focus({ preventScroll: true });   // the list was redrawn, so give the keyboard its place back
+    }
     function renderCaBalances() {
       const wrap = $('#caBalanceList'); if (!wrap) return;
+      applyCaFold();
       const rows = EMPLOYEES.slice().sort((a, b) => (b.caBalance || 0) - (a.caBalance || 0) || a.name.localeCompare(b.name));
-      const withBalance = rows.filter(e => e.caBalance > 0);
-      const rest = rows.filter(e => !(e.caBalance > 0));
-      const list = [...withBalance, ...rest];
-      wrap.innerHTML = list.length ? `<div class="table-wrap" style="border:none;background:transparent;"><table>
-    <thead><tr><th>Employee</th><th>Outstanding Balance</th><th>Weekly Deduction</th><th></th></tr></thead>
-    <tbody>${list.map(e => `
-      <tr>
-        <td><div style="display:flex;align-items:center;gap:9px;"><div class="avatar" style="width:26px;height:26px;font-size:11px;">${initials(e.name)}</div>${esc(e.name)}</div></td>
-        <td class="tabular" style="${e.caBalance > 0 ? 'color:var(--red-light);font-weight:700;' : ''}">${e.caBalance > 0 ? peso(e.caBalance) : 'No balance'}</td>
-        <td class="tabular">${e.caBalance > 0 && e.loanWeekly > 0 ? peso(e.loanWeekly) + ' / wk' : '—'}</td>
-        <td style="white-space:nowrap;"><button class="btn btn-ghost btn-sm" onclick="openAdjustBalanceModal('${e.id}')"><i class="fa-solid fa-pen"></i>Adjust</button></td>
-      </tr>`).join('')}</tbody>
-  </table></div>` : `<div class="empty-state"><i class="fa-solid fa-circle-check"></i><p>No employees yet.</p></div>`;
+      const owing = rows.filter(e => e.caBalance > 0);
+      const clear = rows.filter(e => !(e.caBalance > 0));
+      const total = owing.reduce((s, e) => s + (Number(e.caBalance) || 0), 0);
+
+      // headline, always visible (even when the list is folded)
+      const sum = $('#caBalanceSummary');
+      if (sum) sum.innerHTML = !rows.length ? '' : owing.length
+        ? `<span class="ca-chip">${owing.length} ${owing.length === 1 ? 'owes' : 'owe'}</span><span class="ca-chip ca-chip-due">${peso(total)} total</span>`
+        : `<span class="ca-chip ca-chip-ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i>No loans</span>`;
+      if (!rows.length) { wrap.innerHTML = `<div class="ca-empty">No employees yet.</div>`; return; }
+
+      const row = e => {
+        const owes = e.caBalance > 0, nm = esc(e.name);
+        const wk = !owes ? '' : e.loanWeekly > 0
+          ? `<span class="ca-m">Auto-deducts </span>${peso(e.loanWeekly)} / wk`
+          : `<span class="ca-d">—</span><span class="ca-m">No weekly deduction</span>`;
+        return `<div class="ca-row${owes ? '' : ' ca-clear'}">
+      <div class="avatar" aria-hidden="true">${initials(e.name)}</div>
+      <div class="ca-name" title="${nm}">${nm}</div>
+      <div class="ca-owes tabular">${owes ? peso(e.caBalance) : 'No loan'}</div>
+      <div class="ca-wk tabular">${wk}</div>
+      <button type="button" class="btn btn-ghost btn-sm ca-adj" onclick="openAdjustBalanceModal('${e.id}')" title="${owes ? 'Adjust loan' : 'Add a loan'}" aria-label="${owes ? 'Adjust loan' : 'Add a loan'} — ${nm}"><i class="fa-solid ${owes ? 'fa-pen' : 'fa-plus'}" aria-hidden="true"></i><span>${owes ? 'Adjust' : 'Add loan'}</span></button>
+    </div>`;
+      };
+      const shown = caShowAll ? [...owing, ...clear] : owing;
+      const toggleText = caShowAll ? 'Hide employees with no loan'
+        : owing.length ? `Show ${clear.length} with no loan` : `Show all ${clear.length} employees`;
+      wrap.innerHTML =
+        (owing.length ? `<div class="ca-note">Weekly deductions come off automatically every new pay week until the loan is paid off.</div>` : `<div class="ca-empty"><i class="fa-solid fa-circle-check" aria-hidden="true"></i>No one owes a loan right now.</div>`)
+        + (shown.length ? `<div class="ca-cols" aria-hidden="true"><span></span><span>Employee</span><span>Owes</span><span>Weekly deduction</span><span></span></div>` + shown.map(row).join('') : '')
+        + (clear.length ? `<button type="button" class="ca-more" onclick="toggleCaShowAll()" aria-expanded="${caShowAll}">${toggleText}<i class="fa-solid fa-chevron-${caShowAll ? 'up' : 'down'}" aria-hidden="true"></i></button>` : '');
     }
     function openAdjustBalanceModal(id) {
       const e = empById(id); if (!e) return;
